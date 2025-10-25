@@ -52,3 +52,145 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+
+# Angular
+
+# Angular specific
+/dist/
+/out-tsc/
+/tmp/
+/coverage/
+/e2e/test-output/
+/.angular/
+.angular/
+
+# Node modules and dependency files
+/node_modules/
+/package-lock.json
+/yarn.lock
+
+# Environment files
+/.env
+
+# Angular CLI and build artefacts
+/.angular-cli.json
+/.ng/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Visual Studio and IDEs (team collaboration)
+.vs/
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.idea/
+*.swp
+*.swo
+
+# Keep shared VS Code configs for team
+!.vscode/tasks.json
+!.vscode/settings.json.example
+
+# Entity Framework
+*.edmx.diagram
+*.edmx.sql
+Migrations/
+
+# Database files
+*.mdf
+*.ldf
+*.ndf
+*.db
+*.sqlite
+*.sqlite3
+
+# User-specific files
+*.rsuser
+PublishProfiles/
+*.pubxml
+*.pubxml.user
+*.publishsettings
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage and testing
+coverage/
+*.lcov
+.nyc_output/
+lib-cov/
+
+# ESLint and build cache
+.eslintcache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Package managers
+.npm
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# OS generated files (cross-platform team)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Environment variables (team safety)
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# Keep example env files for team reference
+!.env.example
+!.env.template
+
+# Backup and temporary files
+*.bak
+*.backup
+*.tmp
+*~
+
+# Application specific settings
+appsettings.*.json
+!appsettings.json
+!appsettings.Development.json
+!appsettings.Example.json
+
+# Build and deployment
+wwwroot/lib/
+wwwroot/css/
+wwwroot/js/
+!wwwroot/css/site.css
+!wwwroot/js/site.js
+
+# Keep shared configuration files
+!.editorconfig
+!prettier.config.js
+!.eslintrc.json
