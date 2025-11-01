@@ -40,7 +40,7 @@ public class Repository<T> : IRepository<T> where T : class
 
     public virtual async Task DeleteAsync(Guid id, CancellationToken cancellationToken = default)
     {
-        var entity = await GetByIdAsync(id, cancellationToken);
+        T? entity = await GetByIdAsync(id, cancellationToken);
         if (entity != null)
         {
             _dbSet.Remove(entity);

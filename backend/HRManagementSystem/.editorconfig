@@ -301,3 +301,7 @@ dotnet_diagnostic.IDE0060.severity = warning
 
 # IDE0011: Add braces
 dotnet_diagnostic.IDE0011.severity = suggestion
+
+# S125: Sections of code should not be commented out
+dotnet_diagnostic.S125.severity = suggestion
+

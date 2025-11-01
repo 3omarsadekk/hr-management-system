@@ -1,4 +1,6 @@
 using FluentValidation;
+using HRManagementSystem.Application.Interfaces;
+using HRManagementSystem.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -12,8 +14,8 @@ public static class DependencyInjection
 
         // Add FluentValidation
         services.AddValidatorsFromAssembly(assembly);
+        services.AddScoped<IEmployeeService, EmployeeService>();
 
-        
 
         return services;
     }

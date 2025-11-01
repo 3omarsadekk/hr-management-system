@@ -1,3 +1,4 @@
+using HRManagementSystem.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HRManagementSystem.Infrastructure.Data;
@@ -16,4 +17,6 @@ public class ApplicationDbContext : DbContext
         // Apply configurations from current assembly
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
+
+    public DbSet<Employee> Employees { get; set; }
 }
