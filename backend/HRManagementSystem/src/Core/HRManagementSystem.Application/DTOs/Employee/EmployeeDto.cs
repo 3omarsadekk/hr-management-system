@@ -1,9 +1,10 @@
 using System;
 
-namespace HRManagementSystem.Domain.Entities;
+namespace HRManagementSystem.Application.DTOs;
 
-public class Employee : BaseEntity
+public class EmployeeDto
 {
+    public int Id { get; set; }
     public required string FirstName { get; set; }
     public required string LastName { get; set; }
     public DateTime DateOfBirth { get; set; }
@@ -16,6 +17,4 @@ public class Employee : BaseEntity
     public string? Address { get; set; }
     public decimal BasicSalary { get; set; }
     public string? ApplicationUserId { get; set; }
-
-    // TODO: Navigation property (e.g., Department, Designation, etc.) can be added here in the future
 }
