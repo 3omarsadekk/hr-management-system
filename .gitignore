@@ -106,7 +106,7 @@ lerna-debug.log*
 # Entity Framework
 *.edmx.diagram
 *.edmx.sql
-Migrations/
+# Migrations/
 
 # Database files
 *.mdf
