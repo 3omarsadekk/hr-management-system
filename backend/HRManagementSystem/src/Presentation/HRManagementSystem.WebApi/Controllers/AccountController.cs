@@ -17,7 +17,7 @@ public class AccountController(IAccountService _accountService) : ControllerBase
         {
             return Unauthorized(result);
         }
-        return Ok(result);
+        return Ok(new { result.Succeeded, result.Response });
     }
 
     [HttpPost("assign-role")]

@@ -1,12 +1,15 @@
+using System.Text;
+using HRManagementSystem.Application.Interfaces;
+using HRManagementSystem.Domain.Interfaces;
+using HRManagementSystem.Infrastructure.Data;
+using HRManagementSystem.Infrastructure.Identity;
+using HRManagementSystem.Infrastructure.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using HRManagementSystem.Domain.Interfaces;
-using HRManagementSystem.Infrastructure.Data;
-using HRManagementSystem.Infrastructure.Repositories;
-using HRManagementSystem.Infrastructure.Identity;
-using Microsoft.AspNetCore.Identity;
-using HRManagementSystem.Application.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 
 namespace HRManagementSystem.Infrastructure;
 
@@ -25,12 +28,36 @@ public static class DependencyInjection
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
 
-        services.ConfigureApplicationCookie(options =>
+        //services.ConfigureApplicationCookie(options =>
+        //{
+        //    options.LoginPath = "/Account/Login";
+        //    options.AccessDeniedPath = "/Account/AccessDenied";
+        //});
+
+        // Add JWT Authentication
+        var jwtSettings = configuration.GetSection("Jwt");
+        var key = Encoding.ASCII.GetBytes(jwtSettings["Key"]);
+
+        services.AddAuthentication(options =>
         {
-            options.LoginPath = "/Account/Login";
-            options.AccessDeniedPath = "/Account/AccessDenied";
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+                ValidIssuer = jwtSettings["Issuer"],
+                ValidAudience = jwtSettings["Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(key)
+            };
         });
 
+        services.AddScoped<JwtTokenGenerator>();
         // Register AccountService
         // Register repositories
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));

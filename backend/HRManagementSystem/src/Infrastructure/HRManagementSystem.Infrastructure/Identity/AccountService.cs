@@ -9,6 +9,7 @@ using HRManagementSystem.Infrastructure.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.Extensions.Configuration;
 
 namespace HRManagementSystem.Infrastructure.Identity;
 
@@ -17,7 +18,9 @@ public class AccountService(
     UserManager<ApplicationUser> _userManager,
     SignInManager<ApplicationUser> _signInManager,
     RoleManager<ApplicationRole> _roleManager,
-    ApplicationDbContext _context) : IAccountService
+    ApplicationDbContext _context,
+    JwtTokenGenerator _jwtGenerator
+    ) : IAccountService
 {
 
     #region Authentication
@@ -148,13 +151,18 @@ public class AccountService(
         }
 
         IList<string> roles = await _userManager.GetRolesAsync(user);
+
+        (var token, var expires) = _jwtGenerator.GenerateToken(user, roles);
+
         var response = new AuthResponseDto
         {
             UserId = user.Id,
             Email = user.Email!,
             FullName = user.UserName!,
             EmployeeId = user.EmployeeId,
-            Roles = roles.ToList()
+            Roles = roles.ToList(),
+            Token=token,
+            TokenExpiration= expires
         };
 
         return (true, response, Array.Empty<string>());

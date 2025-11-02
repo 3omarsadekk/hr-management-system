@@ -1,5 +1,6 @@
 using HRManagementSystem.Application.DTOs;
 using HRManagementSystem.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace HRManagementSystem.WebApi.Controllers;
 public class EmployeeController(IEmployeeService employeeService) : ControllerBase
 {
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GetAllEmployees(CancellationToken cancellationToken)
     {
         var employees = await employeeService.GetAllEmployeesAsync(cancellationToken);
