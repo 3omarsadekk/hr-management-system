@@ -18,7 +18,6 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
         builder.Property(e => e.Email).IsRequired().HasMaxLength(200);
         builder.Property(e => e.DateOfBirth).IsRequired();
         builder.Property(e => e.HireDate).IsRequired();
-        builder.Property(e => e.Position).IsRequired().HasMaxLength(100);
-        builder.Property(e => e.Salary).IsRequired().HasColumnType("decimal(18,2)");
+        builder.Property(e => e.BasicSalary).IsRequired().HasColumnType("decimal(18,2)");
     }
 }
