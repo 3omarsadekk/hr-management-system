@@ -21,16 +21,17 @@ export class Login {
     this.authService.login({ email: this.email, password: this.password, rememberMe: true })
       .subscribe({
         next: res => {
-          if (res.succeeded) {
-            this.authService.saveToken(res.response.token);
+          if (res.hasError==false) {
+            this.authService.saveToken(res.data.token);
             this.errorMessage = '';
             alert('Login successful! Token saved.');
           }
         },
         error: err => {
           if (err.status === 401) {
-            this.errorMessage = 'Invalid email or password';
-            alert('Invalid email or password');
+            console.log(err.error.errorMessage);
+            this.errorMessage = err.error.errorMessage;
+            alert(this.errorMessage);
           } else {
             this.errorMessage = 'Error connecting to server';
             alert('Error connecting to server');
