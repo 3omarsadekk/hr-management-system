@@ -1,3 +1,5 @@
+using HRManagementSystem.Application.Mappings;
+
 namespace HRManagementSystem.Application;
 
 public static class DependencyInjection
@@ -10,7 +12,8 @@ public static class DependencyInjection
         services.AddValidatorsFromAssembly(assembly);
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IDepartmentService, DepartmentService>();
-
+        services.AddScoped<IDesignationService, DesignationService>();
+        services.AddAutoMapper(x => x.AddProfile(new MappingHelper()));
 
         return services;
     }
