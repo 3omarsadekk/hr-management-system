@@ -1,6 +1,3 @@
-using System;
-using HRManagementSystem.Application.DTOs.Department;
-
 namespace HRManagementSystem.Application.Interfaces;
 
 public interface IDepartmentService

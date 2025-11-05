@@ -4,7 +4,7 @@ namespace HRManagementSystem.Application.Mappings;
 /// Manual mapping helper - Replace with your actual mapping logic
 /// You can install AutoMapper later if needed
 /// </summary>
-public static class MappingHelper
+public class MappingHelper:Profile
 {
     // Example: Map entity to DTO manually
     // public static SampleDto ToDto(this SampleEntity entity)
@@ -15,4 +15,14 @@ public static class MappingHelper
     //         Name = entity.Name
     //     };
     // }
+    public MappingHelper()
+    {
+        // Define your mappings here
+        CreateMap<Designation, CreateDesignationDto>().ReverseMap();
+        CreateMap<Designation, UpdateDesignationDto>().ReverseMap();
+        CreateMap<Designation, DesignationDto>().ReverseMap();
+        CreateMap<Designation, DesignationDetailsDto>().ReverseMap();
+        CreateMap<Designation, DesignationWithEmployeesDto>().ReverseMap();
+
+    }
 }

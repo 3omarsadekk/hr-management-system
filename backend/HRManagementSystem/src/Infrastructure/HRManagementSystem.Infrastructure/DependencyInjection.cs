@@ -49,7 +49,7 @@ public static class DependencyInjection
         // Register repositories
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-
+        services.AddScoped<IDesignationRepository, DesignationRepository>();
         return services;
     }
 }

@@ -7,3 +7,6 @@ global using Microsoft.AspNetCore.Mvc.Filters;
 global using HRManagementSystem.Application;
 global using HRManagementSystem.Infrastructure;
 global using HRManagementSystem.Infrastructure.Identity;
+global using HRManagementSystem.Application.Common;
+global using HRManagementSystem.Application.DTOs.Department;
+global using HRManagementSystem.Application.DTOs.Designation;
