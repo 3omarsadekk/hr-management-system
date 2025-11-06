@@ -50,6 +50,10 @@ public static class DependencyInjection
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         services.AddScoped<IDesignationRepository, DesignationRepository>();
+        services.AddScoped<ILeaveApprovalRepository, LeaveApprovalRepository>();
+        services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
+        services.AddScoped<IEmployeeLeaveBalanceRepository,EmployeeLeaveBalanceRepository>();
+        services.AddScoped<ILeaveTypeRepository,LeaveTypeRepository>();
         return services;
     }
 }
