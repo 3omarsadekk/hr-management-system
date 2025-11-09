@@ -51,7 +51,6 @@ namespace HRManagementSystem.Application.Services;
             {
                 LeaveType entity = _mapper.Map<LeaveType>(dto);
                 entity.CreatedAt = DateTime.UtcNow;
-                entity.CreatedDate = DateTime.UtcNow;
 
                 await _leaveTypeRepo.AddAsync(entity);
                 return new Response<int>(entity.Id, null, false);
@@ -128,7 +127,7 @@ namespace HRManagementSystem.Application.Services;
 
         // ========================= Balances =========================
 
-        public async Task<Response<EmployeeLeaveBalanceDto>> GetEmployeeBalanceAsync(int employeeId, int leaveTypeId, int year)
+        public async Task<Response<EmployeeLeaveBalanceDto>> GetEmployeeLeaveBalanceAsync(int employeeId, int leaveTypeId, int year)
         {
             try
             {

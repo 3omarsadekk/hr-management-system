@@ -11,28 +11,28 @@ namespace HRManagementSystem.WebApi.Controllers;
 [ApiController]
 public class LeaveController(ILeaveService _leaveService) : ControllerBase
 {
-    // ========================= Leave Types =========================
+    //// ========================= Leave Types =========================
 
-    [HttpPost("types")]
-    public async Task<IActionResult> CreateLeaveType([FromBody] CreateLeaveTypeDto dto)
-    {
-        Response<int> result = await _leaveService.CreateLeaveTypeAsync(dto);
-        if (result.HasError)
-            return BadRequest(new { hasError = result.HasError, errorMessage = result.ErrorMessage });
+    //[HttpPost("types")]
+    //public async Task<IActionResult> CreateLeaveType([FromBody] CreateLeaveTypeDto dto)
+    //{
+    //    Response<int> result = await _leaveService.CreateLeaveTypeAsync(dto);
+    //    if (result.HasError)
+    //        return BadRequest(new { hasError = result.HasError, errorMessage = result.ErrorMessage });
 
-        return Ok(new { hasError = result.HasError, data = result.Data });
-    }
+    //    return Ok(new { hasError = result.HasError, data = result.Data });
+    //}
 
-    [HttpPut("types/{id:int}")]
-    public async Task<IActionResult> UpdateLeaveType([FromRoute] int id, [FromBody] UpdateLeaveTypeDto dto)
-    {
-        dto.Id = id;
-        Response<bool> result = await _leaveService.UpdateLeaveTypeAsync(dto);
-        if (result.HasError)
-            return BadRequest(new { hasError = result.HasError, errorMessage = result.ErrorMessage });
+    //[HttpPut("types/{id:int}")]
+    //public async Task<IActionResult> UpdateLeaveType([FromRoute] int id, [FromBody] UpdateLeaveTypeDto dto)
+    //{
+    //    dto.Id = id;
+    //    Response<bool> result = await _leaveService.UpdateLeaveTypeAsync(dto);
+    //    if (result.HasError)
+    //        return BadRequest(new { hasError = result.HasError, errorMessage = result.ErrorMessage });
 
-        return Ok(new { hasError = result.HasError, data = result.Data });
-    }
+    //    return Ok(new { hasError = result.HasError, data = result.Data });
+    //}
 
     [HttpGet("types")]
     public async Task<IActionResult> GetLeaveTypes()
@@ -54,22 +54,22 @@ public class LeaveController(ILeaveService _leaveService) : ControllerBase
         return Ok(new { hasError = result.HasError, data = result.Data });
     }
 
-    [HttpDelete("types/{id:int}")]
-    public async Task<IActionResult> DeleteLeaveType([FromRoute] int id)
-    {
-        Response<bool> result = await _leaveService.DeleteLeaveTypeAsync(id);
-        if (result.HasError)
-            return BadRequest(new { hasError = result.HasError, errorMessage = result.ErrorMessage });
+    //[HttpDelete("types/{id:int}")]
+    //public async Task<IActionResult> DeleteLeaveType([FromRoute] int id)
+    //{
+    //    Response<bool> result = await _leaveService.DeleteLeaveTypeAsync(id);
+    //    if (result.HasError)
+    //        return BadRequest(new { hasError = result.HasError, errorMessage = result.ErrorMessage });
 
-        return Ok(new { hasError = result.HasError, data = result.Data });
-    }
+    //    return Ok(new { hasError = result.HasError, data = result.Data });
+    //}
 
     // ========================= Balances =========================
 
     [HttpGet("balances/{employeeId:int}/{leaveTypeId:int}/{year:int}")]
-    public async Task<IActionResult> GetEmployeeBalance([FromRoute] int employeeId, [FromRoute] int leaveTypeId, [FromRoute] int year)
+    public async Task<IActionResult> GetEmployeeLeaveBalance([FromRoute] int employeeId, [FromRoute] int leaveTypeId, [FromRoute] int year)
     {
-        Response<EmployeeLeaveBalanceDto> result = await _leaveService.GetEmployeeBalanceAsync(employeeId, leaveTypeId, year);
+        Response<EmployeeLeaveBalanceDto> result = await _leaveService.GetEmployeeLeaveBalanceAsync(employeeId, leaveTypeId, year);
         if (result.HasError)
             return NotFound(new { hasError = result.HasError, errorMessage = result.ErrorMessage });
 

@@ -18,7 +18,7 @@ public interface ILeaveService
     Task<Response<bool>> DeleteLeaveTypeAsync(int id);
 
     // ---------- Leave Balances ----------
-    Task<Response<EmployeeLeaveBalanceDto>> GetEmployeeBalanceAsync(int employeeId, int leaveTypeId, int year);
+    Task<Response<EmployeeLeaveBalanceDto>> GetEmployeeLeaveBalanceAsync(int employeeId, int leaveTypeId, int year);
     Task<Response<int>> AllocateAnnualBalancesAsync(int year);
 
     // ---------- Leave Requests ----------

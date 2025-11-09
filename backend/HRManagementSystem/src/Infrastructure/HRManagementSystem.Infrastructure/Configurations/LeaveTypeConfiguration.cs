@@ -17,7 +17,7 @@ public class LeaveTypeConfiguration : IEntityTypeConfiguration<LeaveType>
         builder.Property(l => l.MaxDays).IsRequired();
         builder.Property(l => l.CanCarryForward).IsRequired();
         builder.Property(l => l.CarryForwardLimit);
-        builder.Property(l => l.CreatedDate).IsRequired();
+        builder.Property(l => l.CreatedAt).IsRequired();
 
         builder.HasMany(l => l.LeaveRequests)
                .WithOne(lr => lr.LeaveType)

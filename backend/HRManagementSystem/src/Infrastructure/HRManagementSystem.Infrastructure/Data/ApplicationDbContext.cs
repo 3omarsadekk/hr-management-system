@@ -1,3 +1,4 @@
+using System.Reflection.Emit;
 using HRManagementSystem.Infrastructure.Configurations;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         builder.ApplyConfiguration(new LeaveRequestConfiguration());
         builder.ApplyConfiguration(new LeaveApprovalConfiguration());
         builder.ApplyConfiguration(new EmployeeLeaveBalanceConfiguration());
+
+        //Add Leave types in database
+        builder.SeedLeaveTypes();
     }
 
     public DbSet<Employee> Employees { get; set; }
