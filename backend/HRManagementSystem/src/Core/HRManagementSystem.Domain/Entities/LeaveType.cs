@@ -6,7 +6,7 @@ public class LeaveType:BaseEntity
     public int MaxDays { get; set; }
     public bool CanCarryForward { get; set; } = false;
     public int? CarryForwardLimit { get; set; }
-    public DateTime CreatedDate { get; set; } = DateTime.Now;
+    public bool IsPaid { get; set; } = true;
 
     // 🔗 Navigation
     public ICollection<LeaveRequest>? LeaveRequests { get; set; }

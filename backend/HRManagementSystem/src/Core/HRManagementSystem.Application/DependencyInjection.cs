@@ -1,4 +1,5 @@
 using HRManagementSystem.Application.Mappings;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace HRManagementSystem.Application;
 
@@ -13,7 +14,10 @@ public static class DependencyInjection
         services.AddScoped<IEmployeeService, EmployeeService>();
         services.AddScoped<IDepartmentService, DepartmentService>();
         services.AddScoped<IDesignationService, DesignationService>();
+        services.AddScoped<ILeaveService, LeaveService>();
         services.AddAutoMapper(x => x.AddProfile(new MappingHelper()));
+        services.AddAutoMapper(x => x.AddProfile(new LeaveProfile()));
+
 
         return services;
     }
