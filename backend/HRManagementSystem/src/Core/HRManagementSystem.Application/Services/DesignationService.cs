@@ -23,8 +23,7 @@ public class DesignationService(IDesignationRepository _DesignationRepository, I
         }
     }
 
-    public Task<Response<DesignationDto>> CreateDesignationsAsync(CreateDesignationDto createDesignationDto, CancellationToken cancellationToken = default) => throw new NotImplementedException();
-
+    
     public async Task<Response<bool>> DeleteDesignationAsync(int id, CancellationToken cancellationToken = default)
     {
         try

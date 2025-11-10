@@ -69,6 +69,8 @@ public class AccountService(
                 HireDate = registerEmployeeDto.HireDate,
                 EFF_Start = registerEmployeeDto.EFF_Start,
                 EFF_End = registerEmployeeDto.EFF_End,
+                DepartmentId = registerEmployeeDto.DeptId,
+                DesignationId = registerEmployeeDto.DesignationId,
                 ContactNumber = registerEmployeeDto.ContactNumber,
                 Address = registerEmployeeDto.Address,
                 BasicSalary = registerEmployeeDto.BasicSalary,
