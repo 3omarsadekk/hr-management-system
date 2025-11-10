@@ -12,3 +12,13 @@ global using System.Reflection;
 global using AutoMapper;
 global using HRManagementSystem.Application.DTOs.Designation;
 global using HRManagementSystem.Application.DTOs.Department;
+global using HRManagementSystem.Application.DTOs.Leaves.LeaveTypeDtos;
+global using HRManagementSystem.Application.DTOs.Leaves.LeaveRequestDtos;
+global using HRManagementSystem.Application.Interfaces.ILeaveServices;
+global using HRManagementSystem.Application.Services.LeaveService;
+global using HRManagementSystem.Domain.Enums;
+global using HRManagementSystem.Domain.Interfaces.LeaveRepository;
+
+
+
+

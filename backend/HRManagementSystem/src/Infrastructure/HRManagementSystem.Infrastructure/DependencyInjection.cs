@@ -1,3 +1,6 @@
+using HRManagementSystem.Domain.Interfaces.LeaveRepository;
+using HRManagementSystem.Infrastructure.Repositories.ILeaveRepository;
+
 namespace HRManagementSystem.Infrastructure;
 
 public static class DependencyInjection

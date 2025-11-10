@@ -24,5 +24,9 @@ public class MappingHelper:Profile
         CreateMap<Designation, DesignationDetailsDto>().ReverseMap();
         CreateMap<Designation, DesignationWithEmployeesDto>().ReverseMap();
 
+        //Leave Request
+        CreateMap<LeaveRequest, LeaveRequestDto>().ReverseMap();
+        CreateMap<LeaveRequest, UpdateLeaveRequestDto>().ReverseMap();
+
     }
 }

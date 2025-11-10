@@ -19,7 +19,9 @@ public class EmployeeService(IRepository<Employee> employeeRepository) : IEmploy
                 ContactNumber = createEmployeeDto.ContactNumber,
                 Address = createEmployeeDto.Address,
                 BasicSalary = createEmployeeDto.BasicSalary,
-                ApplicationUserId = createEmployeeDto.ApplicationUserId
+                ApplicationUserId = createEmployeeDto.ApplicationUserId,
+                DepartmentId = createEmployeeDto.DeptId,
+                DesignationId = createEmployeeDto.DesignationId
             };
 
             await employeeRepository.AddAsync(employee, cancellationToken);
@@ -38,7 +40,9 @@ public class EmployeeService(IRepository<Employee> employeeRepository) : IEmploy
                 ContactNumber = employee.ContactNumber,
                 Address = employee.Address,
                 BasicSalary = employee.BasicSalary,
-                ApplicationUserId = employee.ApplicationUserId
+                ApplicationUserId = employee.ApplicationUserId,
+                DeptId= (int)employee.DepartmentId,
+                DesignationId= (int)employee.DesignationId
             };
 
             return new Response<EmployeeDto>(dto, string.Empty, false);
@@ -60,6 +64,8 @@ public class EmployeeService(IRepository<Employee> employeeRepository) : IEmploy
                 Id = e.Id,
                 FirstName = e.FirstName,
                 LastName = e.LastName,
+                DeptId= (int)e.DepartmentId,
+                DesignationId= (int)e.DesignationId,
                 DateOfBirth = e.DateOfBirth,
                 Gender = e.Gender,
                 HireDate = e.HireDate,
@@ -95,6 +101,8 @@ public class EmployeeService(IRepository<Employee> employeeRepository) : IEmploy
                 FirstName = employee.FirstName,
                 LastName = employee.LastName,
                 DateOfBirth = employee.DateOfBirth,
+                DeptId= (int)employee.DepartmentId,
+                DesignationId= (int)employee.DesignationId,
                 Gender = employee.Gender,
                 HireDate = employee.HireDate,
                 EFF_Start = employee.EFF_Start,
@@ -130,6 +138,8 @@ public class EmployeeService(IRepository<Employee> employeeRepository) : IEmploy
             employee.EFF_Start = updateEmployeeDto.EFF_Start;
             employee.EFF_End = updateEmployeeDto.EFF_End;
             employee.Email = updateEmployeeDto.Email;
+            employee.DesignationId=updateEmployeeDto.DesignationId;
+            employee.DepartmentId=updateEmployeeDto.DeptId;
             employee.ContactNumber = updateEmployeeDto.ContactNumber;
             employee.Address = updateEmployeeDto.Address;
             employee.BasicSalary = updateEmployeeDto.BasicSalary;

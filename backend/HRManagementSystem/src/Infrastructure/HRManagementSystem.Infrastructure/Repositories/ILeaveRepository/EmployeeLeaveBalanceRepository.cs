@@ -1,5 +1,6 @@
-﻿
-namespace HRManagementSystem.Infrastructure.Repositories;
+﻿using HRManagementSystem.Domain.Interfaces.LeaveRepository;
+
+namespace HRManagementSystem.Infrastructure.Repositories.ILeaveRepository;
 public class EmployeeLeaveBalanceRepository(ApplicationDbContext _context) : Repository<EmployeeLeaveBalance>(_context), IEmployeeLeaveBalanceRepository
 {
     public async Task<IEnumerable<EmployeeLeaveBalance>> GetByEmployeeIdAndYearAsync(int employeeId, int year)

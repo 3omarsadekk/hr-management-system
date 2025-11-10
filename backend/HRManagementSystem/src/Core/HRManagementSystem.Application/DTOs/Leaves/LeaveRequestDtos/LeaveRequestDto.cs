@@ -13,7 +13,7 @@ public class LeaveRequestDto
     public DateTime StartDate { get; set; }
     public DateTime EndDate { get; set; }
     public int TotalDays { get; set; }
-    public int Status { get; set; }
+    public int Status { get; set; } = 0;
     public int? ReviewedById { get; set; }
-    public DateTime? ReviewedAt { get; set; }
+    public DateTime? ReviewedAt { get; set; } = null;
 }

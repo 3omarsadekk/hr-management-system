@@ -2,20 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using HRManagementSystem.Application.DTOs.Leaves;
-using HRManagementSystem.Application.DTOs.Leaves.LeaveRequestDtos;
-using HRManagementSystem.Application.DTOs.Leaves.LeaveTypeDtos;
-using HRManagementSystem.Application.Interfaces;
-using HRManagementSystem.Domain.Enums;
-using Microsoft.AspNetCore.Identity;
 
 
 
 
-namespace HRManagementSystem.Application.Services;
+namespace HRManagementSystem.Application.Servicess;
 
-    public class LeaveService : ILeaveService
+    public class LeaveService //: ILeaveService
     {
         private readonly ILeaveTypeRepository _leaveTypeRepo;
         private readonly ILeaveRequestRepository _leaveRequestRepo;
@@ -45,41 +39,41 @@ namespace HRManagementSystem.Application.Services;
 
         // ========================= Leave Types =========================
 
-        public async Task<Response<int>> CreateLeaveTypeAsync(CreateLeaveTypeDto dto)
-        {
-            try
-            {
-                LeaveType entity = _mapper.Map<LeaveType>(dto);
-                entity.CreatedAt = DateTime.UtcNow;
+        //public async Task<Response<int>> CreateLeaveTypeAsync(CreateLeaveTypeDto dto)
+        //{
+        //    try
+        //    {
+        //        LeaveType entity = _mapper.Map<LeaveType>(dto);
+        //        entity.CreatedAt = DateTime.UtcNow;
 
-                await _leaveTypeRepo.AddAsync(entity);
-                return new Response<int>(entity.Id, null, false);
-            }
-            catch (Exception ex)
-            {
-                return new Response<int>(0, $"Failed to create leave type: {ex.Message}", true);
-            }
-        }
+        //        await _leaveTypeRepo.AddAsync(entity);
+        //        return new Response<int>(entity.Id, null, false);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new Response<int>(0, $"Failed to create leave type: {ex.Message}", true);
+        //    }
+        //}
 
-        public async Task<Response<bool>> UpdateLeaveTypeAsync(UpdateLeaveTypeDto dto)
-        {
-            try
-            {
-                LeaveType? entity = await _leaveTypeRepo.GetByIdAsync(dto.Id);
-                if (entity is null)
-                    return new Response<bool>(false, "LeaveType not found", true);
+        //public async Task<Response<bool>> UpdateLeaveTypeAsync(UpdateLeaveTypeDto dto)
+        //{
+        //    try
+        //    {
+        //        LeaveType? entity = await _leaveTypeRepo.GetByIdAsync(dto.Id);
+        //        if (entity is null)
+        //            return new Response<bool>(false, "LeaveType not found", true);
 
-                _mapper.Map(dto, entity);
-                entity.UpdatedAt = DateTime.UtcNow;
+        //        _mapper.Map(dto, entity);
+        //        entity.UpdatedAt = DateTime.UtcNow;
 
-                await _leaveTypeRepo.UpdateAsync(entity);
-                return new Response<bool>(true, null, false);
-            }
-            catch (Exception ex)
-            {
-                return new Response<bool>(false, $"Failed to update leave type: {ex.Message}", true);
-            }
-        }
+        //        await _leaveTypeRepo.UpdateAsync(entity);
+        //        return new Response<bool>(true, null, false);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new Response<bool>(false, $"Failed to update leave type: {ex.Message}", true);
+        //    }
+        //}
 
         public async Task<Response<List<LeaveTypeDto>>> GetLeaveTypesAsync()
         {
@@ -112,18 +106,18 @@ namespace HRManagementSystem.Application.Services;
             }
         }
 
-        public async Task<Response<bool>> DeleteLeaveTypeAsync(int id)
-        {
-            try
-            {
-                await _leaveTypeRepo.DeleteAsync(id);
-                return new Response<bool>(true, null, false);
-            }
-            catch (Exception ex)
-            {
-                return new Response<bool>(false, $"Failed to delete leave type: {ex.Message}", true);
-            }
-        }
+        //public async Task<Response<bool>> DeleteLeaveTypeAsync(int id)
+        //{
+        //    try
+        //    {
+        //        await _leaveTypeRepo.DeleteAsync(id);
+        //        return new Response<bool>(true, null, false);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new Response<bool>(false, $"Failed to delete leave type: {ex.Message}", true);
+        //    }
+        //}
 
         // ========================= Balances =========================
 
@@ -190,97 +184,97 @@ namespace HRManagementSystem.Application.Services;
 
         // ========================= Requests =========================
      
-        public async Task<Response<int>> RequestLeaveAsync(CreateLeaveRequestDto dto, int currentYear)
-        {
-            try
-            {
-                DateTime start = dto.StartDate.Date;
-                DateTime end = dto.EndDate.Date;
+        //public async Task<Response<int>> RequestLeaveAsync(CreateLeaveRequestDto dto, int currentYear)
+        //{
+        //    try
+        //    {
+        //        DateTime start = dto.StartDate.Date;
+        //        DateTime end = dto.EndDate.Date;
 
-                if (start > end)
-                    return new Response<int>(0, "Start date cannot be after end date.", true);
+        //        if (start > end)
+        //            return new Response<int>(0, "Start date cannot be after end date.", true);
 
-                Response<bool> overlap = await HasOverlapAsync(dto.EmployeeId, start, end);
-                if (overlap.Data == true && !overlap.HasError)
-                    return new Response<int>(0, "Overlapping leave request exists.", true);
-                if (overlap.HasError)
-                    return new Response<int>(0, overlap.ErrorMessage, true);
+        //        Response<bool> overlap = await HasOverlapAsync(dto.EmployeeId, start, end);
+        //        if (overlap.Data == true && !overlap.HasError)
+        //            return new Response<int>(0, "Overlapping leave request exists.", true);
+        //        if (overlap.HasError)
+        //            return new Response<int>(0, overlap.ErrorMessage, true);
 
-                int totalDays = (int)(end - start).TotalDays + 1;
+        //        int totalDays = (int)(end - start).TotalDays + 1;
 
-                LeaveRequest req = _mapper.Map<LeaveRequest>(dto);
-                req.StartDate = start;
-                req.EndDate = end;
-                req.TotalDays = totalDays;
-                req.Status = LeaveStatus.Pending;
-                req.CreatedAt = DateTime.UtcNow;
+        //        LeaveRequest req = _mapper.Map<LeaveRequest>(dto);
+        //        req.StartDate = start;
+        //        req.EndDate = end;
+        //        req.TotalDays = totalDays;
+        //        req.Status = LeaveStatus.Pending;
+        //        req.CreatedAt = DateTime.UtcNow;
 
-                await _leaveRequestRepo.AddAsync(req);
+        //        await _leaveRequestRepo.AddAsync(req);
 
-                List<(int ApproverId, LevelApproval Level)> approvers = await ResolveApproversAsync(dto.EmployeeId);
-                foreach ((int ApproverId, LevelApproval Level) step in approvers)
-                {
-                LeaveApproval approval = new LeaveApproval
-                    {
-                        LeaveRequestId = req.Id,
-                        ApproverId = step.ApproverId,
-                        Level = step.Level,        
-                        Status = LeaveStatus.Pending,
-                        ActionDate = null
-                    };
-                    await _leaveApprovalRepo.AddAsync(approval);
-                }
+        //        List<(int ApproverId, LevelApproval Level)> approvers = await ResolveApproversAsync(dto.EmployeeId);
+        //        foreach ((int ApproverId, LevelApproval Level) step in approvers)
+        //        {
+        //        LeaveApproval approval = new LeaveApproval
+        //            {
+        //                LeaveRequestId = req.Id,
+        //                ApproverId = step.ApproverId,
+        //                Level = step.Level,        
+        //                Status = LeaveStatus.Pending,
+        //                ActionDate = null
+        //            };
+        //            await _leaveApprovalRepo.AddAsync(approval);
+        //        }
 
-                return new Response<int>(req.Id, null, false);
-            }
-            catch (Exception ex)
-            {
-                return new Response<int>(0, $"Failed to create leave request: {ex.Message}", true);
-            }
-        }
+        //        return new Response<int>(req.Id, null, false);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new Response<int>(0, $"Failed to create leave request: {ex.Message}", true);
+        //    }
+        //}
 
-        public async Task<Response<List<LeaveRequestDto>>> GetEmployeeRequestsAsync(int employeeId)
-        {
-            try
-            {
-            IEnumerable<LeaveRequest> list = await _leaveRequestRepo.GetAllByEmployeeIdAsync(employeeId);
-            List<LeaveRequestDto> dtos = _mapper.Map<List<LeaveRequestDto>>(list);
-                return new Response<List<LeaveRequestDto>>(dtos, null, false);
-            }
-            catch (Exception ex)
-            {
-                return new Response<List<LeaveRequestDto>>(null, $"Failed to load requests: {ex.Message}", true);
-            }
-        }
+        //public async Task<Response<List<LeaveRequestDto>>> GetEmployeeRequestsAsync(int employeeId)
+        //{
+        //    try
+        //    {
+        //    IEnumerable<LeaveRequest> list = await _leaveRequestRepo.GetAllByEmployeeIdAsync(employeeId);
+        //    List<LeaveRequestDto> dtos = _mapper.Map<List<LeaveRequestDto>>(list);
+        //        return new Response<List<LeaveRequestDto>>(dtos, null, false);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new Response<List<LeaveRequestDto>>(null, $"Failed to load requests: {ex.Message}", true);
+        //    }
+        //}
 
-        public async Task<Response<List<LeaveRequestDto>>> GetPendingApprovalsAsync(int approverId)
-        {
-            try
-            {
-            IEnumerable<LeaveApproval> steps = await _leaveApprovalRepo.GetByApproverIdAsync(approverId, default);
+        //public async Task<Response<List<LeaveRequestDto>>> GetPendingApprovalsAsync(int approverId)
+        //{
+        //    try
+        //    {
+        //    IEnumerable<LeaveApproval> steps = await _leaveApprovalRepo.GetByApproverIdAsync(approverId, default);
 
-            List<int> pendingReqIds = steps
-                    .Where(a => a.ActionDate == null)
-                    .Select(a => a.LeaveRequestId)
-                    .Distinct()
-                    .ToList();
+        //    List<int> pendingReqIds = steps
+        //            .Where(a => a.ActionDate == null)
+        //            .Select(a => a.LeaveRequestId)
+        //            .Distinct()
+        //            .ToList();
 
-            List<LeaveRequest> result = new List<LeaveRequest>();
-                foreach (var id in pendingReqIds)
-                {
-                    var req = await _leaveRequestRepo.GetByIdAsync(id);
-                    if (req != null)
-                        result.Add(req);
-                }
+        //    List<LeaveRequest> result = new List<LeaveRequest>();
+        //        foreach (var id in pendingReqIds)
+        //        {
+        //            var req = await _leaveRequestRepo.GetByIdAsync(id);
+        //            if (req != null)
+        //                result.Add(req);
+        //        }
 
-            List<LeaveRequestDto> dtos = _mapper.Map<List<LeaveRequestDto>>(result);
-                return new Response<List<LeaveRequestDto>>(dtos, null, false);
-            }
-            catch (Exception ex)
-            {
-                return new Response<List<LeaveRequestDto>>(null, $"Failed to load pending approvals: {ex.Message}", true);
-            }
-        }
+        //    List<LeaveRequestDto> dtos = _mapper.Map<List<LeaveRequestDto>>(result);
+        //        return new Response<List<LeaveRequestDto>>(dtos, null, false);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new Response<List<LeaveRequestDto>>(null, $"Failed to load pending approvals: {ex.Message}", true);
+        //    }
+        //}
 
         // ========================= Approvals =========================
 
@@ -385,49 +379,49 @@ namespace HRManagementSystem.Application.Services;
 
         // ========================= Utilities =========================
 
-        public async Task<Response<bool>> HasOverlapAsync(int employeeId, DateTime start, DateTime end)
-        {
-            try
-            {
-            IEnumerable<LeaveRequest> all = await _leaveRequestRepo.GetAllAsync();
-            DateTime s = start.Date;
-            DateTime e = end.Date;
+    //    public async Task<Response<bool>> HasOverlapAsync(int employeeId, DateTime start, DateTime end)
+    //    {
+    //        try
+    //        {
+    //        IEnumerable<LeaveRequest> all = await _leaveRequestRepo.GetAllAsync();
+    //        DateTime s = start.Date;
+    //        DateTime e = end.Date;
 
-            bool overlapped = all.Any(r =>
-                    r.EmployeeId == employeeId &&
-                    r.Status != LeaveStatus.Rejected &&
-                    r.StartDate <= e && r.EndDate >= s);
+    //        bool overlapped = all.Any(r =>
+    //                r.EmployeeId == employeeId &&
+    //                r.Status != LeaveStatus.Rejected &&
+    //                r.StartDate <= e && r.EndDate >= s);
 
-                return new Response<bool>(overlapped, null, false);
-            }
-            catch (Exception ex)
-            {
-                return new Response<bool>(false, $"Failed to check overlap: {ex.Message}", true);
-            }
-        }
+    //            return new Response<bool>(overlapped, null, false);
+    //        }
+    //        catch (Exception ex)
+    //        {
+    //            return new Response<bool>(false, $"Failed to check overlap: {ex.Message}", true);
+    //        }
+    //    }
 
     
-        private async Task<List<(int ApproverId, LevelApproval Level)>> ResolveApproversAsync(int employeeId)
-    {
-        List<(int, LevelApproval)> result = new List<(int, LevelApproval)>();
+    //    private async Task<List<(int ApproverId, LevelApproval Level)>> ResolveApproversAsync(int employeeId)
+    //{
+    //    List<(int, LevelApproval)> result = new List<(int, LevelApproval)>();
 
-        //Response
-        Employee emp = await _employeeRepo.GetByIdAsync(employeeId)
-                  ?? throw new KeyNotFoundException("Employee not found");
+    //    //Response
+    //    Employee emp = await _employeeRepo.GetByIdAsync(employeeId)
+    //              ?? throw new KeyNotFoundException("Employee not found");
 
-        // Manager only
-        if (emp.DepartmentId is not null)
-        {
-            //Response
-            Department? dept = await _departmentRepo.GetByIdAsync(emp.DepartmentId.Value);
+    //    // Manager only
+    //    if (emp.DepartmentId is not null)
+    //    {
+    //        //Response
+    //        Department? dept = await _departmentRepo.GetByIdAsync(emp.DepartmentId.Value);
 
-            if (dept?.ManagerId is not null && dept.ManagerId.Value != employeeId)
-            {
-                result.Add((dept.ManagerId.Value, LevelApproval.Manager));
-            }
-        }
+    //        if (dept?.ManagerId is not null && dept.ManagerId.Value != employeeId)
+    //        {
+    //            result.Add((dept.ManagerId.Value, LevelApproval.Manager));
+    //        }
+    //    }
 
-        return result;
-    }
+    //    return result;
+    //}
 
 }

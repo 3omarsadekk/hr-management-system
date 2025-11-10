@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace HRManagementSystem.Infrastructure.Repositories;
+﻿namespace HRManagementSystem.Infrastructure.Repositories.ILeaveRepository;
 public class LeaveApprovalRepository(ApplicationDbContext _context) : Repository<LeaveApproval>(_context), ILeaveApprovalRepository
 {
     public async Task<IEnumerable<LeaveApproval>> GetByApproverIdAsync(int approverId, CancellationToken cancellationToken) 

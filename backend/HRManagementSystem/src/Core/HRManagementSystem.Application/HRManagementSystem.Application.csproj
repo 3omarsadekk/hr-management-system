@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\LeaveService\" />
     <Folder Include="Validators/" />
   </ItemGroup>
 

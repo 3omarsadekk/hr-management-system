@@ -1,6 +1,7 @@
 ﻿using HRManagementSystem.Domain.Entities;
+using HRManagementSystem.Domain.Interfaces.LeaveRepository;
 
-namespace HRManagementSystem.Infrastructure.Repositories;
+namespace HRManagementSystem.Infrastructure.Repositories.ILeaveRepository;
 public class LeaveRequestRepository(ApplicationDbContext _context) : Repository<LeaveRequest>(_context), ILeaveRequestRepository
 {
     public async Task<IEnumerable<LeaveRequest>> GetAllByEmployeeIdAsync(int employeeId, CancellationToken cancellationToken = default){
