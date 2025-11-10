@@ -11,58 +11,7 @@ namespace HRManagementSystem.WebApi.Controllers;
 [ApiController]
 public class LeaveController(ILeaveService _leaveService) : ControllerBase
 {
-    //// ========================= Leave Types =========================
-
-    //[HttpPost("types")]
-    //public async Task<IActionResult> CreateLeaveType([FromBody] CreateLeaveTypeDto dto)
-    //{
-    //    Response<int> result = await _leaveService.CreateLeaveTypeAsync(dto);
-    //    if (result.HasError)
-    //        return BadRequest(new { hasError = result.HasError, errorMessage = result.ErrorMessage });
-
-    //    return Ok(new { hasError = result.HasError, data = result.Data });
-    //}
-
-    //[HttpPut("types/{id:int}")]
-    //public async Task<IActionResult> UpdateLeaveType([FromRoute] int id, [FromBody] UpdateLeaveTypeDto dto)
-    //{
-    //    dto.Id = id;
-    //    Response<bool> result = await _leaveService.UpdateLeaveTypeAsync(dto);
-    //    if (result.HasError)
-    //        return BadRequest(new { hasError = result.HasError, errorMessage = result.ErrorMessage });
-
-    //    return Ok(new { hasError = result.HasError, data = result.Data });
-    //}
-
-    [HttpGet("types")]
-    public async Task<IActionResult> GetLeaveTypes()
-    {
-        Response<List<LeaveTypeDto>> result = await _leaveService.GetLeaveTypesAsync();
-        if (result.HasError)
-            return BadRequest(new { hasError = result.HasError, errorMessage = result.ErrorMessage });
-
-        return Ok(new { hasError = result.HasError, data = result.Data });
-    }
-
-    [HttpGet("types/{id:int}")]
-    public async Task<IActionResult> GetLeaveType([FromRoute] int id)
-    {
-        Response<LeaveTypeDto> result = await _leaveService.GetLeaveTypeAsync(id);
-        if (result.HasError)
-            return NotFound(new { hasError = result.HasError, errorMessage = result.ErrorMessage });
-
-        return Ok(new { hasError = result.HasError, data = result.Data });
-    }
-
-    //[HttpDelete("types/{id:int}")]
-    //public async Task<IActionResult> DeleteLeaveType([FromRoute] int id)
-    //{
-    //    Response<bool> result = await _leaveService.DeleteLeaveTypeAsync(id);
-    //    if (result.HasError)
-    //        return BadRequest(new { hasError = result.HasError, errorMessage = result.ErrorMessage });
-
-    //    return Ok(new { hasError = result.HasError, data = result.Data });
-    //}
+    
 
     // ========================= Balances =========================
 

@@ -1,4 +1,4 @@
-﻿namespace HRManagementSystem.Application.Services.LeaveService;
+﻿namespace HRManagementSystem.Application.Services.LeaveServices;
 public class LeaveRequestService(ILeaveRequestRepository _LeaveRequestRepository, IEmployeeService _employeeService, IDepartmentService _departmentService, ILeaveApprovalRepository _leaveApprovalRepository,IMapper _mapper) :ILeaveRequestService
 {
     public async Task<Response<LeaveRequestDto>> CreateLeaveRequestAsync(CreateLeaveRequestDto createLeaveRequestDto, CancellationToken cancellationToken = default){
@@ -157,7 +157,7 @@ public class LeaveRequestService(ILeaveRequestRepository _LeaveRequestRepository
         catch (Exception ex)
         {
             // Log the exception (ex) as needed
-            return new Response<bool>(false, $"Error occurred while deleting the LeaveRequest: {ex.Message}", true);
+            return new Response<bool>(false, $"Error occurred while updating the LeaveRequest: {ex.Message}", true);
         }
     }
 

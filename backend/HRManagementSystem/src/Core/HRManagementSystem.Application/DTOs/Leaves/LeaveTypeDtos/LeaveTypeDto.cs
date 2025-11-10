@@ -13,4 +13,5 @@ public class LeaveTypeDto
     public int MaxDays { get; set; }
     public bool CanCarryForward { get; set; }
     public int? CarryForwardLimit { get; set; }
+    public bool IsPaid { get; set; } = true;
 }
