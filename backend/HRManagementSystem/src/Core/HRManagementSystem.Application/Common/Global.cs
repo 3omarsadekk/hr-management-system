@@ -19,7 +19,7 @@ global using HRManagementSystem.Domain.Enums;
 global using HRManagementSystem.Domain.Interfaces.LeaveRepository;
 global using HRManagementSystem.Application.Mappings;
 global using HRManagementSystem.Application.Services.LeaveServices;
-
+global using HRManagementSystem.Application.DTOs.Leaves.LeaveBalanceDtos;
 
 
 

@@ -1,0 +1,106 @@
+﻿
+
+namespace HRManagementSystem.Application.Services.LeaveServices;
+public class LeaveBalanceService(
+    IEmployeeLeaveBalanceRepository _leaveBalanceRepository,
+    ILeaveTypeRepository _leaveTypeRepository,
+    IEmployeeService _employeeService,
+    IMapper _mapper) : ILeaveBalanceService
+{
+
+    // ✅ Get leave balances for one employee
+    public async Task<Response<IEnumerable<LeaveBalanceDto>>> GetByEmployeeIdAsync(int employeeId, CancellationToken cancellationToken = default)
+    {
+        var balances = await _leaveBalanceRepository.GetByEmployeeIdAsync(employeeId, cancellationToken);
+        var dtos = _mapper.Map<IEnumerable<LeaveBalanceDto>>(balances);
+        return new Response<IEnumerable<LeaveBalanceDto>>(dtos, null, false);
+    }
+    // ✅ Get leave balances for one employee With year
+    public async Task<Response<IEnumerable<LeaveBalanceDto>>> GetByEmployeeIdAndYearAsync(int employeeId, int year, CancellationToken cancellationToken = default)
+    {
+        var balances = await _leaveBalanceRepository.GetByEmployeeIdAndYearAsync(employeeId, year, cancellationToken);
+        var dtos = _mapper.Map<IEnumerable<LeaveBalanceDto>>(balances);
+        return new Response<IEnumerable<LeaveBalanceDto>>(dtos, null, false);
+    }
+
+    // ✅ Allocate balances for all leave types to a specific employee (used at hire or new year)
+    public async Task<Response<bool>> AllocateInitialBalancesAsync(int employeeId, CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var employee = await _employeeService.GetEmployeeByIdAsync(employeeId, cancellationToken);
+            if (employee.HasError == true)
+                return new Response<bool>(false, "Employee not found", true);
+
+            var yearsOfService = (int)((DateTime.UtcNow - employee.Data.HireDate).TotalDays / 365);
+
+            var leaveTypes = await _leaveTypeRepository.GetAllAsync(cancellationToken);
+
+            foreach (var type in leaveTypes)
+            {
+                var existing = await _leaveBalanceRepository.GetByEmployeeAndTypeAndYearAsync(employeeId, type.Id, DateTime.UtcNow.Year, cancellationToken);
+                if (existing != null)
+                    continue;
+
+                var totalDays = type.MaxDays;
+
+                // 🔹 Adjust annual leave based on years of service
+                if (type.Name.Equals("Annual Leave", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (yearsOfService < 5)
+                        totalDays = 21;
+                    else if (yearsOfService < 10)
+                        totalDays = 25;
+                    else
+                        totalDays = 30;
+                }
+
+                var balance = new EmployeeLeaveBalance
+                {
+                    EmployeeId = employeeId,
+                    LeaveTypeId = type.Id,
+                    TotalAllocated = totalDays,
+                    UsedDays = 0,
+                    RemainingDays=totalDays,
+                    Year = DateTime.UtcNow.Year
+                };
+
+                await _leaveBalanceRepository.AddAsync(balance, cancellationToken);
+            }
+
+            return new Response<bool>(true, null, false);
+        }
+        catch (Exception ex)
+        {
+            return new Response<bool>(false, $"Failed to allocate balances: {ex.Message}", true);
+        }
+    }
+
+    // ✅ Deduct leave days after an approved request
+    public async Task<Response<bool>> DeductLeaveDaysAsync(int employeeId, int leaveTypeId, int leaveDays, CancellationToken cancellationToken = default)
+    {
+        var balance = await _leaveBalanceRepository.GetByEmployeeAndTypeAndYearAsync(employeeId, leaveTypeId, DateTime.UtcNow.Year, cancellationToken);
+        if (balance == null)
+            return new Response<bool>(false, "Leave balance not found", true);
+
+        if (balance.RemainingDays - balance.UsedDays < leaveDays)
+            return new Response<bool>(false, "Not enough balance", true);
+
+        balance.UsedDays += leaveDays;
+        balance.RemainingDays-= leaveDays;
+        await _leaveBalanceRepository.UpdateAsync(balance, cancellationToken);
+        return new Response<bool>(true, null, false);
+    }
+
+    // ✅ Allocate balances for all employees (e.g., at the start of each year)
+    public async Task<Response<bool>> AllocateBalancesForNewYearAsync(CancellationToken cancellationToken = default)
+    {
+        var response = await _employeeService.GetAllEmployeesAsync(cancellationToken);
+        var employees = response.Data;
+        foreach (var emp in employees)
+        {
+            await AllocateInitialBalancesAsync(emp.Id, cancellationToken);
+        }
+        return new Response<bool>(true, "All employee balances updated for the new year", false);
+    }
+}

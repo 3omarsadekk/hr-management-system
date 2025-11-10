@@ -34,169 +34,108 @@ namespace HRManagementSystem.Application.Servicess;
             _mapper = mapper;
         }
 
-        // ========================= Balances =========================
-
-        public async Task<Response<EmployeeLeaveBalanceDto>> GetEmployeeLeaveBalanceAsync(int employeeId, int leaveTypeId, int year)
-        {
-            try
-            {
-                IEnumerable<EmployeeLeaveBalance> list = await _leaveBalanceRepo.GetByEmployeeIdAndYearAsync(employeeId, year);
-                EmployeeLeaveBalance? bal = list.FirstOrDefault(b => b.LeaveTypeId == leaveTypeId);
-
-                if (bal is null)
-                    return new Response<EmployeeLeaveBalanceDto>(null, "Balance not found", true);
-
-                EmployeeLeaveBalanceDto dto = _mapper.Map<EmployeeLeaveBalanceDto>(bal);
-                return new Response<EmployeeLeaveBalanceDto>(dto, null, false);
-            }
-            catch (Exception ex)
-            {
-                return new Response<EmployeeLeaveBalanceDto>(null, $"Failed to get balance: {ex.Message}", true);
-            }
-        }
-        
-         public async Task<Response<int>> AllocateAnnualBalancesAsync(int year)
-        {
-            try
-            {
-                List<LeaveType> leaveTypes = (await _leaveTypeRepo.GetAllAsync()).ToList();
-            //ToList
-                List<Employee> employees = (await _employeeRepo.GetAllAsync()).ToList();
-
-                int created = 0;
-
-                foreach (var emp in employees)
-                {
-                    var empYearBalances = (await _leaveBalanceRepo.GetByEmployeeIdAndYearAsync(emp.Id, year)).ToList();
-
-                    foreach (var lt in leaveTypes)
-                    {
-                        bool exists = empYearBalances.Any(x => x.LeaveTypeId == lt.Id);
-                        if (!exists)
-                        {
-                            await _leaveBalanceRepo.AddAsync(new EmployeeLeaveBalance
-                            {
-                                EmployeeId = emp.Id,
-                                LeaveTypeId = lt.Id,
-                                Year = year,
-                                TotalAllocated = lt.MaxDays,
-                                UsedDays = 0,
-                                RemainingDays = lt.MaxDays,
-                                LastUpdated = DateTime.UtcNow
-                            });
-                            created++;
-                        }
-                    }
-                }
-
-                return new Response<int>(created, null, false);
-            }
-            catch (Exception ex)
-            {
-                return new Response<int>(0, $"Failed to allocate balances: {ex.Message}", true);
-            }
-        }
+      
 
 
-        // ========================= Approvals =========================
+        //// ========================= Approvals =========================
 
-        public async Task<Response<bool>> ApproveAsync(LeaveApprovalActionDto dto)
-        {
-            try
-            {
-            List<LeaveApproval> allSteps = (await _leaveApprovalRepo.GetAllAsync())
-                               .Where(a => a.LeaveRequestId == dto.LeaveRequestId)
-                               .ToList();
+        //public async Task<Response<bool>> ApproveAsync(LeaveApprovalActionDto dto)
+        //{
+        //    try
+        //    {
+        //    List<LeaveApproval> allSteps = (await _leaveApprovalRepo.GetAllAsync())
+        //                       .Where(a => a.LeaveRequestId == dto.LeaveRequestId)
+        //                       .ToList();
 
-            LeaveApproval? approval = allSteps.FirstOrDefault(a =>
-                    a.LeaveRequestId == dto.LeaveRequestId &&
-                    a.ApproverId == dto.ApproverId &&
-                    a.Level == dto.Level &&
-                    a.ActionDate == null);
+        //    LeaveApproval? approval = allSteps.FirstOrDefault(a =>
+        //            a.LeaveRequestId == dto.LeaveRequestId &&
+        //            a.ApproverId == dto.ApproverId &&
+        //            a.Level == dto.Level &&
+        //            a.ActionDate == null);
 
-                if (approval is null)
-                    return new Response<bool>(false, "Approval step not found or already processed", true);
+        //        if (approval is null)
+        //            return new Response<bool>(false, "Approval step not found or already processed", true);
 
-                approval.ActionDate = DateTime.UtcNow;
-                await _leaveApprovalRepo.UpdateAsync(approval);
+        //        approval.ActionDate = DateTime.UtcNow;
+        //        await _leaveApprovalRepo.UpdateAsync(approval);
 
-            bool stillPending = allSteps.Any(a => a.ActionDate == null);
-                if (stillPending)
-                    return new Response<bool>(true, null, false); 
+        //    bool stillPending = allSteps.Any(a => a.ActionDate == null);
+        //        if (stillPending)
+        //            return new Response<bool>(true, null, false); 
 
-            LeaveRequest? req = await _leaveRequestRepo.GetByIdAsync(dto.LeaveRequestId);
-                if (req is null)
-                    return new Response<bool>(false, "Leave request not found", true);
+        //    LeaveRequest? req = await _leaveRequestRepo.GetByIdAsync(dto.LeaveRequestId);
+        //        if (req is null)
+        //            return new Response<bool>(false, "Leave request not found", true);
 
-            List<EmployeeLeaveBalance> balances = (await _leaveBalanceRepo.GetByEmployeeIdAndYearAsync(req.EmployeeId, req.StartDate.Year)).ToList();
-            EmployeeLeaveBalance? bal = balances.FirstOrDefault(b => b.LeaveTypeId == req.LeaveTypeId);
-                if (bal is null)
-                    return new Response<bool>(false, "Balance not found for employee/year", true);
+        //    List<EmployeeLeaveBalance> balances = (await _leaveBalanceRepo.GetByEmployeeIdAndYearAsync(req.EmployeeId, req.StartDate.Year)).ToList();
+        //    EmployeeLeaveBalance? bal = balances.FirstOrDefault(b => b.LeaveTypeId == req.LeaveTypeId);
+        //        if (bal is null)
+        //            return new Response<bool>(false, "Balance not found for employee/year", true);
 
-                if (bal.RemainingDays < req.TotalDays)
-                    return new Response<bool>(false, "Insufficient leave balance", true);
+        //        if (bal.RemainingDays < req.TotalDays)
+        //            return new Response<bool>(false, "Insufficient leave balance", true);
 
-                bal.UsedDays += req.TotalDays;
-                bal.RemainingDays -= req.TotalDays;
-                bal.LastUpdated = DateTime.UtcNow;
+        //        bal.UsedDays += req.TotalDays;
+        //        bal.RemainingDays -= req.TotalDays;
+        //        bal.LastUpdated = DateTime.UtcNow;
 
-                req.Status = LeaveStatus.Approved;
-                req.ReviewedAt = DateTime.UtcNow;
-                req.ReviewedById = dto.ApproverId;
+        //        req.Status = LeaveStatus.Approved;
+        //        req.ReviewedAt = DateTime.UtcNow;
+        //        req.ReviewedById = dto.ApproverId;
 
-                await _leaveBalanceRepo.UpdateAsync(bal);
-                await _leaveRequestRepo.UpdateAsync(req);
+        //        await _leaveBalanceRepo.UpdateAsync(bal);
+        //        await _leaveRequestRepo.UpdateAsync(req);
 
-                return new Response<bool>(true, null, false);
-            }
-            catch (Exception ex)
-            {
-                return new Response<bool>(false, $"Failed to approve: {ex.Message}", true);
-            }
-        }
+        //        return new Response<bool>(true, null, false);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new Response<bool>(false, $"Failed to approve: {ex.Message}", true);
+        //    }
+        //}
 
-        public async Task<Response<bool>> RejectAsync(LeaveApprovalActionDto dto)
-        {
-            try
-            {
-            List<LeaveApproval> allSteps = (await _leaveApprovalRepo.GetAllAsync())
-                               .Where(a => a.LeaveRequestId == dto.LeaveRequestId)
-                               .ToList();
+        //public async Task<Response<bool>> RejectAsync(LeaveApprovalActionDto dto)
+        //{
+        //    try
+        //    {
+        //    List<LeaveApproval> allSteps = (await _leaveApprovalRepo.GetAllAsync())
+        //                       .Where(a => a.LeaveRequestId == dto.LeaveRequestId)
+        //                       .ToList();
 
-            LeaveApproval? approval = allSteps.FirstOrDefault(a =>
-                    a.LeaveRequestId == dto.LeaveRequestId &&
-                    a.ApproverId == dto.ApproverId &&
-                    a.Level == dto.Level &&
-                    a.ActionDate == null);
+        //    LeaveApproval? approval = allSteps.FirstOrDefault(a =>
+        //            a.LeaveRequestId == dto.LeaveRequestId &&
+        //            a.ApproverId == dto.ApproverId &&
+        //            a.Level == dto.Level &&
+        //            a.ActionDate == null);
 
-                if (approval is null)
-                    return new Response<bool>(false, "Approval step not found or already processed", true);
+        //        if (approval is null)
+        //            return new Response<bool>(false, "Approval step not found or already processed", true);
 
-                approval.ActionDate = DateTime.UtcNow;
-                await _leaveApprovalRepo.UpdateAsync(approval);
+        //        approval.ActionDate = DateTime.UtcNow;
+        //        await _leaveApprovalRepo.UpdateAsync(approval);
 
-                var req = await _leaveRequestRepo.GetByIdAsync(dto.LeaveRequestId);
-                if (req is null)
-                    return new Response<bool>(false, "Leave request not found", true);
+        //        var req = await _leaveRequestRepo.GetByIdAsync(dto.LeaveRequestId);
+        //        if (req is null)
+        //            return new Response<bool>(false, "Leave request not found", true);
 
-                req.Status = LeaveStatus.Rejected;
-                req.ReviewedAt = DateTime.UtcNow;
-                req.ReviewedById = dto.ApproverId;
+        //        req.Status = LeaveStatus.Rejected;
+        //        req.ReviewedAt = DateTime.UtcNow;
+        //        req.ReviewedById = dto.ApproverId;
 
-                await _leaveRequestRepo.UpdateAsync(req);
+        //        await _leaveRequestRepo.UpdateAsync(req);
 
-                foreach (var step in allSteps.Where(a => a.ActionDate == null))
-                {
-                    step.ActionDate = DateTime.UtcNow;
-                    await _leaveApprovalRepo.UpdateAsync(step);
-                }
+        //        foreach (var step in allSteps.Where(a => a.ActionDate == null))
+        //        {
+        //            step.ActionDate = DateTime.UtcNow;
+        //            await _leaveApprovalRepo.UpdateAsync(step);
+        //        }
 
-                return new Response<bool>(true, null, false);
-            }
-            catch (Exception ex)
-            {
-                return new Response<bool>(false, $"Failed to reject: {ex.Message}", true);
-            }
-        }
+        //        return new Response<bool>(true, null, false);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new Response<bool>(false, $"Failed to reject: {ex.Message}", true);
+        //    }
+        //}
 
 }

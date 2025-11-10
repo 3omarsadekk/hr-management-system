@@ -27,6 +27,10 @@ public class MappingHelper:Profile
         //Leave Request
         CreateMap<LeaveRequest, LeaveRequestDto>().ReverseMap();
         CreateMap<LeaveRequest, UpdateLeaveRequestDto>().ReverseMap();
+        CreateMap<LeaveBalanceDto, EmployeeLeaveBalance>().ReverseMap();
+
+
+
 
     }
 }

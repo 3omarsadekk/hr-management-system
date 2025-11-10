@@ -14,6 +14,8 @@ public static class DependencyInjection
 
         services.AddScoped<ILeaveRequestService, LeaveRequestService>();
         services.AddScoped<ILeaveTypeService, LeaveTypeService>();
+        services.AddScoped<ILeaveBalanceService, LeaveBalanceService>();
+
         // services.AddScoped<ILeaveService, LeaveService>();
         services.AddAutoMapper(x => x.AddProfile(new MappingHelper()));
         services.AddAutoMapper(x => x.AddProfile(new LeaveProfile()));
