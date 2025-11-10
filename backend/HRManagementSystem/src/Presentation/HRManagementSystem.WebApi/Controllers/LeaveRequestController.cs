@@ -39,7 +39,7 @@ public class LeaveRequestController(ILeaveRequestService _leaveRequestService) :
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateLeaveRequest(int id, UpdateLeaveRequestDto updateLeaveRequestDto, CancellationToken cancellationToken)
     {
-        Response<bool> response = await _leaveRequestService.UpdateLeaveRequestAsync(id, updateLeaveRequestDto, cancellationToken);
+        Response<bool> response = await _leaveRequestService.UpdateLeaveRequestAsync(id, updateLeaveRequestDto, 0,cancellationToken);
         if (response.HasError)
         {
             return BadRequest(new { hasError = response.HasError, errorMessage = response.ErrorMessage });

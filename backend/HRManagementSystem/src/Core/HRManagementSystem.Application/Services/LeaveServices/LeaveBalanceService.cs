@@ -83,7 +83,7 @@ public class LeaveBalanceService(
         if (balance == null)
             return new Response<bool>(false, "Leave balance not found", true);
 
-        if (balance.RemainingDays - balance.UsedDays < leaveDays)
+        if (balance.TotalAllocated - balance.UsedDays < leaveDays)
             return new Response<bool>(false, "Not enough balance", true);
 
         balance.UsedDays += leaveDays;

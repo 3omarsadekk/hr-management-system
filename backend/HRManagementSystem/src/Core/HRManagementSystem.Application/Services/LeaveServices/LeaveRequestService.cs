@@ -7,7 +7,7 @@ public class LeaveRequestService(ILeaveRequestRepository _LeaveRequestRepository
             DateTime start = createLeaveRequestDto.StartDate.Date;
             DateTime end = createLeaveRequestDto.EndDate.Date;
 
-            var temp = await CanCreateOrUpdate(createLeaveRequestDto.EmployeeId, start, end, cancellationToken);
+            var temp = await CanCreateOrUpdate(createLeaveRequestDto.EmployeeId, -1, start, end, cancellationToken);
 
             if (temp.HasError)
                 return temp;
@@ -116,7 +116,7 @@ public class LeaveRequestService(ILeaveRequestRepository _LeaveRequestRepository
             return new Response<IEnumerable<LeaveRequestDto>>(null, $"Failed to load requests: {ex.Message}", true);
         }
     }
-    public async Task<Response<bool>> UpdateLeaveRequestAsync(int id, UpdateLeaveRequestDto updateLeaveRequestDto, CancellationToken cancellationToken = default)
+    public async Task<Response<bool>> UpdateLeaveRequestAsync(int id, UpdateLeaveRequestDto updateLeaveRequestDto, int flag = 0, CancellationToken cancellationToken = default)
     {
         try
         {
@@ -126,7 +126,7 @@ public class LeaveRequestService(ILeaveRequestRepository _LeaveRequestRepository
                 return new Response<bool>(false, "LeaveRequest not found.", true);
             }
 
-            if (LeaveRequest.Status != Domain.Enums.LeaveStatus.Pending)
+            if (LeaveRequest.Status != LeaveStatus.Pending)
             {
                 return new Response<bool>(false, "Cannot update LeaveRequest, It already reviewed", true);
             }
@@ -134,7 +134,7 @@ public class LeaveRequestService(ILeaveRequestRepository _LeaveRequestRepository
             DateTime start = updateLeaveRequestDto.StartDate.Date;
             DateTime end = updateLeaveRequestDto.EndDate.Date;
 
-            var temp = await CanCreateOrUpdate(updateLeaveRequestDto.EmployeeId, start, end, cancellationToken);
+            var temp = await CanCreateOrUpdate(updateLeaveRequestDto.EmployeeId, id,start, end, cancellationToken);
 
             if (temp.HasError)
                 return new Response<bool>(false,temp.ErrorMessage, true);
@@ -144,10 +144,14 @@ public class LeaveRequestService(ILeaveRequestRepository _LeaveRequestRepository
             var emp = await _employeeService.GetEmployeeByIdAsync(updateLeaveRequestDto.EmployeeId, cancellationToken);
             var dept = await _departmentService.GetDepartmentByIdAsync(emp.Data.DeptId);
             LeaveRequest.ReviewedById = dept.Data.ManagerId;
-
+            if (flag > 0)
+            {
+                LeaveRequest.Status = (LeaveStatus)flag;
+                LeaveRequest.ReviewedAt= DateTime.UtcNow;
+            }
             await _LeaveRequestRepository.UpdateAsync(LeaveRequest, cancellationToken);
 
-            LeaveApproval approval = await _leaveApprovalRepository.GetByLeaveRequestIdAsync(LeaveRequest.Id);
+            LeaveApproval approval = await _leaveApprovalRepository.GetByLeaveRequestIdAsync(LeaveRequest.Id,cancellationToken);
             approval.ApproverId = (int)LeaveRequest.ReviewedById;
             await _leaveApprovalRepository.UpdateAsync(approval);
 
@@ -164,7 +168,7 @@ public class LeaveRequestService(ILeaveRequestRepository _LeaveRequestRepository
 
     // ========================= Utilities =========================
 
-    public async Task<Response<bool>> HasOverlapAsync(int employeeId, DateTime start, DateTime end)
+    public async Task<Response<bool>> HasOverlapAsync(int employeeId, DateTime start, DateTime end, int requestId)
     {
         try
         {
@@ -174,7 +178,7 @@ public class LeaveRequestService(ILeaveRequestRepository _LeaveRequestRepository
 
             bool overlapped = all.Any(r =>
                     r.Status != LeaveStatus.Approved &&
-                    r.StartDate <= e && r.EndDate >= s);
+                    r.StartDate <= e && r.EndDate >= s && r.Id !=requestId);
 
             return new Response<bool>(overlapped, null, false);
         }
@@ -183,7 +187,7 @@ public class LeaveRequestService(ILeaveRequestRepository _LeaveRequestRepository
             return new Response<bool>(false, $"Failed to check overlap: {ex.Message}", true);
         }
     }
-    private async Task<Response<LeaveRequestDto>> CanCreateOrUpdate(int employeeId , DateTime start, DateTime end, CancellationToken cancellationToken = default)
+    private async Task<Response<LeaveRequestDto>> CanCreateOrUpdate(int employeeId , int requestId,DateTime start, DateTime end, CancellationToken cancellationToken = default)
     {
         var emp = await _employeeService.GetEmployeeByIdAsync(employeeId, cancellationToken);
         if (emp.HasError)
@@ -192,7 +196,7 @@ public class LeaveRequestService(ILeaveRequestRepository _LeaveRequestRepository
         if (start > end)
             return new Response<LeaveRequestDto>(default!, "Start date cannot be after end date.", true);
 
-        Response<bool> overlap = await HasOverlapAsync(employeeId, start, end);
+        Response<bool> overlap = await HasOverlapAsync(employeeId, start, end, requestId);
         if (overlap.Data == true && !overlap.HasError)
             return new Response<LeaveRequestDto>(default!, "Overlapping leave request exists.", true);
         if (overlap.HasError)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HRManagementSystem.Application.DTOs.Leaves;
+using HRManagementSystem.Application.DTOs.Leaves.LeaveApprovalDtos;
 using HRManagementSystem.Application.DTOs.Leaves.LeaveRequestDtos;
 using HRManagementSystem.Application.DTOs.Leaves.LeaveTypeDtos;
 
