@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251109174856_UpdateLeaveTypeEntity_SeedLeaveTypes")]
-    partial class UpdateLeaveTypeEntity_SeedLeaveTypes
+    [Migration("20251110233427_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -202,6 +202,58 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     b.ToTable("EmployeeLeaveBalances", (string)null);
                 });
 
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.JobPosting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ClosingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int>("DesignationId")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime>("PostedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Requirements")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("DesignationId");
+
+                    b.ToTable("JobPostings", (string)null);
+                });
+
             modelBuilder.Entity("HRManagementSystem.Domain.Entities.LeaveApproval", b =>
                 {
                     b.Property<int>("Id")
@@ -334,7 +386,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                             Id = 1,
                             CanCarryForward = true,
                             CarryForwardLimit = 5,
-                            CreatedAt = new DateTime(2025, 11, 9, 19, 48, 55, 436, DateTimeKind.Local).AddTicks(3323),
+                            CreatedAt = new DateTime(2025, 11, 11, 1, 34, 26, 461, DateTimeKind.Local).AddTicks(2191),
                             Description = "Annual paid leave after completing the first year of work",
                             IsPaid = true,
                             MaxDays = 15,
@@ -344,7 +396,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 2,
                             CanCarryForward = false,
-                            CreatedAt = new DateTime(2025, 11, 9, 19, 48, 55, 436, DateTimeKind.Local).AddTicks(3389),
+                            CreatedAt = new DateTime(2025, 11, 11, 1, 34, 26, 461, DateTimeKind.Local).AddTicks(2282),
                             Description = "Medical leave based on a valid medical certificate",
                             IsPaid = true,
                             MaxDays = 30,
@@ -354,7 +406,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 3,
                             CanCarryForward = false,
-                            CreatedAt = new DateTime(2025, 11, 9, 19, 48, 55, 436, DateTimeKind.Local).AddTicks(3396),
+                            CreatedAt = new DateTime(2025, 11, 11, 1, 34, 26, 461, DateTimeKind.Local).AddTicks(2305),
                             Description = "Maternity leave for female employees, 90 days paid",
                             IsPaid = true,
                             MaxDays = 90,
@@ -364,7 +416,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 4,
                             CanCarryForward = false,
-                            CreatedAt = new DateTime(2025, 11, 9, 19, 48, 55, 436, DateTimeKind.Local).AddTicks(3401),
+                            CreatedAt = new DateTime(2025, 11, 11, 1, 34, 26, 461, DateTimeKind.Local).AddTicks(2324),
                             Description = "Short paid leave for new fathers as per company policy",
                             IsPaid = true,
                             MaxDays = 3,
@@ -374,7 +426,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 5,
                             CanCarryForward = false,
-                            CreatedAt = new DateTime(2025, 11, 9, 19, 48, 55, 436, DateTimeKind.Local).AddTicks(3407),
+                            CreatedAt = new DateTime(2025, 11, 11, 1, 34, 26, 461, DateTimeKind.Local).AddTicks(2348),
                             Description = "Leave without pay subject to management approval",
                             IsPaid = false,
                             MaxDays = 30,
@@ -384,7 +436,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 6,
                             CanCarryForward = false,
-                            CreatedAt = new DateTime(2025, 11, 9, 19, 48, 55, 436, DateTimeKind.Local).AddTicks(3412),
+                            CreatedAt = new DateTime(2025, 11, 11, 1, 34, 26, 461, DateTimeKind.Local).AddTicks(2372),
                             Description = "Leave for emergencies (death of a relative, special circumstances)",
                             IsPaid = true,
                             MaxDays = 5,
@@ -394,7 +446,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 7,
                             CanCarryForward = false,
-                            CreatedAt = new DateTime(2025, 11, 9, 19, 48, 55, 436, DateTimeKind.Local).AddTicks(3417),
+                            CreatedAt = new DateTime(2025, 11, 11, 1, 34, 26, 461, DateTimeKind.Local).AddTicks(2391),
                             Description = "Hajj leave for Muslims, 10 days paid, once in a lifetime",
                             IsPaid = true,
                             MaxDays = 10,
@@ -639,6 +691,25 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     b.Navigation("Employee");
 
                     b.Navigation("LeaveType");
+                });
+
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.JobPosting", b =>
+                {
+                    b.HasOne("HRManagementSystem.Domain.Entities.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HRManagementSystem.Domain.Entities.Designation", "Designation")
+                        .WithMany()
+                        .HasForeignKey("DesignationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Designation");
                 });
 
             modelBuilder.Entity("HRManagementSystem.Domain.Entities.LeaveApproval", b =>

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251106151531_AddLeavesEntities")]
-    partial class AddLeavesEntities
+    [Migration("20251111082125_AddCandidateAndJobApplication")]
+    partial class AddCandidateAndJobApplication
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,111 @@ namespace HRManagementSystem.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.Candidate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("AvailableFrom")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Certifications")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ConvertedToEmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CurrentCompany")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CurrentJobTitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("CurrentSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Education")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("ExpectedSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LinkedInUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NoticePeriodDays")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PortfolioUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PostalCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PreferredWorkLocation")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ResumeUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Skills")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("WillingToRelocate")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("YearsOfExperience")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConvertedToEmployeeId");
+
+                    b.ToTable("Candidates");
+                });
 
             modelBuilder.Entity("HRManagementSystem.Domain.Entities.Department", b =>
                 {
@@ -202,6 +307,139 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     b.ToTable("EmployeeLeaveBalances", (string)null);
                 });
 
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.JobApplication", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("ApplicationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("AssignedRecruiterId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CandidateId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CoverLetter")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("CurrentStage")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("ExpectedSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("InterviewDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InterviewFeedback")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("InterviewRating")
+                        .HasColumnType("int");
+
+                    b.Property<int>("JobPostingId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("OfferedSalary")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("RejectionReason")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ReviewedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ReviewedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ReviewerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Source")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssignedRecruiterId");
+
+                    b.HasIndex("CandidateId");
+
+                    b.HasIndex("JobPostingId");
+
+                    b.HasIndex("ReviewerId");
+
+                    b.ToTable("JobApplications");
+                });
+
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.JobPosting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ClosingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartmentId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<int>("DesignationId")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime>("PostedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Requirements")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.HasIndex("DesignationId");
+
+                    b.ToTable("JobPostings", (string)null);
+                });
+
             modelBuilder.Entity("HRManagementSystem.Domain.Entities.LeaveApproval", b =>
                 {
                     b.Property<int>("Id")
@@ -219,11 +457,15 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     b.Property<int>("LeaveRequestId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id");
 
@@ -263,8 +505,10 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("TotalDays")
                         .HasColumnType("int");
@@ -300,12 +544,12 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
 
                     b.Property<int>("MaxDays")
                         .HasColumnType("int");
@@ -321,6 +565,79 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("LeaveTypes", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CanCarryForward = true,
+                            CarryForwardLimit = 5,
+                            CreatedAt = new DateTime(2025, 11, 11, 10, 21, 23, 820, DateTimeKind.Local).AddTicks(2972),
+                            Description = "Annual paid leave after completing the first year of work",
+                            IsPaid = true,
+                            MaxDays = 15,
+                            Name = "Annual Leave"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CanCarryForward = false,
+                            CreatedAt = new DateTime(2025, 11, 11, 10, 21, 23, 820, DateTimeKind.Local).AddTicks(3071),
+                            Description = "Medical leave based on a valid medical certificate",
+                            IsPaid = true,
+                            MaxDays = 30,
+                            Name = "Sick Leave"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CanCarryForward = false,
+                            CreatedAt = new DateTime(2025, 11, 11, 10, 21, 23, 820, DateTimeKind.Local).AddTicks(3085),
+                            Description = "Maternity leave for female employees, 90 days paid",
+                            IsPaid = true,
+                            MaxDays = 90,
+                            Name = "Maternity Leave"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CanCarryForward = false,
+                            CreatedAt = new DateTime(2025, 11, 11, 10, 21, 23, 820, DateTimeKind.Local).AddTicks(3109),
+                            Description = "Short paid leave for new fathers as per company policy",
+                            IsPaid = true,
+                            MaxDays = 3,
+                            Name = "Paternity Leave"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CanCarryForward = false,
+                            CreatedAt = new DateTime(2025, 11, 11, 10, 21, 23, 820, DateTimeKind.Local).AddTicks(3133),
+                            Description = "Leave without pay subject to management approval",
+                            IsPaid = false,
+                            MaxDays = 30,
+                            Name = "Unpaid Leave"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CanCarryForward = false,
+                            CreatedAt = new DateTime(2025, 11, 11, 10, 21, 23, 820, DateTimeKind.Local).AddTicks(3153),
+                            Description = "Leave for emergencies (death of a relative, special circumstances)",
+                            IsPaid = true,
+                            MaxDays = 5,
+                            Name = "Emergency Leave"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CanCarryForward = false,
+                            CreatedAt = new DateTime(2025, 11, 11, 10, 21, 23, 820, DateTimeKind.Local).AddTicks(3195),
+                            Description = "Hajj leave for Muslims, 10 days paid, once in a lifetime",
+                            IsPaid = true,
+                            MaxDays = 10,
+                            Name = "Hajj Leave"
+                        });
                 });
 
             modelBuilder.Entity("HRManagementSystem.Infrastructure.Identity.ApplicationRole", b =>
@@ -526,6 +843,15 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.Candidate", b =>
+                {
+                    b.HasOne("HRManagementSystem.Domain.Entities.Employee", "ConvertedToEmployee")
+                        .WithMany()
+                        .HasForeignKey("ConvertedToEmployeeId");
+
+                    b.Navigation("ConvertedToEmployee");
+                });
+
             modelBuilder.Entity("HRManagementSystem.Domain.Entities.Employee", b =>
                 {
                     b.HasOne("HRManagementSystem.Domain.Entities.Department", "Department")
@@ -560,6 +886,56 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     b.Navigation("Employee");
 
                     b.Navigation("LeaveType");
+                });
+
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.JobApplication", b =>
+                {
+                    b.HasOne("HRManagementSystem.Domain.Entities.Employee", "AssignedRecruiter")
+                        .WithMany()
+                        .HasForeignKey("AssignedRecruiterId");
+
+                    b.HasOne("HRManagementSystem.Domain.Entities.Candidate", "Candidate")
+                        .WithMany("JobApplications")
+                        .HasForeignKey("CandidateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HRManagementSystem.Domain.Entities.JobPosting", "JobPosting")
+                        .WithMany("JobApplications")
+                        .HasForeignKey("JobPostingId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HRManagementSystem.Domain.Entities.Employee", "Reviewer")
+                        .WithMany()
+                        .HasForeignKey("ReviewerId");
+
+                    b.Navigation("AssignedRecruiter");
+
+                    b.Navigation("Candidate");
+
+                    b.Navigation("JobPosting");
+
+                    b.Navigation("Reviewer");
+                });
+
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.JobPosting", b =>
+                {
+                    b.HasOne("HRManagementSystem.Domain.Entities.Department", "Department")
+                        .WithMany()
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HRManagementSystem.Domain.Entities.Designation", "Designation")
+                        .WithMany()
+                        .HasForeignKey("DesignationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("Designation");
                 });
 
             modelBuilder.Entity("HRManagementSystem.Domain.Entities.LeaveApproval", b =>
@@ -658,6 +1034,11 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.Candidate", b =>
+                {
+                    b.Navigation("JobApplications");
+                });
+
             modelBuilder.Entity("HRManagementSystem.Domain.Entities.Department", b =>
                 {
                     b.Navigation("Employees");
@@ -675,6 +1056,11 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     b.Navigation("LeaveBalances");
 
                     b.Navigation("LeaveRequests");
+                });
+
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.JobPosting", b =>
+                {
+                    b.Navigation("JobApplications");
                 });
 
             modelBuilder.Entity("HRManagementSystem.Domain.Entities.LeaveRequest", b =>
