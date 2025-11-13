@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HRManagementSystem.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -101,6 +101,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     CanCarryForward = table.Column<bool>(type: "bit", nullable: false),
                     CarryForwardLimit = table.Column<int>(type: "int", nullable: true),
                     IsPaid = table.Column<bool>(type: "bit", nullable: false),
+                    GenderRestriction = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -290,6 +291,52 @@ namespace HRManagementSystem.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Candidates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ResumeUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LinkedInUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PortfolioUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PostalCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Gender = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    YearsOfExperience = table.Column<int>(type: "int", nullable: true),
+                    CurrentCompany = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CurrentJobTitle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CurrentSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    ExpectedSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    Skills = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Education = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Certifications = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NoticePeriodDays = table.Column<int>(type: "int", nullable: true),
+                    AvailableFrom = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PreferredWorkLocation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WillingToRelocate = table.Column<bool>(type: "bit", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConvertedToEmployeeId = table.Column<int>(type: "int", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Candidates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Candidates_Employees_ConvertedToEmployeeId",
+                        column: x => x.ConvertedToEmployeeId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "EmployeeLeaveBalances",
                 columns: table => new
                 {
@@ -361,6 +408,60 @@ namespace HRManagementSystem.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "JobApplications",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CandidateId = table.Column<int>(type: "int", nullable: false),
+                    JobPostingId = table.Column<int>(type: "int", nullable: false),
+                    ApplicationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    Source = table.Column<int>(type: "int", nullable: false),
+                    CoverLetter = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReviewedBy = table.Column<int>(type: "int", nullable: true),
+                    ReviewedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    InterviewDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    InterviewFeedback = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    InterviewRating = table.Column<int>(type: "int", nullable: true),
+                    ExpectedSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    OfferedSalary = table.Column<decimal>(type: "decimal(18,2)", nullable: true),
+                    RejectionReason = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AssignedRecruiterId = table.Column<int>(type: "int", nullable: true),
+                    CurrentStage = table.Column<int>(type: "int", nullable: false),
+                    ReviewerId = table.Column<int>(type: "int", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_JobApplications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_JobApplications_Candidates_CandidateId",
+                        column: x => x.CandidateId,
+                        principalTable: "Candidates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_JobApplications_Employees_AssignedRecruiterId",
+                        column: x => x.AssignedRecruiterId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_JobApplications_Employees_ReviewerId",
+                        column: x => x.ReviewerId,
+                        principalTable: "Employees",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_JobApplications_JobPostings_JobPostingId",
+                        column: x => x.JobPostingId,
+                        principalTable: "JobPostings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LeaveApprovals",
                 columns: table => new
                 {
@@ -391,16 +492,16 @@ namespace HRManagementSystem.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "LeaveTypes",
-                columns: new[] { "Id", "CanCarryForward", "CarryForwardLimit", "CreatedAt", "Description", "IsPaid", "MaxDays", "Name", "UpdatedAt" },
+                columns: new[] { "Id", "CanCarryForward", "CarryForwardLimit", "CreatedAt", "Description", "GenderRestriction", "IsPaid", "MaxDays", "Name", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, true, 5, new DateTime(2025, 11, 11, 1, 34, 26, 461, DateTimeKind.Local).AddTicks(2191), "Annual paid leave after completing the first year of work", true, 15, "Annual Leave", null },
-                    { 2, false, null, new DateTime(2025, 11, 11, 1, 34, 26, 461, DateTimeKind.Local).AddTicks(2282), "Medical leave based on a valid medical certificate", true, 30, "Sick Leave", null },
-                    { 3, false, null, new DateTime(2025, 11, 11, 1, 34, 26, 461, DateTimeKind.Local).AddTicks(2305), "Maternity leave for female employees, 90 days paid", true, 90, "Maternity Leave", null },
-                    { 4, false, null, new DateTime(2025, 11, 11, 1, 34, 26, 461, DateTimeKind.Local).AddTicks(2324), "Short paid leave for new fathers as per company policy", true, 3, "Paternity Leave", null },
-                    { 5, false, null, new DateTime(2025, 11, 11, 1, 34, 26, 461, DateTimeKind.Local).AddTicks(2348), "Leave without pay subject to management approval", false, 30, "Unpaid Leave", null },
-                    { 6, false, null, new DateTime(2025, 11, 11, 1, 34, 26, 461, DateTimeKind.Local).AddTicks(2372), "Leave for emergencies (death of a relative, special circumstances)", true, 5, "Emergency Leave", null },
-                    { 7, false, null, new DateTime(2025, 11, 11, 1, 34, 26, 461, DateTimeKind.Local).AddTicks(2391), "Hajj leave for Muslims, 10 days paid, once in a lifetime", true, 10, "Hajj Leave", null }
+                    { 1, true, 5, new DateTime(2025, 11, 13, 15, 39, 1, 785, DateTimeKind.Local).AddTicks(280), "Annual paid leave after completing the first year of work", null, true, 15, "Annual Leave", null },
+                    { 2, false, null, new DateTime(2025, 11, 13, 15, 39, 1, 785, DateTimeKind.Local).AddTicks(332), "Medical leave based on a valid medical certificate", null, true, 30, "Sick Leave", null },
+                    { 3, false, null, new DateTime(2025, 11, 13, 15, 39, 1, 785, DateTimeKind.Local).AddTicks(336), "Maternity leave for female employees, 90 days paid", "Female", true, 90, "Maternity Leave", null },
+                    { 4, false, null, new DateTime(2025, 11, 13, 15, 39, 1, 785, DateTimeKind.Local).AddTicks(381), "Short paid leave for new fathers as per company policy", "Male", true, 3, "Paternity Leave", null },
+                    { 5, false, null, new DateTime(2025, 11, 13, 15, 39, 1, 785, DateTimeKind.Local).AddTicks(387), "Leave without pay subject to management approval", null, false, 30, "Unpaid Leave", null },
+                    { 6, false, null, new DateTime(2025, 11, 13, 15, 39, 1, 785, DateTimeKind.Local).AddTicks(391), "Leave for emergencies (death of a relative, special circumstances)", null, true, 5, "Emergency Leave", null },
+                    { 7, false, null, new DateTime(2025, 11, 13, 15, 39, 1, 785, DateTimeKind.Local).AddTicks(394), "Hajj leave for Muslims, 10 days paid, once in a lifetime", null, true, 10, "Hajj Leave", null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -443,6 +544,11 @@ namespace HRManagementSystem.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Candidates_ConvertedToEmployeeId",
+                table: "Candidates",
+                column: "ConvertedToEmployeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_EmployeeLeaveBalances_EmployeeId",
                 table: "EmployeeLeaveBalances",
                 column: "EmployeeId");
@@ -461,6 +567,26 @@ namespace HRManagementSystem.Infrastructure.Migrations
                 name: "IX_Employees_DesignationId",
                 table: "Employees",
                 column: "DesignationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobApplications_AssignedRecruiterId",
+                table: "JobApplications",
+                column: "AssignedRecruiterId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobApplications_CandidateId",
+                table: "JobApplications",
+                column: "CandidateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobApplications_JobPostingId",
+                table: "JobApplications",
+                column: "JobPostingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_JobApplications_ReviewerId",
+                table: "JobApplications",
+                column: "ReviewerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobPostings_DepartmentId",
@@ -520,7 +646,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                 name: "EmployeeLeaveBalances");
 
             migrationBuilder.DropTable(
-                name: "JobPostings");
+                name: "JobApplications");
 
             migrationBuilder.DropTable(
                 name: "LeaveApprovals");
@@ -530,6 +656,12 @@ namespace HRManagementSystem.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Candidates");
+
+            migrationBuilder.DropTable(
+                name: "JobPostings");
 
             migrationBuilder.DropTable(
                 name: "LeaveRequests");

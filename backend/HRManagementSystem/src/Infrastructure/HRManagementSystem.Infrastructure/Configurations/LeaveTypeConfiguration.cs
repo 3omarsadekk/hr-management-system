@@ -14,6 +14,7 @@ public class LeaveTypeConfiguration : IEntityTypeConfiguration<LeaveType>
 
         builder.Property(l => l.Name).IsRequired().HasMaxLength(100);
         builder.Property(l => l.Description).HasMaxLength(500);
+        builder.Property(l => l.GenderRestriction).HasMaxLength(100);
         builder.Property(l => l.MaxDays).IsRequired();
         builder.Property(l => l.CanCarryForward).IsRequired();
         builder.Property(l => l.CarryForwardLimit);

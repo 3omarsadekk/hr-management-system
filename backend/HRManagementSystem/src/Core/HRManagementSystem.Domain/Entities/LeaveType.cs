@@ -7,6 +7,7 @@ public class LeaveType:BaseEntity
     public bool CanCarryForward { get; set; } = false;
     public int? CarryForwardLimit { get; set; }
     public bool IsPaid { get; set; } = true;
+    public string? GenderRestriction { get; set; }  
 
     // 🔗 Navigation
     public ICollection<LeaveRequest>? LeaveRequests { get; set; }

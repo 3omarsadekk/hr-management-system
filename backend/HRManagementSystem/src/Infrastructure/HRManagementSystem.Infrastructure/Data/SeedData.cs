@@ -19,7 +19,8 @@ public static class SeedData
                 CanCarryForward = true,
                 CarryForwardLimit = 5,
                 IsPaid = true,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                GenderRestriction = null
             },
             new LeaveType
             {
@@ -29,7 +30,8 @@ public static class SeedData
                 MaxDays = 30,
                 CanCarryForward = false,
                 IsPaid = true,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                GenderRestriction = null
             },
             new LeaveType
             {
@@ -39,7 +41,8 @@ public static class SeedData
                 MaxDays = 90,
                 CanCarryForward = false,
                 IsPaid = true,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                GenderRestriction = "Female"
             },
             new LeaveType
             {
@@ -49,7 +52,8 @@ public static class SeedData
                 MaxDays = 3,
                 CanCarryForward = false,
                 IsPaid = true,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                GenderRestriction = "Male"
             },
             new LeaveType
             {
@@ -59,7 +63,8 @@ public static class SeedData
                 MaxDays = 30,
                 CanCarryForward = false,
                 IsPaid = false,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                GenderRestriction= null
             },
             new LeaveType
             {
@@ -69,7 +74,8 @@ public static class SeedData
                 MaxDays = 5,
                 CanCarryForward = false,
                 IsPaid = true,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                GenderRestriction= null
             },
             new LeaveType
             {
@@ -79,7 +85,8 @@ public static class SeedData
                 MaxDays = 10,
                 CanCarryForward = false,
                 IsPaid = true,
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.Now,
+                GenderRestriction= null
             }
         );
     }
