@@ -21,11 +21,11 @@ public class LeaveApprovalService(
             approval.Status = LeaveStatus.Approved;
             await _leaveApprovalRepo.UpdateAsync(approval);
 
-            // Check if all steps are done
+            // Check if there are still pending approval steps
             IEnumerable<LeaveApproval> allSteps = await _leaveApprovalRepo.GetAllByRequestIdAsync(dto.LeaveRequestId);
             bool stillPending = allSteps.Any(a => a.ActionDate == null);
             if (stillPending)
-                return new Response<bool>(true, null, false);
+                return new Response<bool>(true, "Approval recorded. Waiting for higher-level approvals.", false);
 
             // Update LeaveRequest and balance
             Response<LeaveRequestDto> respose = await _leaveRequestService.GetLeaveRequestByIdAsync(dto.LeaveRequestId);
@@ -41,16 +41,16 @@ public class LeaveApprovalService(
             );
 
             if (deductResult.HasError)
-                return new Response<bool>(false, deductResult.ErrorMessage, true);
+                return new Response<bool>(false, $"Failed to deduct leave balance: {deductResult.ErrorMessage}", true);
 
             UpdateLeaveRequestDto updateLeaveReqdto = _mapper.Map<UpdateLeaveRequestDto>(leaveRequest);
             await _leaveRequestService.UpdateLeaveRequestAsync(leaveRequest.Id, updateLeaveReqdto, 1);
 
-            return new Response<bool>(true, null, false);
+            return new Response<bool>(true, "Leave request fully approved.", false);
         }
         catch (Exception ex)
         {
-            return new Response<bool>(false, $"Failed to approve: {ex.Message}", true);
+            return new Response<bool>(false, $"Failed to approve leave: {ex.Message}", true);
         }
     }
 
@@ -62,11 +62,11 @@ public class LeaveApprovalService(
             IEnumerable<LeaveApprovalDto>? approverApprovals = _mapper.Map<IEnumerable<LeaveApprovalDto>>(approvals);
 
 
-            return new Response<IEnumerable<LeaveApprovalDto>>(approverApprovals, string.Empty, false);
+            return new Response<IEnumerable<LeaveApprovalDto>>(approverApprovals, null, false);
         }
         catch (Exception ex)
         {
-            return new Response<IEnumerable<LeaveApprovalDto>>(null, $"Failed to get approvals: {ex.Message}", true);
+            return new Response<IEnumerable<LeaveApprovalDto>>(null, $"Failed to get approvals for approver: {ex.Message}", true);
         }
     }
 
@@ -77,11 +77,11 @@ public class LeaveApprovalService(
             IEnumerable<LeaveApproval> approvals = await _leaveApprovalRepo.GetAllByRequestIdAsync(leaveRequestId);
             IEnumerable<LeaveApprovalDto>? requestApprovals = _mapper.Map<IEnumerable<LeaveApprovalDto>>(approvals);
 
-            return new Response<IEnumerable<LeaveApprovalDto>>(requestApprovals, string.Empty, false);
+            return new Response<IEnumerable<LeaveApprovalDto>>(requestApprovals, null, false);
         }
         catch (Exception ex)
         {
-            return new Response<IEnumerable<LeaveApprovalDto>>(null, $"Failed to get approvals: {ex.Message}", true);
+            return new Response<IEnumerable<LeaveApprovalDto>>(null, $"Failed to get approvals for leave request: {ex.Message}", true);
         }
     }
 
@@ -95,6 +95,7 @@ public class LeaveApprovalService(
                 return new Response<bool>(false, "Approval step not found or already processed", true);
 
             approval.ActionDate = DateTime.UtcNow;
+            approval.Status = LeaveStatus.Rejected;
             await _leaveApprovalRepo.UpdateAsync(approval);
 
             IEnumerable<LeaveApproval> allSteps = await _leaveApprovalRepo.GetAllByRequestIdAsync(dto.LeaveRequestId);
@@ -102,6 +103,7 @@ public class LeaveApprovalService(
             foreach (LeaveApproval step in allSteps.Where(a => a.ActionDate == null))
             {
                 step.ActionDate = DateTime.UtcNow;
+                step.Status = LeaveStatus.Rejected;
                 await _leaveApprovalRepo.UpdateAsync(step);
             }
 
@@ -119,11 +121,11 @@ public class LeaveApprovalService(
             await _leaveRequestService.UpdateLeaveRequestAsync(leaveRequest.Id, updateLeaveReqdto, 2);
 
 
-            return new Response<bool>(true, null, false);
+            return new Response<bool>(true, "Leave request rejected successfully.", false);
         }
         catch (Exception ex)
         {
-            return new Response<bool>(false, $"Failed to reject: {ex.Message}", true);
+            return new Response<bool>(false, $"Failed to reject leave: {ex.Message}", true);
         }
     }
 }

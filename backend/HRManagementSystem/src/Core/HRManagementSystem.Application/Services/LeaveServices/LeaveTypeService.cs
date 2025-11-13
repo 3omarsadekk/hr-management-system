@@ -5,9 +5,13 @@ public class LeaveTypeService(ILeaveTypeRepository _leaveTypeRepository, IMapper
     {
         try
         {
-            IEnumerable<LeaveType> types = await _leaveTypeRepository.GetAllAsync();
-            IEnumerable<LeaveTypeDto> leaveTypeDtos = _mapper.Map<List<LeaveTypeDto>>(types);
-            return new Response<IEnumerable<LeaveTypeDto>>(leaveTypeDtos, string.Empty, false);
+            IEnumerable<LeaveType> types = await _leaveTypeRepository.GetAllAsync(cancellationToken);
+
+            if (!types.Any())
+                return new Response<IEnumerable<LeaveTypeDto>>(Enumerable.Empty<LeaveTypeDto>(), "No leave types found.", false);
+
+            IEnumerable<LeaveTypeDto> leaveTypeDtos = _mapper.Map<IEnumerable<LeaveTypeDto>>(types);
+            return new Response<IEnumerable<LeaveTypeDto>>(leaveTypeDtos, null, false);
         }
         catch (Exception ex)
         {
@@ -24,7 +28,7 @@ public class LeaveTypeService(ILeaveTypeRepository _leaveTypeRepository, IMapper
                 return new Response<LeaveTypeDto>(default!, "LeaveType not found", true);
 
             LeaveTypeDto dto = _mapper.Map<LeaveTypeDto>(entity);
-            return new Response<LeaveTypeDto>(dto, string.Empty, false);
+            return new Response<LeaveTypeDto>(dto, null, false);
         }
         catch (Exception ex)
         {

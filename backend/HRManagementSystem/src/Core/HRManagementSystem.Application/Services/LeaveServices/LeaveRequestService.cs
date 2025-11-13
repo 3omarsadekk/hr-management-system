@@ -15,34 +15,42 @@ public class LeaveRequestService(
             DateTime start = createLeaveRequestDto.StartDate.Date;
             DateTime end = createLeaveRequestDto.EndDate.Date;
 
-            Response<LeaveRequestDto> temp =
+            Response<LeaveRequestDto> validationResult =
                 await CanCreateOrUpdate(createLeaveRequestDto.EmployeeId, -1, start, end, cancellationToken);
 
-            if (temp.HasError)
-                return temp;
+            if (validationResult.HasError)
+                return validationResult;
 
             int totalDays = (int)(end - start).TotalDays + 1;
 
-            LeaveRequest req = _mapper.Map<LeaveRequest>(createLeaveRequestDto);
-            req.TotalDays = totalDays;
-            req.CreatedAt = DateTime.UtcNow;
+            LeaveRequest leaveRequest = _mapper.Map<LeaveRequest>(createLeaveRequestDto);
+            leaveRequest.TotalDays = totalDays;
+            leaveRequest.CreatedAt = DateTime.UtcNow;
             Response<EmployeeDto> emp =
                 await _employeeService.GetEmployeeByIdAsync(createLeaveRequestDto.EmployeeId, cancellationToken);
-            Response<DepartmentDto> dept = await _departmentService.GetDepartmentByIdAsync(emp.Data.DeptId);
-            req.ReviewedById = dept.Data.ManagerId;
+            if (emp.HasError)
+                return new Response<LeaveRequestDto>(default!, "Employee not found.", true);
 
-            await _LeaveRequestRepository.AddAsync(req, cancellationToken);
+            Response<DepartmentDto> dept = await _departmentService.GetDepartmentByIdAsync(emp.Data.DeptId);
+            if (dept.HasError)
+                return new Response<LeaveRequestDto>(default!, "Department not found for this employee.", true);
+            if (dept.Data.ManagerId==null)
+                return new Response<LeaveRequestDto>(default!, "No manager assigned to this department.", true);
+
+            leaveRequest.ReviewedById = dept.Data.ManagerId;
+
+            await _LeaveRequestRepository.AddAsync(leaveRequest, cancellationToken);
 
             LeaveApproval approval = new LeaveApproval
             {
-                LeaveRequestId = req.Id,
-                ApproverId = (int)req.ReviewedById,
+                LeaveRequestId = leaveRequest.Id,
+                ApproverId = (int)leaveRequest.ReviewedById,
                 Level = LevelApproval.Manager,
                 Status = LeaveStatus.Pending,
                 ActionDate = null
             };
             await _leaveApprovalRepository.AddAsync(approval);
-            LeaveRequestDto result = _mapper.Map<LeaveRequestDto>(req);
+            LeaveRequestDto result = _mapper.Map<LeaveRequestDto>(leaveRequest);
 
             return new Response<LeaveRequestDto>(result, null, false);
         }
@@ -64,16 +72,16 @@ public class LeaveRequestService(
 
             if (LeaveRequest.Status != Domain.Enums.LeaveStatus.Pending)
             {
-                return new Response<bool>(false, "Cannot delete LeaveRequest, It already reviewed", true);
+                return new Response<bool>(false, "Cannot delete this leave request because it has already been reviewed.", true);
             }
 
             await _LeaveRequestRepository.DeleteAsync(LeaveRequest.Id, cancellationToken);
-            return new Response<bool>(true, string.Empty, false);
+            return new Response<bool>(true, "Leave request deleted successfully.", false);
         }
         catch (Exception ex)
         {
             // Log the exception (ex) as needed
-            return new Response<bool>(false, $"Error occurred while deleting the LeaveRequest: {ex.Message}", true);
+            return new Response<bool>(false, $"Failed to delete leave request: {ex.Message}", true);
         }
     }
 
@@ -88,7 +96,7 @@ public class LeaveRequestService(
         }
         catch (Exception ex)
         {
-            return new Response<IEnumerable<LeaveRequestDto>>(null, $"Failed to load requests: {ex.Message}", true);
+            return new Response<IEnumerable<LeaveRequestDto>>(null, $"Failed to load leave requests: {ex.Message}", true);
         }
     }
 
@@ -104,7 +112,7 @@ public class LeaveRequestService(
         }
         catch (Exception ex)
         {
-            return new Response<IEnumerable<LeaveRequestDto>>(null, $"Failed to load requests: {ex.Message}", true);
+            return new Response<IEnumerable<LeaveRequestDto>>(null, $"Failed to load employee leave requests: {ex.Message}", true);
         }
     }
 
@@ -114,12 +122,15 @@ public class LeaveRequestService(
         try
         {
             LeaveRequest leaveRequest = await _LeaveRequestRepository.GetByIdAsync(id, cancellationToken);
+            if (leaveRequest == null)
+                return new Response<LeaveRequestDto>(null, "Leave request not found.", true);
+
             LeaveRequestDto leaveRequestDto = _mapper.Map<LeaveRequestDto>(leaveRequest);
             return new Response<LeaveRequestDto>(leaveRequestDto, null, false);
         }
         catch (Exception ex)
         {
-            return new Response<LeaveRequestDto>(null, $"Failed : {ex.Message}", true);
+            return new Response<LeaveRequestDto>(null, $"Failed to retrieve leave request: {ex.Message}", true);
         }
     }
 
@@ -152,17 +163,17 @@ public class LeaveRequestService(
 
             if (LeaveRequest.Status != LeaveStatus.Pending)
             {
-                return new Response<bool>(false, "Cannot update LeaveRequest, It already reviewed", true);
+                return new Response<bool>(false, "Cannot update this leave request because it has already been reviewed.", true);
             }
 
             DateTime start = updateLeaveRequestDto.StartDate.Date;
             DateTime end = updateLeaveRequestDto.EndDate.Date;
 
-            Response<LeaveRequestDto> temp =
+            Response<LeaveRequestDto> validation =
                 await CanCreateOrUpdate(updateLeaveRequestDto.EmployeeId, id, start, end, cancellationToken);
 
-            if (temp.HasError)
-                return new Response<bool>(false, temp.ErrorMessage, true);
+            if (validation.HasError)
+                return new Response<bool>(false, validation.ErrorMessage, true);
             int totalDays = (int)(end - start).TotalDays + 1;
             LeaveRequest.TotalDays = totalDays;
             LeaveRequest.UpdatedAt = DateTime.UtcNow;
@@ -188,7 +199,7 @@ public class LeaveRequestService(
         catch (Exception ex)
         {
             // Log the exception (ex) as needed
-            return new Response<bool>(false, $"Error occurred while updating the LeaveRequest: {ex.Message}", true);
+            return new Response<bool>(false, $"Failed to update leave request: {ex.Message}", true);
         }
     }
 
@@ -211,7 +222,7 @@ public class LeaveRequestService(
         }
         catch (Exception ex)
         {
-            return new Response<bool>(false, $"Failed to check overlap: {ex.Message}", true);
+            return new Response<bool>(false, $"Failed to check leave overlap: {ex.Message}", true);
         }
     }
 
@@ -220,16 +231,17 @@ public class LeaveRequestService(
     {
         Response<EmployeeDto> emp = await _employeeService.GetEmployeeByIdAsync(employeeId, cancellationToken);
         if (emp.HasError)
-            return new Response<LeaveRequestDto>(default!, "Employee Id is not correct", true);
+            return new Response<LeaveRequestDto>(default!, "Invalid employee ID.", true);
 
         if (start > end)
             return new Response<LeaveRequestDto>(default!, "Start date cannot be after end date.", true);
 
         Response<bool> overlap = await HasOverlapAsync(employeeId, start, end, requestId);
-        if (overlap.Data == true && !overlap.HasError)
-            return new Response<LeaveRequestDto>(default!, "Overlapping leave request exists.", true);
         if (overlap.HasError)
             return new Response<LeaveRequestDto>(default!, overlap.ErrorMessage, true);
+        if (overlap.Data == true)
+            return new Response<LeaveRequestDto>(default!, "Overlapping leave request already exists.", true);
+        
         return new Response<LeaveRequestDto>(default!, null, false);
     }
 }
