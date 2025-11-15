@@ -4,6 +4,7 @@ using HRManagementSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251115095717_SeedInitialData")]
+    partial class SeedInitialData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1150,7 +1153,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                             Id = 1,
                             CanCarryForward = true,
                             CarryForwardLimit = 5,
-                            CreatedAt = new DateTime(2025, 11, 15, 12, 29, 11, 234, DateTimeKind.Local).AddTicks(3511),
+                            CreatedAt = new DateTime(2025, 11, 15, 11, 57, 15, 253, DateTimeKind.Local).AddTicks(3249),
                             Description = "Annual paid leave after completing the first year of work",
                             IsPaid = true,
                             MaxDays = 15,
@@ -1160,7 +1163,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 2,
                             CanCarryForward = false,
-                            CreatedAt = new DateTime(2025, 11, 15, 12, 29, 11, 234, DateTimeKind.Local).AddTicks(3628),
+                            CreatedAt = new DateTime(2025, 11, 15, 11, 57, 15, 253, DateTimeKind.Local).AddTicks(3357),
                             Description = "Medical leave based on a valid medical certificate",
                             IsPaid = true,
                             MaxDays = 30,
@@ -1170,7 +1173,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 3,
                             CanCarryForward = false,
-                            CreatedAt = new DateTime(2025, 11, 15, 12, 29, 11, 234, DateTimeKind.Local).AddTicks(3657),
+                            CreatedAt = new DateTime(2025, 11, 15, 11, 57, 15, 253, DateTimeKind.Local).AddTicks(3381),
                             Description = "Maternity leave for female employees, 90 days paid",
                             GenderRestriction = "Female",
                             IsPaid = true,
@@ -1181,7 +1184,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 4,
                             CanCarryForward = false,
-                            CreatedAt = new DateTime(2025, 11, 15, 12, 29, 11, 234, DateTimeKind.Local).AddTicks(3681),
+                            CreatedAt = new DateTime(2025, 11, 15, 11, 57, 15, 253, DateTimeKind.Local).AddTicks(3405),
                             Description = "Short paid leave for new fathers as per company policy",
                             GenderRestriction = "Male",
                             IsPaid = true,
@@ -1192,7 +1195,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 5,
                             CanCarryForward = false,
-                            CreatedAt = new DateTime(2025, 11, 15, 12, 29, 11, 234, DateTimeKind.Local).AddTicks(3705),
+                            CreatedAt = new DateTime(2025, 11, 15, 11, 57, 15, 253, DateTimeKind.Local).AddTicks(3434),
                             Description = "Leave without pay subject to management approval",
                             IsPaid = false,
                             MaxDays = 30,
@@ -1202,7 +1205,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 6,
                             CanCarryForward = false,
-                            CreatedAt = new DateTime(2025, 11, 15, 12, 29, 11, 234, DateTimeKind.Local).AddTicks(3729),
+                            CreatedAt = new DateTime(2025, 11, 15, 11, 57, 15, 253, DateTimeKind.Local).AddTicks(3457),
                             Description = "Leave for emergencies (death of a relative, special circumstances)",
                             IsPaid = true,
                             MaxDays = 5,
@@ -1212,7 +1215,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 7,
                             CanCarryForward = false,
-                            CreatedAt = new DateTime(2025, 11, 15, 12, 29, 11, 234, DateTimeKind.Local).AddTicks(3776),
+                            CreatedAt = new DateTime(2025, 11, 15, 11, 57, 15, 253, DateTimeKind.Local).AddTicks(3492),
                             Description = "Hajj leave for Muslims, 10 days paid, once in a lifetime",
                             IsPaid = true,
                             MaxDays = 10,
