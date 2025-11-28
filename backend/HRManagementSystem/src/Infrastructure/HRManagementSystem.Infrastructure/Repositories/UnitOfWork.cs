@@ -28,6 +28,16 @@ public class UnitOfWork : IUnitOfWork
     private INotificationRepository? _notifications;
 
 
+    private IReviewCycleRepository? _reviewCycles;
+    private IPerformanceReviewRepository? _performanceReviews;
+    private IGoalRepository? _goals;
+    private IKpiRepository? _kpis;
+    private IKpiResultRepository? _kpiResults;
+    private ICompetencyRepository? _competencies;
+    private IEmployeeCompetencyRatingRepository? _employeeCompetencyRatings;
+    private IFeedbackRepository? _feedbacks;
+
+
     public UnitOfWork(ApplicationDbContext context)
     {
         _context = context;
@@ -77,6 +87,14 @@ public class UnitOfWork : IUnitOfWork
 
         return (IRepository<T>)_repositories[type];
     }
+    public IReviewCycleRepository ReviewCycles => _reviewCycles ??= new ReviewCycleRepository(_context);
+    public IPerformanceReviewRepository PerformanceReviews => _performanceReviews ??= new PerformanceReviewRepository(_context);
+    public IGoalRepository Goals => _goals ??= new GoalRepository(_context);
+    public IKpiRepository KPIs => _kpis ??= new KpiRepository(_context);
+    public IKpiResultRepository KPIResults => _kpiResults ??= new KpiResultRepository(_context);
+    public ICompetencyRepository Competencies => _competencies ??= new CompetencyRepository(_context);
+    public IEmployeeCompetencyRatingRepository EmployeeCompetencyRatings => _employeeCompetencyRatings ??= new EmployeeCompetencyRatingRepository(_context);
+    public IFeedbackRepository Feedbacks => _feedbacks ??= new FeedbackRepository(_context);
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

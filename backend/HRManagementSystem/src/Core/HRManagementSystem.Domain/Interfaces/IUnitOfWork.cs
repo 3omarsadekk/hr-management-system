@@ -23,6 +23,16 @@ public interface IUnitOfWork : IDisposable
     IEmployeeRepository Employees { get; }
     INotificationRepository Notifications { get; }
 
+    IReviewCycleRepository ReviewCycles { get; }
+    IPerformanceReviewRepository PerformanceReviews { get; }
+    IGoalRepository Goals { get; }
+    IKpiRepository KPIs { get; }
+    IKpiResultRepository KPIResults { get; }
+    ICompetencyRepository Competencies { get; }
+    IEmployeeCompetencyRatingRepository EmployeeCompetencyRatings { get; }
+    IFeedbackRepository Feedbacks { get; }
+
+
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     Task BeginTransactionAsync(CancellationToken cancellationToken = default);
     Task CommitTransactionAsync(CancellationToken cancellationToken = default);
