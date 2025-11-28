@@ -33,8 +33,7 @@ public static class DependencyInjection
                 services.AddScoped<IJobApplicationService, JobApplicationService>();
                 services.AddScoped<IPerformanceService, PerformanceService>();
                 services.AddScoped<INotificationService, NotificationService>();
-
-                // services.AddScoped<ILeaveService, LeaveService>();
+                services.AddScoped<IAttendanceService, AttendanceService>();
 
                 services.AddAutoMapper(x => x.AddProfile(new MappingHelper()));
                 services.AddAutoMapper(x => x.AddProfile(new LeaveProfile()));

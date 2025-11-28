@@ -10,6 +10,7 @@ public interface IUnitOfWork : IDisposable
     IDesignationRepository Designations { get; }
     ICandidateRepository Candidates { get; }
     IJobPostingRepository JobPostings { get; }
+    IAttendanceRepository Attendances { get; }
     IJobApplicationRepository JobApplications { get; }
     ILeaveRequestRepository LeaveRequests { get; }
     ILeaveApprovalRepository LeaveApprovals { get; }

@@ -1,9 +1,4 @@
-using System.Reflection.Emit;
-using HRManagementSystem.Infrastructure.Configurations;
 using HRManagementSystem.Infrastructure.Data.Seeds;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-
 namespace HRManagementSystem.Infrastructure.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
@@ -87,6 +82,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 
     public DbSet<Candidate> Candidates { get; set; }
     public DbSet<JobApplication> JobApplications { get; set; }
+
+    public DbSet<Attendance> Attendances { get; set; }
 
     public DbSet<ReviewCycle> ReviewCycles { get; set; }
     public DbSet<PerformanceReview> PerformanceReviews { get; set; }

@@ -25,8 +25,8 @@ public class UnitOfWork : IUnitOfWork
     private IEmployeeAllowanceRepository? _employeeAllowances;
     private IEmployeeDeductionRepository? _employeeDeductions;
     private IEmployeeRepository? _employees;
+    private IAttendanceRepository? _attendances;
     private INotificationRepository? _notifications;
-
 
     private IReviewCycleRepository? _reviewCycles;
     private IPerformanceReviewRepository? _performanceReviews;
@@ -36,7 +36,6 @@ public class UnitOfWork : IUnitOfWork
     private ICompetencyRepository? _competencies;
     private IEmployeeCompetencyRatingRepository? _employeeCompetencyRatings;
     private IFeedbackRepository? _feedbacks;
-
 
     public UnitOfWork(ApplicationDbContext context)
     {
@@ -73,6 +72,8 @@ public class UnitOfWork : IUnitOfWork
     public IEmployeeDeductionRepository EmployeeDeductions => _employeeDeductions ??= new EmployeeDeductionRepository(_context);
 
     public IEmployeeRepository Employees => _employees ??= new EmployeeRepository(_context);
+
+    public IAttendanceRepository Attendances => _attendances ??= new AttendanceRepository(_context);
 
     public INotificationRepository Notifications => _notifications ??= new NotificationRepository(_context);
 
