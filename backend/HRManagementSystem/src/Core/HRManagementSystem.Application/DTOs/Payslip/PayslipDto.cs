@@ -5,7 +5,9 @@ public class PayslipDto
     public int Id { get; set; }
     public int EmployeeId { get; set; }
 
+
     public required string EmployeeName { get; set; }
+
     public decimal BasicSalary { get; set; }
 
     public decimal TotalAllowances { get; set; }
@@ -20,4 +22,5 @@ public class PayslipDto
 
     public List<AllowanceDto>? Allowances { get; set; }
     public List<DeductionDto>? Deductions { get; set; }
+
 }

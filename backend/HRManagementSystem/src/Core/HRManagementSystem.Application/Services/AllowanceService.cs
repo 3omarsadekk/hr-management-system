@@ -1,6 +1,8 @@
 ﻿namespace HRManagementSystem.Application.Services;
 
+
 public class AllowanceService(IUnitOfWork _unitOfWork, IMapper _mapper) : IAllowanceService
+
 {
 
 
@@ -8,8 +10,10 @@ public class AllowanceService(IUnitOfWork _unitOfWork, IMapper _mapper) : IAllow
     {
         try
         {
+
             IEnumerable<Allowance> allowances = await _unitOfWork.Allowances.GetAllAsync();
             IEnumerable<AllowanceDto> allowanceDtos = _mapper.Map<IEnumerable<AllowanceDto>>(allowances);
+
 
             return new Response<IEnumerable<AllowanceDto>>(allowanceDtos, string.Empty, false);
         }
@@ -67,15 +71,21 @@ public class AllowanceService(IUnitOfWork _unitOfWork, IMapper _mapper) : IAllow
             if (allowance == null)
                 return new Response<AllowanceDto>(default!, "Allowance not found.", true);
 
-            if (!string.Equals(allowance.Name, request.Name, StringComparison.OrdinalIgnoreCase))
+            // Only check for name conflict if Name is provided
+            if (!string.IsNullOrEmpty(request.Name) && !string.Equals(allowance.Name, request.Name, StringComparison.OrdinalIgnoreCase))
             {
                 Allowance? existing = await _unitOfWork.Allowances.GetByNameAsync(request.Name);
                 if (existing != null && existing.Id != id)
                     return new Response<AllowanceDto>(default!, "Another allowance with this name already exists.", true);
             }
 
-            allowance.Name = request.Name;
-            allowance.Amount = request.Amount;
+            // Apply updates only if provided
+            if (!string.IsNullOrEmpty(request.Name))
+                allowance.Name = request.Name;
+            if (request.Amount.HasValue)
+                allowance.Amount = request.Amount.Value;
+            if (request.IsPercentage.HasValue)
+                allowance.IsPercentage = request.IsPercentage.Value;
             allowance.UpdatedAt = DateTime.UtcNow;
 
             await _unitOfWork.Allowances.UpdateAsync(allowance);

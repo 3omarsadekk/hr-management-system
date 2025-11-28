@@ -1,4 +1,7 @@
 using HRManagementSystem.Infrastructure.Data.Seeds;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+
 namespace HRManagementSystem.Infrastructure.Data;
 
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
@@ -27,6 +30,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         builder.ApplyConfiguration(new EmployeeAllowanceConfiguration());
         builder.ApplyConfiguration(new EmployeeDeductionConfiguration());
         builder.ApplyConfiguration(new PayslipConfiguration());
+        builder.ApplyConfiguration(new EmployeeTrainingConfiguration());
+        builder.ApplyConfiguration(new TrainingCourseConfiguration());
 
         // Seed initial data
         builder.SeedDepartments();
@@ -43,6 +48,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
         builder.SeedEmployeeAllowances();
         builder.SeedEmployeeDeductions();
         builder.SeedPayslips();
+
+        builder.SeedTrainingCourses();
+        builder.SeedEmployeeTraining();
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -82,6 +90,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 
     public DbSet<Candidate> Candidates { get; set; }
     public DbSet<JobApplication> JobApplications { get; set; }
+
+    public DbSet<TrainingCourse> TrainingCourses { get; set; }
+    public DbSet<EmployeeTraining> EmployeeTrainings { get; set; }
 
     public DbSet<Attendance> Attendances { get; set; }
 

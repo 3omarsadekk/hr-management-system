@@ -34,6 +34,9 @@ public interface IUnitOfWork : IDisposable
     IFeedbackRepository Feedbacks { get; }
 
 
+    IReportingRepository Reporting { get; }
+    ITrainingCourseRepository TrainingCourses { get; }
+    IEmployeeTrainingRepository EmployeeTrainings { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     Task BeginTransactionAsync(CancellationToken cancellationToken = default);
     Task CommitTransactionAsync(CancellationToken cancellationToken = default);
