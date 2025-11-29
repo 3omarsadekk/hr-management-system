@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Auth } from '../../Services/auth';
-import { Router } from '@angular/router';
 import { RegisterEmployee } from '../../models/RegisterEmployee';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-register',
   imports: [FormsModule],

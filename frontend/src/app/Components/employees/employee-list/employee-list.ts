@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Employee } from '../../../services/employee';
+import { Employee } from '../../../Services/employee';
 import { Employee as EmployeeModel } from '../../../models/employee';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-employee-list',

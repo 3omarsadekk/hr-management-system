@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
+import { LayoutService } from '../../Services/layout.service';
 import { CommonModule } from '@angular/common';
-import { LayoutService } from '../../services/layout.service';
+import { RouterModule } from '@angular/router';
 
 export interface MenuItem {
   title: string;
@@ -10,7 +11,6 @@ export interface MenuItem {
   children?: MenuItem[];
 }
 
-import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',

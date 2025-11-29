@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { LayoutService } from '../../services/layout.service';
-import { AuthService } from '../../services/auth.service';
+import { LayoutService } from '../../Services/layout.service';
+import { AuthService } from '../../Services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',

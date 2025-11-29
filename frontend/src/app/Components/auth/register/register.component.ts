@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from '../../../Services/auth.service';
+import { LayoutService } from '../../../Services/layout.service';
+import { RegisterEmployee } from '../../../models/RegisterEmployee';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
-import { LayoutService } from '../../../services/layout.service';
-import { RegisterEmployee } from '../../../models/RegisterEmployee';
 
 @Component({
   selector: 'app-register',

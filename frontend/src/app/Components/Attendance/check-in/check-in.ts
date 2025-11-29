@@ -1,7 +1,8 @@
 import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Attendance } from '../../../Services/attendance/attendance';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-check-in',

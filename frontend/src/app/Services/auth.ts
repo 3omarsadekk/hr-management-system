@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class Auth {
-  private apiUrl = 'http://localhost:5093/api/Account'; // Backend API URL
+  private apiUrl = 'https://localhost:7005/api/Account'; // Backend API URL
 
   constructor(private http: HttpClient) { }
 
