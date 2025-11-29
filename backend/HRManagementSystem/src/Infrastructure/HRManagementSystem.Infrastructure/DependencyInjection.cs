@@ -62,7 +62,11 @@ public static class DependencyInjection
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IDepartmentRepository, DepartmentRepository>();
         services.AddScoped<IDesignationRepository, DesignationRepository>();
-        services.AddScoped<IFaceRecognitionService, FaceRecognitionService>();
+        // Use stub face recognition service (native Dlib not available on Linux)
+        // To enable real face recognition, install native libraries and use FaceRecognitionService
+        services.AddScoped<IFaceRecognitionService, StubFaceRecognitionService>();
+
+        // services.AddScoped<IFaceRecognitionService, FaceRecognitionService>(); // Uncomment to use real service
 
         services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 

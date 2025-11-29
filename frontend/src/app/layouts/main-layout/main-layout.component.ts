@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from '../../components/header/header.component';
-import { SidebarComponent } from '../../components/sidebar/sidebar.component';
+import { HeaderComponent } from '../../Components/header/header.component';
+import { SidebarComponent } from '../../Components/sidebar/sidebar.component';
 import { LayoutService } from '../../services/layout.service';
-import { LoginComponent } from '../../components/auth/login/login.component';
-import { RegisterComponent } from '../../components/auth/register/register.component';
+import { LoginComponent } from '../../Components/auth/login/login.component';
+import { RegisterComponent } from '../../Components/auth/register/register.component';
 
 @Component({
   selector: 'app-main-layout',

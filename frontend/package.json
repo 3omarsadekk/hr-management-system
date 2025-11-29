@@ -1,5 +1,5 @@
 {
-  "name": "ready-to-use-component",
+  "name": "hrmanagement-system",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -35,8 +35,8 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular/build": "^20.3.6",
-    "@angular/cli": "^20.3.6",
+    "@angular/build": "^20.3.4",
+    "@angular/cli": "^20.3.4",
     "@angular/compiler-cli": "^20.3.0",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.9.0",
