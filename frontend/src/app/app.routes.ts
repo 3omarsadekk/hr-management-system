@@ -1,12 +1,24 @@
 import { Routes } from '@angular/router';
-import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { LoginComponent } from './components/auth/login/login.component';
-import { RegisterComponent } from './components/auth/register/register.component';
-import { authGuard } from './auth.guard';
+import { Login } from './Components/login/login';
+import { Register } from './Components/register/register';
 import { CheckIn } from './Components/Attendance/check-in/check-in';
 import { CheckOut } from './Components/Attendance/check-out/check-out';
 import { UpdateEmployeeImage } from './Components/Employee/update-employee-image/update-employee-image';
+import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { LoginComponent } from './Components/auth/login/login.component';
+import { RegisterComponent } from './Components/auth/register/register.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { authGuard } from './auth.guard';
+
+/* export const routes: Routes = [
+    // { path: '', redirectTo: 'home', pathMatch: 'full', title: 'Home' },
+    { path: 'login', component: Login, title: 'Login' },
+    { path: 'register', component: Register, title: 'Register' },
+    { path: 'checkIn', component: CheckIn, title: 'CheckIn' },
+    { path: 'checkOut', component: CheckOut, title: 'CheckOut' },
+    { path: 'updateEmployeeImage', component: UpdateEmployeeImage, title: 'UpdateEmployeeImage' }
+];
+ */
 
 export const routes: Routes = [
   {
@@ -14,12 +26,15 @@ export const routes: Routes = [
     component: MainLayoutComponent,
     children: [
       { path: 'login', component: LoginComponent },
+
+      { path: 'login2', component: Login }, // nada a7med login
       { path: 'register', component: RegisterComponent },
+      { path: 'register2', component: Register }, // nada a7med register
       { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
       {
         path: 'employees',
         loadComponent: () =>
-          import('./components/employees/employee-list/employee-list').then((m) => m.EmployeeList),
+          import('./Components/employees/employee-list/employee-list').then((m) => m.EmployeeList),
       },
       { path: 'checkIn', component: CheckIn, title: 'CheckIn' },
       { path: 'checkOut', component: CheckOut, title: 'CheckOut' },
