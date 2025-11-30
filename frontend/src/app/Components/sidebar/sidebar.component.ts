@@ -80,6 +80,7 @@ export class SidebarComponent {
         { title: 'My Leave Requests', link: '/pages/ess/leave-requests' },
         { title: 'My Payslips', link: '/pages/ess/payslips' },
         { title: 'My Dashboard', link: '/pages/ess/dashboard' },
+        { title: 'Update My Image', link: '/pages/updateEmployeeImage' },
       ],
     },
     {
