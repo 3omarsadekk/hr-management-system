@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HRManagementSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251128230748_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251130133403_AddingTrainingRequest")]
+    partial class AddingTrainingRequest
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -2458,6 +2458,58 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.TrainingRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ManagerNote")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("RequestDate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<DateTime?>("ReviewedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ReviewedByManagerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Pending");
+
+                    b.Property<int>("TrainingCourseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ReviewedByManagerId");
+
+                    b.HasIndex("TrainingCourseId");
+
+                    b.ToTable("EmployeeTrainingRequests", (string)null);
+                });
+
             modelBuilder.Entity("HRManagementSystem.Infrastructure.Identity.ApplicationRole", b =>
                 {
                     b.Property<Guid>("Id")
@@ -2948,6 +3000,32 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     b.Navigation("ReviewCycle");
                 });
 
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.TrainingRequest", b =>
+                {
+                    b.HasOne("HRManagementSystem.Domain.Entities.Employee", "Employee")
+                        .WithMany("TrainingRequests")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HRManagementSystem.Domain.Entities.Employee", "Reviewer")
+                        .WithMany()
+                        .HasForeignKey("ReviewedByManagerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("HRManagementSystem.Domain.Entities.TrainingCourse", "TrainingCourse")
+                        .WithMany()
+                        .HasForeignKey("TrainingCourseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Reviewer");
+
+                    b.Navigation("TrainingCourse");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
                     b.HasOne("HRManagementSystem.Infrastructure.Identity.ApplicationRole", null)
@@ -3039,6 +3117,8 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     b.Navigation("LeaveRequests");
 
                     b.Navigation("Payslips");
+
+                    b.Navigation("TrainingRequests");
                 });
 
             modelBuilder.Entity("HRManagementSystem.Domain.Entities.JobPosting", b =>
