@@ -1,0 +1,281 @@
+<div class="container-fluid py-4">
+  <!-- Page Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold mb-1">Notifications</h2>
+      <p class="text-muted mb-0">
+        You have <span class="fw-semibold text-primary">{{ unreadCount() }}</span> unread
+        notifications
+      </p>
+    </div>
+    <div class="d-flex gap-2">
+      <button
+        class="btn btn-outline-secondary"
+        (click)="refreshNotifications()"
+        [disabled]="isLoading()"
+      >
+        <i class="eva eva-refresh-outline me-1"></i>
+        Refresh
+      </button>
+      @if (unreadCount() > 0) {
+      <button class="btn btn-primary" (click)="markAllAsRead()">
+        <i class="eva eva-done-all-outline me-1"></i>
+        Mark All as Read
+      </button>
+      }
+    </div>
+  </div>
+
+  <!-- Filters Section -->
+  <div class="card border-0 shadow-sm mb-4">
+    <div class="card-body">
+      <div class="row g-3">
+        <!-- Search -->
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0">
+              <i class="eva eva-search-outline text-muted"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control border-start-0"
+              placeholder="Search notifications..."
+              [ngModel]="searchQuery()"
+              (ngModelChange)="setSearchQuery($event)"
+            />
+          </div>
+        </div>
+
+        <!-- Status Filter -->
+        <div class="col-md-2">
+          <select
+            class="form-select"
+            [ngModel]="filterStatus()"
+            (ngModelChange)="setFilterStatus($event)"
+          >
+            <option value="all">All Status</option>
+            <option value="unread">Unread</option>
+            <option value="read">Read</option>
+          </select>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="col-md-2">
+          <select
+            class="form-select"
+            [ngModel]="filterCategory()"
+            (ngModelChange)="setFilterCategory($event)"
+          >
+            <option value="all">All Categories</option>
+            @for (category of categories; track category) {
+            <option [value]="category">{{ getCategoryDisplayName(category) }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Priority Filter -->
+        <div class="col-md-2">
+          <select
+            class="form-select"
+            [ngModel]="filterPriority()"
+            (ngModelChange)="setFilterPriority($event)"
+          >
+            <option value="all">All Priorities</option>
+            @for (priority of priorities; track priority) {
+            <option [value]="priority">{{ priority }}</option>
+            }
+          </select>
+        </div>
+
+        <!-- Sort & Clear -->
+        <div class="col-md-2 d-flex gap-2">
+          <div class="dropdown flex-grow-1">
+            <button
+              class="btn btn-outline-secondary w-100 dropdown-toggle"
+              type="button"
+              data-bs-toggle="dropdown"
+            >
+              <i class="eva eva-funnel-outline me-1"></i>
+              Sort
+            </button>
+            <ul class="dropdown-menu">
+              <li>
+                <button
+                  class="dropdown-item"
+                  [class.active]="sortBy() === 'date'"
+                  (click)="setSortBy('date')"
+                >
+                  <i class="eva eva-calendar-outline me-2"></i>
+                  By Date @if (sortBy() === 'date') {
+                  <i
+                    class="eva eva-arrow-{{ sortOrder() === 'desc' ? 'down' : 'up' }}-outline ms-2"
+                  ></i>
+                  }
+                </button>
+              </li>
+              <li>
+                <button
+                  class="dropdown-item"
+                  [class.active]="sortBy() === 'priority'"
+                  (click)="setSortBy('priority')"
+                >
+                  <i class="eva eva-alert-circle-outline me-2"></i>
+                  By Priority @if (sortBy() === 'priority') {
+                  <i
+                    class="eva eva-arrow-{{ sortOrder() === 'desc' ? 'down' : 'up' }}-outline ms-2"
+                  ></i>
+                  }
+                </button>
+              </li>
+            </ul>
+          </div>
+          <button class="btn btn-outline-secondary" (click)="clearFilters()" title="Clear filters">
+            <i class="eva eva-close-outline"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+  <div class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="text-muted mt-3">Loading notifications...</p>
+  </div>
+  } @else if (filteredNotifications().length === 0) {
+  <!-- Empty State -->
+  <div class="card border-0 shadow-sm">
+    <div class="card-body text-center py-5">
+      <i class="eva eva-bell-off-outline text-muted" style="font-size: 4rem"></i>
+      <h5 class="mt-3 text-muted">No notifications found</h5>
+      <p class="text-muted mb-0">
+        @if (searchQuery() || filterStatus() !== 'all' || filterCategory() !== 'all' ||
+        filterPriority() !== 'all') { Try adjusting your filters or search query } @else { You're
+        all caught up! Check back later for new notifications. }
+      </p>
+      @if (searchQuery() || filterStatus() !== 'all' || filterCategory() !== 'all' ||
+      filterPriority() !== 'all') {
+      <button class="btn btn-outline-primary mt-3" (click)="clearFilters()">Clear Filters</button>
+      }
+    </div>
+  </div>
+  } @else {
+  <!-- Notifications List -->
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-white border-bottom py-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <span class="text-muted">
+          Showing {{ filteredNotifications().length }} notification{{
+            filteredNotifications().length !== 1 ? 's' : ''
+          }}
+        </span>
+        <div class="btn-group btn-group-sm" role="group">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            [class.active]="filterStatus() === 'all'"
+            (click)="setFilterStatus('all')"
+          >
+            All
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            [class.active]="filterStatus() === 'unread'"
+            (click)="setFilterStatus('unread')"
+          >
+            Unread
+          </button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            [class.active]="filterStatus() === 'read'"
+            (click)="setFilterStatus('read')"
+          >
+            Read
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="list-group list-group-flush">
+      @for (notification of filteredNotifications(); track notification.id) {
+      <div
+        class="list-group-item list-group-item-action notification-item p-3"
+        [class.unread]="!notification.isRead"
+        (click)="markAsRead(notification)"
+      >
+        <div class="d-flex align-items-start">
+          <!-- Icon -->
+          <div class="notification-icon me-3">
+            <div
+              class="icon-wrapper rounded-circle d-flex align-items-center justify-content-center"
+              [ngClass]="getNotificationColorClass(notification.type)"
+            >
+              <i class="eva eva-{{ getNotificationIcon(notification.type) }}"></i>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="flex-grow-1">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <h6 class="mb-0 fw-semibold">
+                {{ notification.title }}
+                @if (!notification.isRead) {
+                <span class="badge bg-primary ms-2">New</span>
+                }
+              </h6>
+              <div class="d-flex align-items-center gap-2">
+                <span
+                  class="badge rounded-pill"
+                  [ngClass]="getPriorityBadgeClass(notification.priority)"
+                >
+                  {{ notification.priority }}
+                </span>
+                <button
+                  class="btn btn-link btn-sm p-0 text-muted delete-btn"
+                  (click)="deleteNotification(notification, $event)"
+                  title="Delete notification"
+                >
+                  <i class="eva eva-trash-2-outline"></i>
+                </button>
+              </div>
+            </div>
+
+            <p class="mb-2 text-muted">{{ notification.message }}</p>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center gap-3">
+                <span class="badge bg-light text-dark">
+                  <i class="eva eva-folder-outline me-1"></i>
+                  {{ getCategoryDisplayName(notification.category) }}
+                </span>
+                <small class="text-muted">
+                  <i class="eva eva-clock-outline me-1"></i>
+                  {{ getTimeAgo(notification.createdAt) }}
+                </small>
+              </div>
+
+              @if (notification.actionUrl) {
+              <span class="text-primary small">
+                <i class="eva eva-external-link-outline me-1"></i>
+                View Details
+              </span>
+              }
+            </div>
+          </div>
+
+          <!-- Unread Indicator -->
+          @if (!notification.isRead) {
+          <span class="unread-indicator ms-3"></span>
+          }
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>

@@ -134,6 +134,17 @@ export const routes: Routes = [
         title: 'Designations',
       },
 
+      // Notifications Route
+      {
+        path: 'notifications',
+        loadComponent: () =>
+          import('./Components/notifications/notification-list.component').then(
+            (m) => m.NotificationListComponent
+          ),
+        canActivate: [authGuard],
+        title: 'Notifications',
+      },
+
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },

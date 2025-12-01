@@ -42,6 +42,14 @@ export class SidebarComponent {
       ],
     },
     {
+      title: 'Attendance',
+      icon: 'clock-outline',
+      children: [
+        { title: 'Check In/Out', link: '/pages/attendance/check' },
+        { title: 'Attendance Records', link: '/pages/attendance/records' },
+      ],
+    },
+    {
       title: 'Leave Management',
       icon: 'calendar-outline',
       children: [
@@ -63,12 +71,44 @@ export class SidebarComponent {
       ],
     },
     {
+      title: 'Performance',
+      icon: 'trending-up-outline',
+      children: [
+        { title: 'Review Cycles', link: '/pages/performance/cycles' },
+        { title: 'Reviews', link: '/pages/performance/reviews' },
+        { title: 'Goals', link: '/pages/performance/goals' },
+        { title: 'KPIs', link: '/pages/performance/kpis' },
+        { title: 'Competencies', link: '/pages/performance/competencies' },
+        { title: 'Feedback', link: '/pages/performance/feedback' },
+      ],
+    },
+    {
+      title: 'Training',
+      icon: 'book-open-outline',
+      children: [
+        { title: 'Training Courses', link: '/pages/training/courses' },
+        { title: 'Employee Enrollments', link: '/pages/training/enrollments' },
+        { title: 'Training Requests', link: '/pages/training/requests' },
+      ],
+    },
+    {
       title: 'Recruitment',
       icon: 'person-add-outline',
       children: [
         { title: 'Job Postings', link: '/pages/recruitment/jobs' },
         { title: 'Candidates', link: '/pages/recruitment/candidates' },
         { title: 'Job Applications', link: '/pages/recruitment/applications' },
+      ],
+    },
+    {
+      title: 'Reports & Analytics',
+      icon: 'bar-chart-outline',
+      children: [
+        { title: 'Dashboard KPIs', link: '/pages/reports/dashboard' },
+        { title: 'Employee Reports', link: '/pages/reports/employees' },
+        { title: 'Payroll Reports', link: '/pages/reports/payroll' },
+        { title: 'Leave Reports', link: '/pages/reports/leave' },
+        { title: 'Recruitment Reports', link: '/pages/reports/recruitment' },
       ],
     },
     { title: 'Notifications', icon: 'bell-outline', link: '/pages/notifications' },

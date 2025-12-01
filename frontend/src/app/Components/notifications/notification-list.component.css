@@ -1,0 +1,128 @@
+.notification-item {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.notification-item:hover {
+  background-color: var(--hover-bg, #f8f9fa);
+}
+
+.notification-item.unread {
+  background-color: rgba(var(--bs-primary-rgb), 0.05);
+  border-left-color: var(--bs-primary);
+}
+
+.notification-item.unread:hover {
+  background-color: rgba(var(--bs-primary-rgb), 0.1);
+}
+
+.notification-icon .icon-wrapper {
+  width: 48px;
+  height: 48px;
+  background-color: var(--hover-bg, #f8f9fa);
+  flex-shrink: 0;
+}
+
+.notification-icon .icon-wrapper i {
+  font-size: 1.5rem;
+}
+
+.unread-indicator {
+  width: 10px;
+  height: 10px;
+  background-color: var(--bs-primary);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.delete-btn {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.notification-item:hover .delete-btn {
+  opacity: 1;
+}
+
+.delete-btn:hover {
+  color: var(--bs-danger) !important;
+}
+
+/* Card styling */
+.card {
+  border-radius: 0.75rem;
+}
+
+.card-header {
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+/* Filter section */
+.input-group-text {
+  border-color: var(--bs-border-color);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.15);
+}
+
+/* Button group active state */
+.btn-group .btn.active {
+  background-color: var(--bs-primary);
+  border-color: var(--bs-primary);
+  color: white;
+}
+
+/* Priority badges */
+.badge.bg-danger {
+  background-color: #dc3545 !important;
+}
+
+.badge.bg-warning {
+  background-color: #ffc107 !important;
+  color: #212529 !important;
+}
+
+.badge.bg-primary {
+  background-color: var(--bs-primary) !important;
+}
+
+.badge.bg-secondary {
+  background-color: #6c757d !important;
+}
+
+/* Type color classes */
+.text-success {
+  color: #198754 !important;
+}
+
+.text-warning {
+  color: #ffc107 !important;
+}
+
+.text-danger {
+  color: #dc3545 !important;
+}
+
+.text-info {
+  color: #0dcaf0 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .notification-icon .icon-wrapper {
+    width: 40px;
+    height: 40px;
+  }
+
+  .notification-icon .icon-wrapper i {
+    font-size: 1.25rem;
+  }
+
+  .notification-item {
+    padding: 1rem !important;
+  }
+}
