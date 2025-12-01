@@ -9,7 +9,7 @@ import { ApiResponse } from '../models/api-response';
 })
 export class NotificationService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:5093/api/Notification';
+  private apiUrl = 'https://localhost:7005/api/Notification';
 
   // Reactive state for notifications
   private _notifications = signal<Notification[]>([]);

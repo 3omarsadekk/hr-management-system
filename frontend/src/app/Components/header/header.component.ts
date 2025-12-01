@@ -29,11 +29,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isLoading = this.notificationService.isLoading;
 
   ngOnInit(): void {
-    // Load notifications on init
-    this.notificationService.loadNotifications();
+    // Only load notifications if user is authenticated
+    if (this.authService.getToken()) {
+      // Load notifications on init
+      this.notificationService.loadNotifications();
 
-    // Start polling for new notifications every 30 seconds
-    this.pollingSubscription = this.notificationService.startPolling(30000).subscribe();
+      // Start polling for new notifications every 30 seconds
+      this.pollingSubscription = this.notificationService.startPolling(30000).subscribe();
+    }
   }
 
   ngOnDestroy(): void {
@@ -59,6 +62,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   toggleNotificationDropdown(event: Event): void {
     event.stopPropagation();
+
+    // Only allow if authenticated
+    if (!this.authService.getToken()) {
+      this.router.navigate(['/pages/login']);
+      return;
+    }
+
     this.isNotificationDropdownOpen = !this.isNotificationDropdownOpen;
 
     if (this.isNotificationDropdownOpen) {
