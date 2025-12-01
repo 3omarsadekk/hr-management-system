@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DepartmentService } from '../../../../Services/department.service';
 import { ToastService } from '../../../../Services/toast.service';
+import { Employee as EmployeeService } from '../../../../Services/employee';
+import { Employee as EmployeeModel } from '../../../../models/employee';
 import {
   Department,
   DepartmentWithEmployees,
@@ -21,9 +23,12 @@ import {
 export class DepartmentListComponent implements OnInit {
   private departmentService = inject(DepartmentService);
   private toastService = inject(ToastService);
+  private employeeService = inject(EmployeeService);
 
   departments: Department[] = [];
+  employees: EmployeeModel[] = [];
   isLoading = true;
+  isLoadingEmployees = false;
   error: string | null = null;
 
   // Modal state
@@ -46,6 +51,7 @@ export class DepartmentListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDepartments();
+    this.loadEmployees();
   }
 
   loadDepartments(): void {
@@ -66,6 +72,21 @@ export class DepartmentListComponent implements OnInit {
         this.error = 'An error occurred while loading departments';
         this.toastService.error(this.error);
         this.isLoading = false;
+      },
+    });
+  }
+
+  loadEmployees(): void {
+    this.isLoadingEmployees = true;
+    this.employeeService.getEmployees().subscribe({
+      next: (response) => {
+        if (!response.hasError && response.data) {
+          this.employees = response.data;
+        }
+        this.isLoadingEmployees = false;
+      },
+      error: () => {
+        this.isLoadingEmployees = false;
       },
     });
   }
@@ -251,5 +272,15 @@ export class DepartmentListComponent implements OnInit {
   getAvgEmployees(): string {
     if (this.departments.length === 0) return '0';
     return (this.getTotalEmployees() / this.departments.length).toFixed(1);
+  }
+
+  getManagerName(managerId?: number): string {
+    if (!managerId) return 'Not Assigned';
+    const manager = this.employees.find((e) => e.id === managerId);
+    return manager ? `${manager.firstName} ${manager.lastName}` : 'Unknown';
+  }
+
+  getEmployeeFullName(employee: EmployeeModel): string {
+    return `${employee.firstName} ${employee.lastName}`;
   }
 }

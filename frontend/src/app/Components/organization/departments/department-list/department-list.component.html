@@ -46,10 +46,11 @@
           <thead class="table-light">
             <tr>
               <th>Department</th>
-              <th>Description</th>
+              <th style="max-width: 180px">Description</th>
+              <th>Manager</th>
               <th>Employees</th>
               <th>Created</th>
-              <th class="text-end">Actions</th>
+              <th class="text-end text-nowrap">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -68,8 +69,24 @@
                   </div>
                 </div>
               </td>
+              <td style="max-width: 180px">
+                <span
+                  class="text-muted text-truncate d-inline-block"
+                  style="max-width: 160px"
+                  title="{{ department.description || 'No description' }}"
+                >
+                  {{ department.description || 'No description' }}
+                </span>
+              </td>
               <td>
-                <span class="text-muted">{{ department.description || 'No description' }}</span>
+                @if (department.managerId) {
+                <span class="badge bg-success-subtle text-success-emphasis">
+                  <i class="eva eva-person-outline me-1"></i>
+                  {{ getManagerName(department.managerId) }}
+                </span>
+                } @else {
+                <span class="text-muted">Not Assigned</span>
+                }
               </td>
               <td>
                 <span class="badge bg-primary bg-opacity-10 text-primary">
@@ -79,7 +96,7 @@
               <td>
                 <span class="text-muted">{{ formatDate(department.createdAt) }}</span>
               </td>
-              <td class="text-end">
+              <td class="text-end text-nowrap">
                 <button
                   class="btn btn-sm btn-light me-1"
                   title="View Details"
@@ -175,6 +192,18 @@
               placeholder="Enter department description (optional)"
             ></textarea>
           </div>
+          <div class="mb-3">
+            <label class="form-label">Department Manager</label>
+            <select class="form-select" [(ngModel)]="formData.managerId" name="managerId">
+              <option [ngValue]="undefined">-- No Manager --</option>
+              @for (employee of employees; track employee.id) {
+              <option [ngValue]="employee.id">
+                {{ getEmployeeFullName(employee) }} ({{ employee.email }})
+              </option>
+              }
+            </select>
+            <div class="form-text">Select an employee to be the department manager (optional)</div>
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -236,6 +265,19 @@
                 <tr>
                   <td class="text-muted">Description:</td>
                   <td>{{ departmentDetail.description || 'N/A' }}</td>
+                </tr>
+                <tr>
+                  <td class="text-muted">Manager:</td>
+                  <td>
+                    @if (departmentDetail.managerId) {
+                    <span class="badge bg-success-subtle text-success-emphasis">
+                      <i class="eva eva-person-outline me-1"></i>
+                      {{ getManagerName(departmentDetail.managerId) }}
+                    </span>
+                    } @else {
+                    <span class="text-muted">Not Assigned</span>
+                    }
+                  </td>
                 </tr>
                 <tr>
                   <td class="text-muted">Employee Count:</td>

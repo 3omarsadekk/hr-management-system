@@ -35,6 +35,8 @@ export const routes: Routes = [
         path: 'employees',
         loadComponent: () =>
           import('./Components/employees/employee-list/employee-list').then((m) => m.EmployeeList),
+        canActivate: [authGuard],
+        title: 'Employee Management',
       },
       { path: 'checkIn', component: CheckIn, title: 'CheckIn' },
       { path: 'checkOut', component: CheckOut, title: 'CheckOut' },
@@ -132,6 +134,17 @@ export const routes: Routes = [
           ).then((m) => m.DesignationListComponent),
         canActivate: [authGuard],
         title: 'Designations',
+      },
+
+      // Notifications Route
+      {
+        path: 'notifications',
+        loadComponent: () =>
+          import('./Components/notifications/notification-list.component').then(
+            (m) => m.NotificationListComponent
+          ),
+        canActivate: [authGuard],
+        title: 'Notifications',
       },
 
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

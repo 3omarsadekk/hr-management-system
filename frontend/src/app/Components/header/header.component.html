@@ -3,7 +3,8 @@
     <div class="d-flex align-items-center">
       <button
         class="btn btn-link me-4 text-decoration-none sidebar-toggle d-flex align-items-center justify-content-center"
-        (click)="toggleSidebar()">
+        (click)="toggleSidebar()"
+      >
         <i class="eva eva-menu-2-outline fs-2"></i>
       </button>
       <a class="navbar-brand fw-bold fs-3" href="#">HRM <span class="text-primary">System</span></a>
@@ -19,38 +20,142 @@
       <div class="position-relative cursor-pointer">
         <i class="eva eva-email-outline fs-4 text-muted"></i>
         <span
-          class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+          class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"
+        >
           <span class="visually-hidden">New alerts</span>
         </span>
       </div>
 
-      <!-- Notifications -->
-      <div class="position-relative cursor-pointer">
-        <i class="eva eva-bell-outline fs-4 text-muted"></i>
-        <span
-          class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
-          <span class="visually-hidden">New alerts</span>
-        </span>
+      <!-- Notifications Dropdown -->
+      <div class="position-relative notification-dropdown">
+        <div class="cursor-pointer" (click)="toggleNotificationDropdown($event)">
+          <i class="eva eva-bell-outline fs-4 text-muted"></i>
+          @if (unreadCount() > 0) {
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger notification-badge"
+          >
+            {{ unreadCount() > 99 ? '99+' : unreadCount() }}
+            <span class="visually-hidden">unread notifications</span>
+          </span>
+          }
+        </div>
+
+        <!-- Notification Dropdown Menu -->
+        @if (isNotificationDropdownOpen) {
+        <div
+          class="notification-menu dropdown-menu show shadow border-0"
+          (click)="$event.stopPropagation()"
+        >
+          <div
+            class="notification-header d-flex justify-content-between align-items-center px-3 py-2 border-bottom"
+          >
+            <h6 class="mb-0 fw-bold">Notifications</h6>
+            @if (unreadCount() > 0) {
+            <button
+              class="btn btn-link btn-sm text-primary p-0 text-decoration-none"
+              (click)="markAllAsRead($event)"
+            >
+              Mark all as read
+            </button>
+            }
+          </div>
+
+          <div class="notification-body">
+            @if (isLoading()) {
+            <div class="text-center py-4">
+              <div class="spinner-border spinner-border-sm text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+            </div>
+            } @else if (recentNotifications.length === 0) {
+            <div class="text-center py-4 text-muted">
+              <i class="eva eva-bell-off-outline fs-1 mb-2 d-block"></i>
+              <p class="mb-0">No notifications</p>
+            </div>
+            } @else { @for (notification of recentNotifications; track notification.id) {
+            <div
+              class="notification-item d-flex align-items-start p-3 border-bottom cursor-pointer"
+              [class.unread]="!notification.isRead"
+              (click)="markAsRead(notification, $event)"
+            >
+              <div class="notification-icon me-3">
+                <div
+                  class="icon-wrapper rounded-circle d-flex align-items-center justify-content-center"
+                  [ngClass]="getNotificationColorClass(notification.type)"
+                >
+                  <i class="eva eva-{{ getNotificationIcon(notification.type) }}"></i>
+                </div>
+              </div>
+              <div class="notification-content flex-grow-1">
+                <div class="d-flex justify-content-between align-items-start">
+                  <p class="notification-title mb-1 fw-semibold">{{ notification.title }}</p>
+                  <button
+                    class="btn btn-link btn-sm p-0 text-muted delete-btn"
+                    (click)="deleteNotification(notification, $event)"
+                    title="Delete notification"
+                  >
+                    <i class="eva eva-close-outline"></i>
+                  </button>
+                </div>
+                <p class="notification-message mb-1 text-muted small">{{ notification.message }}</p>
+                <small class="notification-time text-muted">{{
+                  getTimeAgo(notification.createdAt)
+                }}</small>
+              </div>
+              @if (!notification.isRead) {
+              <span class="unread-indicator ms-2"></span>
+              }
+            </div>
+            } }
+          </div>
+
+          <div class="notification-footer text-center py-2 border-top">
+            <button
+              class="btn btn-link btn-sm text-primary text-decoration-none"
+              (click)="viewAllNotifications()"
+            >
+              View all notifications
+            </button>
+          </div>
+        </div>
+        }
       </div>
+
       <!-- CheckIn -->
-      <div class="position-relative cursor-pointer" (click)="goToCheckIn()" style="display: inline-block;">
+      <div
+        class="position-relative cursor-pointer"
+        (click)="goToCheckIn()"
+        style="display: inline-block"
+      >
         <i class="eva eva-arrow-circle-right-outline fs-4 text-muted"></i>
         <span
-          class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle">
+          class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"
+        >
           <span class="visually-hidden">Check in</span>
         </span>
       </div>
 
       <!-- User Profile -->
       <div class="dropdown ms-3">
-        <a class="d-flex align-items-center text-decoration-none dropdown-toggle user-profile" href="#" role="button"
-          id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-          <div class="user-avatar rounded-circle bg-light d-flex align-items-center justify-content-center me-2">
+        <a
+          class="d-flex align-items-center text-decoration-none dropdown-toggle user-profile"
+          href="#"
+          role="button"
+          id="userDropdown"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <div
+            class="user-avatar rounded-circle bg-light d-flex align-items-center justify-content-center me-2"
+          >
             <i class="eva eva-person fs-4 text-secondary"></i>
           </div>
           <span class="d-none d-md-inline fw-semibold text-dark">Nick Jones</span>
         </a>
-        <ul class="dropdown-menu dropdown-menu-end border-0 shadow-sm" aria-labelledby="userDropdown">
+        <ul
+          class="dropdown-menu dropdown-menu-end border-0 shadow-sm"
+          aria-labelledby="userDropdown"
+        >
           <li>
             <a class="dropdown-item" href="#"><i class="eva eva-person-outline me-2"></i>Profile</a>
           </li>
@@ -58,15 +163,22 @@
             <hr class="dropdown-divider" />
           </li>
           <li>
-            <a class="dropdown-item" href="#" (click)="goTocheckOut(); $event.preventDefault()"><i
-                class="eva eva-arrow-circle-left-outline me-2"></i>Check out</a>
+            <a class="dropdown-item" href="#" (click)="goTocheckOut(); $event.preventDefault()"
+              ><i class="eva eva-arrow-circle-left-outline me-2"></i>Check out</a
+            >
           </li>
           <li>
-            <a class="dropdown-item" href="#" (click)="logout(); $event.preventDefault()"><i
-                class="eva eva-log-out-outline me-2"></i>Log out</a>
+            <a class="dropdown-item" href="#" (click)="logout(); $event.preventDefault()"
+              ><i class="eva eva-log-out-outline me-2"></i>Log out</a
+            >
           </li>
         </ul>
       </div>
     </div>
   </div>
 </nav>
+
+<!-- Backdrop to close notification dropdown when clicking outside -->
+@if (isNotificationDropdownOpen) {
+<div class="notification-backdrop" (click)="closeNotificationDropdown()"></div>
+}

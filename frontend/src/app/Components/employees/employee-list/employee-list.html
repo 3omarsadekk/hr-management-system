@@ -1,70 +1,880 @@
-<div class="container-fluid p-4">
+<div class="container-fluid py-4">
+  <!-- Header -->
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Employee Management</h2>
-    <button class="btn btn-primary"><i class="eva eva-plus-outline me-2"></i>Add Employee</button>
+    <div>
+      <h2 class="mb-1">Employee Management</h2>
+      <p class="mb-0">Manage employee records and information</p>
+    </div>
+    <button class="btn btn-primary d-flex align-items-center gap-2" (click)="openCreateModal()">
+      <i class="eva eva-plus-outline"></i>
+      Add Employee
+    </button>
   </div>
 
-  <div class="card shadow-sm">
-    <div class="card-body p-0">
-      <div *ngIf="isLoading" class="p-4 text-center">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
+  <!-- Search and Filters -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-4">
+          <label class="form-label">Search</label>
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="eva eva-search-outline"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search by name or email..."
+              [(ngModel)]="searchTerm"
+            />
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Department</label>
+          <select class="form-select" [(ngModel)]="filterDepartment">
+            <option [ngValue]="null">All Departments</option>
+            @for (dept of departments; track dept.id) {
+            <option [ngValue]="dept.id">{{ dept.name }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label class="form-label">Designation</label>
+          <select class="form-select" [(ngModel)]="filterDesignation">
+            <option [ngValue]="null">All Designations</option>
+            @for (designation of designations; track designation.id) {
+            <option [ngValue]="designation.id">{{ designation.title }}</option>
+            }
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-outline-secondary w-100" (click)="clearFilters()">
+            <i class="eva eva-close-outline me-1"></i>
+            Clear
+          </button>
         </div>
       </div>
+    </div>
+  </div>
 
-      <div *ngIf="error" class="alert alert-danger m-3" role="alert">
-        {{ error }}
+  <!-- Loading State -->
+  @if (isLoading) {
+  <div class="card">
+    <div class="card-body text-center py-5">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
+      <p class="mt-3 mb-0">Loading employees...</p>
+    </div>
+  </div>
+  }
 
-      <div *ngIf="!isLoading && !error" class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-          <thead>
+  <!-- Error State -->
+  @if (error && !isLoading) {
+  <div class="alert alert-danger d-flex align-items-center" role="alert">
+    <i class="eva eva-alert-circle-outline me-2 fs-4"></i>
+    <div>{{ error }}</div>
+  </div>
+  }
+
+  <!-- Employees Table -->
+  @if (!isLoading && !error) {
+  <div class="card">
+    <div class="card-body p-0">
+      @if (filteredEmployees.length === 0) {
+      <div class="text-center py-5">
+        <i class="eva eva-people-outline fs-1 text-muted"></i>
+        <p class="mt-3 mb-0 text-muted">
+          @if (employees.length === 0) { No employees found. Add your first employee! } @else { No
+          employees match your search criteria. }
+        </p>
+      </div>
+      } @else {
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
             <tr>
-              <th class="ps-4">Name</th>
+              <th>Employee</th>
               <th>Department</th>
               <th>Designation</th>
-              <th>Email</th>
-              <th>Status</th>
-              <th>Actions</th>
+              <th>Contact</th>
+              <th>Hire Date</th>
+              <th>Salary</th>
+              <th class="text-end text-nowrap">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let employee of employees">
-              <td class="ps-4">
+            @for (employee of filteredEmployees; track employee.id) {
+            <tr>
+              <td>
                 <div class="d-flex align-items-center">
                   <div
-                    class="avatar-initial rounded-circle text-primary fw-bold me-3 d-flex align-items-center justify-content-center"
+                    class="avatar-initial rounded-circle me-3 d-flex align-items-center justify-content-center"
                     style="width: 40px; height: 40px"
                   >
-                    {{ employee.firstName.charAt(0) }}{{ employee.lastName.charAt(0) }}
+                    {{ getInitials(employee.firstName, employee.lastName) }}
                   </div>
                   <div>
-                    <div class="fw-bold">{{ employee.firstName }} {{ employee.lastName }}</div>
+                    <div class="fw-semibold">{{ employee.firstName }} {{ employee.lastName }}</div>
                     <div class="text-muted small">{{ employee.email }}</div>
                   </div>
                 </div>
               </td>
-              <td>{{ employee.departmentName || '-' }}</td>
-              <td>{{ employee.designationName || '-' }}</td>
-              <td>{{ employee.email }}</td>
               <td>
-                <span class="badge bg-success rounded-pill">Active</span>
+                <span class="badge bg-primary bg-opacity-10 text-primary">
+                  {{ getDepartmentName(employee.deptId) }}
+                </span>
               </td>
               <td>
-                <button class="btn btn-sm btn-light text-primary me-2">
-                  <i class="eva eva-edit-2-outline"></i>
+                <span class="text-muted">{{ getDesignationName(employee.designationId) }}</span>
+              </td>
+              <td>
+                <span class="text-muted">{{ employee.contactNumber || '-' }}</span>
+              </td>
+              <td>
+                <span class="text-muted">{{ formatDate(employee.hireDate) }}</span>
+              </td>
+              <td>
+                <span class="fw-medium">{{ formatCurrency(employee.basicSalary) }}</span>
+              </td>
+              <td class="text-end text-nowrap">
+                <button
+                  class="btn btn-sm btn-outline-primary me-1"
+                  title="View Details"
+                  (click)="viewDetail(employee)"
+                >
+                  <i class="eva eva-eye-outline"></i>
                 </button>
-                <button class="btn btn-sm btn-light text-danger">
+                <button
+                  class="btn btn-sm btn-outline-info me-1"
+                  title="Edit"
+                  (click)="openEditModal(employee)"
+                >
+                  <i class="eva eva-edit-outline"></i>
+                </button>
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  title="Delete"
+                  (click)="openDeleteModal(employee)"
+                >
                   <i class="eva eva-trash-2-outline"></i>
                 </button>
               </td>
             </tr>
-            <tr *ngIf="employees.length === 0">
-              <td colspan="6" class="text-center py-5 text-muted">No employees found</td>
-            </tr>
+            }
           </tbody>
         </table>
+      </div>
+      }
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="row mt-4">
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center">
+          <div class="h4 mb-1 text-primary">{{ filteredEmployees.length }}</div>
+          <small class="text-muted">Total Employees</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center">
+          <div class="h4 mb-1 text-success">{{ getAverageSalary() }}</div>
+          <small class="text-muted">Average Salary</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body text-center">
+          <div class="h4 mb-1 text-info">{{ getEmployeesThisMonth() }}</div>
+          <small class="text-muted">New This Month</small>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>
+
+<!-- Create/Edit Modal -->
+@if (showModal) {
+<div class="modal show d-block" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {{ isEditing ? 'Edit Employee' : 'Add New Employee' }}
+        </h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <!-- CREATE FORM -->
+        @if (!isEditing) {
+        <form (ngSubmit)="saveEmployee()">
+          <!-- Account Credentials Section (only for new employees) -->
+          <h6 class="text-primary mb-3">
+            <i class="eva eva-lock-outline me-2"></i>Account Credentials
+          </h6>
+          <div class="alert alert-info mb-3">
+            <i class="eva eva-info-outline me-2"></i>
+            <small
+              >Create login credentials for the new employee. You can generate a random password or
+              enter one manually.</small
+            >
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Password <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="createFormData.password"
+                  name="password"
+                  placeholder="Enter password"
+                  required
+                />
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  (click)="onGeneratePassword()"
+                  title="Generate Password"
+                >
+                  <i class="eva eva-refresh-outline"></i>
+                </button>
+              </div>
+              <div class="form-text">Minimum 6 characters</div>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Confirm Password <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="createFormData.confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirm password"
+                required
+              />
+            </div>
+          </div>
+
+          <hr class="my-4" />
+
+          <h6 class="text-primary mb-3">
+            <i class="eva eva-person-outline me-2"></i>Personal Information
+          </h6>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">First Name <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="createFormData.firstName"
+                name="firstName"
+                placeholder="Enter first name"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Last Name <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="createFormData.lastName"
+                name="lastName"
+                placeholder="Enter last name"
+                required
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Email <span class="text-danger">*</span></label>
+              <input
+                type="email"
+                class="form-control"
+                [(ngModel)]="createFormData.email"
+                name="email"
+                placeholder="Enter email address"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Contact Number</label>
+              <input
+                type="tel"
+                class="form-control"
+                [(ngModel)]="createFormData.contactNumber"
+                name="contactNumber"
+                placeholder="Enter contact number"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Date of Birth</label>
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="createFormData.dateOfBirth"
+                name="dateOfBirth"
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Gender</label>
+              <select class="form-select" [(ngModel)]="createFormData.gender" name="gender">
+                <option value="">-- Select Gender --</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Address</label>
+            <textarea
+              class="form-control"
+              [(ngModel)]="createFormData.address"
+              name="address"
+              rows="2"
+              placeholder="Enter address"
+            ></textarea>
+          </div>
+
+          <hr class="my-4" />
+
+          <h6 class="text-primary mb-3">
+            <i class="eva eva-briefcase-outline me-2"></i>Employment Information
+          </h6>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Department <span class="text-danger">*</span></label>
+              <select
+                class="form-select"
+                [(ngModel)]="createFormData.deptId"
+                name="deptId"
+                required
+              >
+                <option [ngValue]="0">-- Select Department --</option>
+                @for (dept of departments; track dept.id) {
+                <option [ngValue]="dept.id">{{ dept.name }}</option>
+                }
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Designation <span class="text-danger">*</span></label>
+              <select
+                class="form-select"
+                [(ngModel)]="createFormData.designationId"
+                name="designationId"
+                required
+              >
+                <option [ngValue]="0">-- Select Designation --</option>
+                @for (designation of designations; track designation.id) {
+                <option [ngValue]="designation.id">{{ designation.title }}</option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Hire Date <span class="text-danger">*</span></label>
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="createFormData.hireDate"
+                name="hireDate"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Basic Salary <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="createFormData.basicSalary"
+                  name="basicSalary"
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Effective Start Date</label>
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="createFormData.eFF_Start"
+                name="eFF_Start"
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Effective End Date</label>
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="createFormData.eFF_End"
+                name="eFF_End"
+              />
+            </div>
+          </div>
+        </form>
+        }
+
+        <!-- EDIT FORM -->
+        @if (isEditing) {
+        <form (ngSubmit)="saveEmployee()">
+          <h6 class="text-primary mb-3">
+            <i class="eva eva-person-outline me-2"></i>Personal Information
+          </h6>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">First Name <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="editFormData.firstName"
+                name="firstName"
+                placeholder="Enter first name"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Last Name <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="editFormData.lastName"
+                name="lastName"
+                placeholder="Enter last name"
+                required
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Email <span class="text-danger">*</span></label>
+              <input
+                type="email"
+                class="form-control"
+                [(ngModel)]="editFormData.email"
+                name="email"
+                placeholder="Enter email address"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Contact Number</label>
+              <input
+                type="tel"
+                class="form-control"
+                [(ngModel)]="editFormData.contactNumber"
+                name="contactNumber"
+                placeholder="Enter contact number"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Date of Birth</label>
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="editFormData.dateOfBirth"
+                name="dateOfBirth"
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Gender</label>
+              <select class="form-select" [(ngModel)]="editFormData.gender" name="gender">
+                <option value="">-- Select Gender --</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Address</label>
+            <textarea
+              class="form-control"
+              [(ngModel)]="editFormData.address"
+              name="address"
+              rows="2"
+              placeholder="Enter address"
+            ></textarea>
+          </div>
+
+          <hr class="my-4" />
+
+          <h6 class="text-primary mb-3">
+            <i class="eva eva-briefcase-outline me-2"></i>Employment Information
+          </h6>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Department <span class="text-danger">*</span></label>
+              <select class="form-select" [(ngModel)]="editFormData.deptId" name="deptId" required>
+                <option [ngValue]="0">-- Select Department --</option>
+                @for (dept of departments; track dept.id) {
+                <option [ngValue]="dept.id">{{ dept.name }}</option>
+                }
+              </select>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Designation <span class="text-danger">*</span></label>
+              <select
+                class="form-select"
+                [(ngModel)]="editFormData.designationId"
+                name="designationId"
+                required
+              >
+                <option [ngValue]="0">-- Select Designation --</option>
+                @for (designation of designations; track designation.id) {
+                <option [ngValue]="designation.id">{{ designation.title }}</option>
+                }
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Hire Date <span class="text-danger">*</span></label>
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="editFormData.hireDate"
+                name="hireDate"
+                required
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Basic Salary <span class="text-danger">*</span></label>
+              <div class="input-group">
+                <span class="input-group-text">$</span>
+                <input
+                  type="number"
+                  class="form-control"
+                  [(ngModel)]="editFormData.basicSalary"
+                  name="basicSalary"
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Effective Start Date</label>
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="editFormData.eFF_Start"
+                name="eFF_Start"
+              />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Effective End Date</label>
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="editFormData.eFF_End"
+                name="eFF_End"
+              />
+            </div>
+          </div>
+        </form>
+        }
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closeModal()"
+          [disabled]="isSaving"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="saveEmployee()"
+          [disabled]="isSaving"
+        >
+          @if (isSaving) {
+          <span class="spinner-border spinner-border-sm me-1"></span>
+          Saving... } @else {
+          {{ isEditing ? 'Update Employee' : 'Create Employee Account' }}
+          }
+        </button>
       </div>
     </div>
   </div>
 </div>
+}
+
+<!-- Detail Modal -->
+@if (showDetailModal && selectedEmployee) {
+<div class="modal show d-block" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Employee Details</h5>
+        <button type="button" class="btn-close" (click)="closeDetailModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center mb-4">
+          <div
+            class="avatar-initial rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3"
+            style="width: 80px; height: 80px; font-size: 1.5rem"
+          >
+            {{ getInitials(selectedEmployee.firstName, selectedEmployee.lastName) }}
+          </div>
+          <h4 class="mb-1">{{ selectedEmployee.firstName }} {{ selectedEmployee.lastName }}</h4>
+          <p class="text-muted mb-0">{{ selectedEmployee.email }}</p>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <h6 class="text-primary mb-3">
+              <i class="eva eva-person-outline me-2"></i>Personal Information
+            </h6>
+            <table class="table table-sm table-borderless">
+              <tr>
+                <td class="text-muted" style="width: 40%">Full Name:</td>
+                <td class="fw-medium">
+                  {{ selectedEmployee.firstName }} {{ selectedEmployee.lastName }}
+                </td>
+              </tr>
+              <tr>
+                <td class="text-muted">Email:</td>
+                <td>{{ selectedEmployee.email }}</td>
+              </tr>
+              <tr>
+                <td class="text-muted">Contact:</td>
+                <td>{{ selectedEmployee.contactNumber || 'N/A' }}</td>
+              </tr>
+              <tr>
+                <td class="text-muted">Date of Birth:</td>
+                <td>{{ formatDate(selectedEmployee.dateOfBirth) }}</td>
+              </tr>
+              <tr>
+                <td class="text-muted">Gender:</td>
+                <td>{{ selectedEmployee.gender || 'N/A' }}</td>
+              </tr>
+              <tr>
+                <td class="text-muted">Address:</td>
+                <td>{{ selectedEmployee.address || 'N/A' }}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="col-md-6">
+            <h6 class="text-primary mb-3">
+              <i class="eva eva-briefcase-outline me-2"></i>Employment Information
+            </h6>
+            <table class="table table-sm table-borderless">
+              <tr>
+                <td class="text-muted" style="width: 40%">Department:</td>
+                <td>
+                  <span class="badge bg-primary">
+                    {{ getDepartmentName(selectedEmployee.deptId) }}
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td class="text-muted">Designation:</td>
+                <td>{{ getDesignationName(selectedEmployee.designationId) }}</td>
+              </tr>
+              <tr>
+                <td class="text-muted">Hire Date:</td>
+                <td>{{ formatDate(selectedEmployee.hireDate) }}</td>
+              </tr>
+              <tr>
+                <td class="text-muted">Basic Salary:</td>
+                <td class="fw-medium text-success">
+                  {{ formatCurrency(selectedEmployee.basicSalary) }}
+                </td>
+              </tr>
+              <tr>
+                <td class="text-muted">Effective Start:</td>
+                <td>{{ formatDate(selectedEmployee.eFF_Start) }}</td>
+              </tr>
+              <tr>
+                <td class="text-muted">Effective End:</td>
+                <td>{{ formatDate(selectedEmployee.eFF_End) }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-outline-info"
+          (click)="closeDetailModal(); openEditModal(selectedEmployee)"
+        >
+          <i class="eva eva-edit-outline me-1"></i>Edit
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="closeDetailModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+}
+
+<!-- Delete Confirmation Modal -->
+@if (showDeleteModal) {
+<div class="modal show d-block" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Delete</h5>
+        <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center mb-3">
+          <i class="eva eva-alert-triangle-outline text-danger" style="font-size: 3rem"></i>
+        </div>
+        <p class="text-center">
+          Are you sure you want to delete
+          <strong>{{ employeeToDelete?.firstName }} {{ employeeToDelete?.lastName }}</strong
+          >?
+        </p>
+        <p class="text-muted small mb-0 text-center">
+          This action cannot be undone. All data associated with this employee will be permanently
+          removed.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closeDeleteModal()"
+          [disabled]="isSaving"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="confirmDelete()"
+          [disabled]="isSaving"
+        >
+          @if (isSaving) {
+          <span class="spinner-border spinner-border-sm me-1"></span>
+          Deleting... } @else {
+          <i class="eva eva-trash-2-outline me-1"></i>
+          Delete Employee }
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+}
+
+<!-- Credentials Modal (shown after successful employee registration) -->
+@if (showCredentialsModal && createdEmployeeCredentials) {
+<div class="modal show d-block" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title">
+          <i class="eva eva-checkmark-circle-outline me-2"></i>Employee Account Created
+        </h5>
+        <button
+          type="button"
+          class="btn-close btn-close-white"
+          (click)="closeCredentialsModal()"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center mb-4">
+          <div class="mb-3">
+            <i class="eva eva-person-done-outline text-success" style="font-size: 4rem"></i>
+          </div>
+          <h5 class="mb-1">{{ createdEmployeeCredentials.fullName }}</h5>
+          <p class="text-muted mb-0">Employee account has been successfully created!</p>
+        </div>
+
+        <div class="alert alert-warning mb-3">
+          <i class="eva eva-alert-circle-outline me-2"></i>
+          <strong>Important:</strong> Please save or share these credentials with the employee. The
+          password will not be shown again.
+        </div>
+
+        <div class="card bg-light">
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label text-muted small mb-1">Email (Login)</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control bg-white"
+                  [value]="createdEmployeeCredentials.email"
+                  readonly
+                />
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  (click)="copyToClipboard(createdEmployeeCredentials.email, 'Email')"
+                  title="Copy email"
+                >
+                  <i class="eva eva-copy-outline"></i>
+                </button>
+              </div>
+            </div>
+            <div class="mb-0">
+              <label class="form-label text-muted small mb-1">Password</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control bg-white font-monospace"
+                  [value]="createdEmployeeCredentials.password"
+                  readonly
+                />
+                <button
+                  type="button"
+                  class="btn btn-outline-primary"
+                  (click)="copyToClipboard(createdEmployeeCredentials.password, 'Password')"
+                  title="Copy password"
+                >
+                  <i class="eva eva-copy-outline"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3 text-center">
+          <button
+            type="button"
+            class="btn btn-outline-primary btn-sm"
+            (click)="
+              copyToClipboard(
+                createdEmployeeCredentials.email + '\n' + createdEmployeeCredentials.password,
+                'Credentials'
+              )
+            "
+          >
+            <i class="eva eva-copy-outline me-1"></i>Copy Both
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="closeCredentialsModal()">
+          <i class="eva eva-checkmark-outline me-1"></i>Done
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+}
