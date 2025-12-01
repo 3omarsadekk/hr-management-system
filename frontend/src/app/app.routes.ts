@@ -39,6 +39,101 @@ export const routes: Routes = [
       { path: 'checkIn', component: CheckIn, title: 'CheckIn' },
       { path: 'checkOut', component: CheckOut, title: 'CheckOut' },
       { path: 'updateEmployeeImage', component: UpdateEmployeeImage, title: 'UpdateEmployeeImage' },
+
+      // ESS (Employee Self-Service) Routes
+      {
+        path: 'ess',
+        canActivate: [authGuard],
+        children: [
+          {
+            path: 'dashboard',
+            loadComponent: () =>
+              import('./Components/ess/ess-dashboard/ess-dashboard.component').then(
+                (m) => m.EssDashboardComponent
+              ),
+            title: 'ESS Dashboard',
+          },
+          {
+            path: 'profile',
+            loadComponent: () =>
+              import('./Components/ess/ess-profile/ess-profile.component').then(
+                (m) => m.EssProfileComponent
+              ),
+            title: 'My Profile',
+          },
+          {
+            path: 'leave-requests',
+            loadComponent: () =>
+              import('./Components/ess/ess-leave-requests/ess-leave-requests.component').then(
+                (m) => m.EssLeaveRequestsComponent
+              ),
+            title: 'My Leave Requests',
+          },
+          {
+            path: 'payslips',
+            loadComponent: () =>
+              import('./Components/ess/ess-payslips/ess-payslips.component').then(
+                (m) => m.EssPayslipsComponent
+              ),
+            title: 'My Payslips',
+          },
+          { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+        ],
+      },
+
+      // Recruitment Routes
+      {
+        path: 'recruitment',
+        canActivate: [authGuard],
+        children: [
+          {
+            path: 'jobs',
+            loadComponent: () =>
+              import(
+                './Components/recruitment/job-postings/job-posting-list/job-posting-list.component'
+              ).then((m) => m.JobPostingListComponent),
+            title: 'Job Postings',
+          },
+          {
+            path: 'candidates',
+            loadComponent: () =>
+              import(
+                './Components/recruitment/candidates/candidate-list/candidate-list.component'
+              ).then((m) => m.CandidateListComponent),
+            title: 'Candidates',
+          },
+          {
+            path: 'applications',
+            loadComponent: () =>
+              import(
+                './Components/recruitment/applications/application-list/application-list.component'
+              ).then((m) => m.ApplicationListComponent),
+            title: 'Job Applications',
+          },
+          { path: '', redirectTo: 'jobs', pathMatch: 'full' },
+        ],
+      },
+
+      // Organization Routes (Departments & Designations)
+      {
+        path: 'departments',
+        loadComponent: () =>
+          import(
+            './Components/organization/departments/department-list/department-list.component'
+          ).then((m) => m.DepartmentListComponent),
+        canActivate: [authGuard],
+        title: 'Departments',
+      },
+      {
+        path: 'designations',
+        loadComponent: () =>
+          import(
+            './Components/organization/designations/designation-list/designation-list.component'
+          ).then((m) => m.DesignationListComponent),
+        canActivate: [authGuard],
+        title: 'Designations',
+      },
+
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
