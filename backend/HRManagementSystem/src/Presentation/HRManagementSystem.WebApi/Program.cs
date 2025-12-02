@@ -1,5 +1,6 @@
 // using FaceRecognitionDotNet; // Disabled - requires native Dlib libraries for Linux
 using HRManagementSystem.Application.Services;
+using HRManagementSystem.WebApi.Extensions;
 using HRManagementSystem.WebApi.Middleware;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -69,6 +70,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Configure Hangfire Dashboard and register recurring jobs
+app.UseHangfireDashboardWithConfig();
+
 app.UseCors("AllowAngular");
 
 app.UseHttpsRedirection();
@@ -76,5 +80,8 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+// Register recurring background jobs
+app.RegisterHangfireRecurringJobs();
 
 await app.RunAsync();

@@ -9,6 +9,7 @@ import { LoginComponent } from './Components/auth/login/login.component';
 import { RegisterComponent } from './Components/auth/register/register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { authGuard } from './auth.guard';
+import { LandingPageComponent } from './Components/landing/landing-page/landing-page.component';
 
 /* export const routes: Routes = [
     // { path: '', redirectTo: 'home', pathMatch: 'full', title: 'Home' },
@@ -79,6 +80,14 @@ export const routes: Routes = [
               ),
             title: 'My Payslips',
           },
+          {
+            path: 'training',
+            loadComponent: () =>
+              import('./Components/ess/ess-training/ess-training.component').then(
+                (m) => m.EssTrainingComponent
+              ),
+            title: 'My Training',
+          },
           { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
         ],
       },
@@ -116,6 +125,39 @@ export const routes: Routes = [
         ],
       },
 
+      // Training Routes
+      {
+        path: 'training',
+        canActivate: [authGuard],
+        children: [
+          {
+            path: 'courses',
+            loadComponent: () =>
+              import(
+                './Components/training/training-courses/training-course-list/training-course-list.component'
+              ).then((m) => m.TrainingCourseListComponent),
+            title: 'Training Courses',
+          },
+          {
+            path: 'enrollments',
+            loadComponent: () =>
+              import(
+                './Components/training/employee-enrollments/enrollment-list/enrollment-list.component'
+              ).then((m) => m.EnrollmentListComponent),
+            title: 'Employee Enrollments',
+          },
+          {
+            path: 'requests',
+            loadComponent: () =>
+              import(
+                './Components/training/training-requests/request-list/request-list.component'
+              ).then((m) => m.RequestListComponent),
+            title: 'Training Requests',
+          },
+          { path: '', redirectTo: 'courses', pathMatch: 'full' },
+        ],
+      },
+
       // Organization Routes (Departments & Designations)
       {
         path: 'departments',
@@ -136,6 +178,55 @@ export const routes: Routes = [
         title: 'Designations',
       },
 
+      // Reports Routes
+      {
+        path: 'reports',
+        canActivate: [authGuard],
+        children: [
+          {
+            path: 'dashboard',
+            loadComponent: () =>
+              import('./pages/reports/dashboard/reporting-dashboard.component').then(
+                (m) => m.ReportingDashboardComponent
+              ),
+            title: 'Reports Dashboard',
+          },
+          {
+            path: 'employees',
+            loadComponent: () =>
+              import('./pages/reports/employees/employees-reports.component').then(
+                (m) => m.EmployeesReportsComponent
+              ),
+            title: 'Employee Reports',
+          },
+          {
+            path: 'payroll',
+            loadComponent: () =>
+              import('./pages/reports/payroll/payroll-reports.component').then(
+                (m) => m.PayrollReportsComponent
+              ),
+            title: 'Payroll Reports',
+          },
+          {
+            path: 'leave',
+            loadComponent: () =>
+              import('./pages/reports/leave/leave-reports.component').then(
+                (m) => m.LeaveReportsComponent
+              ),
+            title: 'Leave Reports',
+          },
+          {
+            path: 'recruitment',
+            loadComponent: () =>
+              import('./pages/reports/recruitment/recruitment-reports.component').then(
+                (m) => m.RecruitmentReportsComponent
+              ),
+            title: 'Recruitment Reports',
+          },
+          { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+        ],
+      },
+
       // Notifications Route
       {
         path: 'notifications',
@@ -150,5 +241,9 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
+  {
+    path: '',
+    component: LandingPageComponent,
+    title: 'HRM System - Human Resource Management',
+  },
 ];
