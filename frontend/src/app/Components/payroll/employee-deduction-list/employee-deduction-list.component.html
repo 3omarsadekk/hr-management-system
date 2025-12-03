@@ -1,0 +1,280 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Employee Deductions</h2>
+        <button class="btn btn-primary" (click)="openCreateModal()">
+            <i class="eva eva-plus-outline me-2"></i>Assign Deduction
+        </button>
+    </div>
+
+    <div *ngIf="isLoading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div *ngIf="!isLoading && !error" class="card mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label">Search</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="eva eva-search-outline"></i>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Search by employee name..."
+                            [(ngModel)]="searchTerm">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!isLoading && !error" class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Employee</th>
+                            <th>Deduction</th>
+                            <th>Amount</th>
+                            <th>Recurrence</th>
+                            <th>Dates</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let empDeduction of filteredEmployeeDeductions">
+                            <td class="ps-4">
+                                <div class="fw-medium">{{ getEmployeeName(empDeduction.employeeId) }}</div>
+                            </td>
+                            <td>
+                                <span class="badge bg-primary bg-opacity-10 text-primary">
+                                    {{ getDeductionName(empDeduction.deductionId) }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="fw-medium">
+                                    {{ empDeduction.isPercentage ? empDeduction.amount + '%' :
+                                    formatCurrency(empDeduction.amount) }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge bg-info bg-opacity-10 text-info">
+                                    {{ getRecurrenceLabel(empDeduction.recurrence) }}
+                                </span>
+                            </td>
+                            <td>
+                                <div class="small">
+                                    <div *ngIf="empDeduction.startDate" class="text-muted">
+                                        <i class="eva eva-calendar-outline me-1"></i>{{
+                                        formatDate(empDeduction.startDate) }}
+                                    </div>
+                                    <div *ngIf="empDeduction.endDate" class="text-danger">
+                                        <i class="eva eva-calendar-outline me-1"></i>{{ formatDate(empDeduction.endDate)
+                                        }}
+                                    </div>
+                                    <div *ngIf="!empDeduction.endDate && empDeduction.startDate" class="text-success">
+                                        <i class="eva eva-checkmark-circle-2-outline me-1"></i>Ongoing
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-sm btn-outline-info me-2"
+                                    (click)="openDetailsModal(empDeduction)" title="View Details">
+                                    <i class="eva eva-eye-outline"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary me-2"
+                                    (click)="openEditModal(empDeduction)" title="Edit">
+                                    <i class="eva eva-edit-outline"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" (click)="openDeleteModal(empDeduction)"
+                                    title="Delete">
+                                    <i class="eva eva-trash-2-outline"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="employeeDeductions.length === 0">
+                            <td colspan="6" class="text-center py-5">
+                                <i class="eva eva-people-outline fs-1 text-muted"></i>
+                                <p class="mt-3 mb-0 text-muted">No employee deductions found. Assign a deduction to an
+                                    employee!</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create/Edit Modal -->
+<div class="modal fade show" [class.d-block]="showModal" tabindex="-1" *ngIf="showModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ isEditing ? 'Edit Assignment' : 'Assign Deduction' }}</h5>
+                <button type="button" class="btn-close" (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Employee & Deduction Selection (Only for Create) -->
+                <div class="mb-3" *ngIf="!isEditing">
+                    <label class="form-label">Employee</label>
+                    <select class="form-select" [(ngModel)]="createFormData.employeeId">
+                        <option [ngValue]="0" disabled>Select Employee</option>
+                        <option *ngFor="let emp of employees" [ngValue]="emp.id">
+                            {{ emp.firstName }} {{ emp.lastName }}
+                        </option>
+                    </select>
+                </div>
+                <div class="mb-3" *ngIf="!isEditing">
+                    <label class="form-label">Deduction</label>
+                    <select class="form-select" [(ngModel)]="createFormData.deductionId">
+                        <option [ngValue]="0" disabled>Select Deduction</option>
+                        <option *ngFor="let ded of deductions" [ngValue]="ded.id">
+                            {{ getDeductionDisplay(ded) }}
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Recurrence -->
+                <div class="mb-3">
+                    <label class="form-label">Recurrence</label>
+                    <select class="form-select"
+                        [ngModel]="isEditing ? updateFormData.recurrence : createFormData.recurrence"
+                        (ngModelChange)="isEditing ? (updateFormData.recurrence = $event) : (createFormData.recurrence = $event); onRecurrenceChange()">
+                        <option [ngValue]="RecurrenceType.OneTime">One Time</option>
+                        <option [ngValue]="RecurrenceType.Period">Period</option>
+                        <option [ngValue]="RecurrenceType.Annual">Annual</option>
+                        <option [ngValue]="RecurrenceType.Permanent">Permanent</option>
+                    </select>
+                </div>
+
+                <!-- Dates -->
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Start Date</label>
+                        <input type="date" class="form-control"
+                            [ngModel]="isEditing ? updateFormData.startDate : createFormData.startDate"
+                            (ngModelChange)="isEditing ? (updateFormData.startDate = $event) : (createFormData.startDate = $event)" />
+                    </div>
+                    <div class="col-md-6 mb-3"
+                        *ngIf="(isEditing ? updateFormData.recurrence : createFormData.recurrence) === RecurrenceType.Period">
+                        <label class="form-label">End Date</label>
+                        <input type="date" class="form-control"
+                            [ngModel]="isEditing ? updateFormData.endDate : createFormData.endDate"
+                            (ngModelChange)="isEditing ? (updateFormData.endDate = $event) : (createFormData.endDate = $event)" />
+                    </div>
+                </div>
+
+                <!-- Amount Override -->
+                <div class="mb-3">
+                    <label class="form-label">Amount / Percentage</label>
+                    <div class="btn-group w-100 mb-2" role="group">
+                        <input type="radio" class="btn-check" name="amountType" id="typeDefault" value="default"
+                            [(ngModel)]="amountType" (change)="onAmountTypeChange()">
+                        <label class="btn btn-outline-secondary" for="typeDefault">Default</label>
+
+                        <input type="radio" class="btn-check" name="amountType" id="typeFixed" value="fixed"
+                            [(ngModel)]="amountType" (change)="onAmountTypeChange()">
+                        <label class="btn btn-outline-secondary" for="typeFixed">Fixed Amount</label>
+
+                        <input type="radio" class="btn-check" name="amountType" id="typePercentage" value="percentage"
+                            [(ngModel)]="amountType" (change)="onAmountTypeChange()">
+                        <label class="btn btn-outline-secondary" for="typePercentage">Percentage</label>
+                    </div>
+
+                    <div class="input-group" *ngIf="amountType !== 'default'">
+                        <span class="input-group-text">{{ amountType === 'percentage' ? '%' : '$' }}</span>
+                        <input type="number" class="form-control" placeholder="Value"
+                            [ngModel]="isEditing ? updateFormData.amount : createFormData.amount"
+                            (ngModelChange)="isEditing ? (updateFormData.amount = $event) : (createFormData.amount = $event)">
+                    </div>
+                    <div class="form-text" *ngIf="amountType === 'default'">
+                        Uses the default value defined in the Deduction settings.
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="save()" [disabled]="isSaving">
+                    <span *ngIf="isSaving" class="spinner-border spinner-border-sm me-2" role="status"
+                        aria-hidden="true"></span>
+                    {{ isEditing ? 'Update' : 'Assign' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showModal"></div>
+
+<!-- Details Modal -->
+<div class="modal fade show" [class.d-block]="showDetailsModal" tabindex="-1" *ngIf="showDetailsModal && itemToView">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Employee Deduction Details</h5>
+                <button type="button" class="btn-close" (click)="closeDetailsModal()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Employee</p>
+                        <p class="fw-bold">{{ getEmployeeName(itemToView.employeeId) }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Deduction</p>
+                        <p class="fw-bold">{{ getDeductionName(itemToView.deductionId) }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Amount</p>
+                        <p class="fw-bold">{{ itemToView.isPercentage ? itemToView.amount + '%' :
+                            formatCurrency(itemToView.amount) }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Recurrence</p>
+                        <span class="badge bg-info bg-opacity-10 text-info">{{ getRecurrenceLabel(itemToView.recurrence)
+                            }}</span>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Start Date</p>
+                        <p class="fw-bold">{{ itemToView.startDate ? formatDate(itemToView.startDate) : 'Not set' }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">End Date</p>
+                        <p class="fw-bold">{{ itemToView.endDate ? formatDate(itemToView.endDate) : 'Ongoing' }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeDetailsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showDetailsModal"></div>
+
+<!-- Delete Modal -->
+<div class="modal fade show" [class.d-block]="showDeleteModal" tabindex="-1" *ngIf="showDeleteModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Remove Assignment</h5>
+                <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to remove this deduction assignment?</p>
+                <p class="text-danger mb-0"><small>This action cannot be undone.</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancel</button>
+                <button type="button" class="btn btn-danger" (click)="confirmDelete()" [disabled]="isSaving">
+                    <span *ngIf="isSaving" class="spinner-border spinner-border-sm me-2" role="status"
+                        aria-hidden="true"></span>
+                    Remove
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showDeleteModal"></div>

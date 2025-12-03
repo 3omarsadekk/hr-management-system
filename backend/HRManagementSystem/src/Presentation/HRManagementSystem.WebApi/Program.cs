@@ -1,6 +1,7 @@
 // using FaceRecognitionDotNet; // Disabled - requires native Dlib libraries for Linux
 using HRManagementSystem.Application.Services;
 using HRManagementSystem.WebApi.Middleware;
+using QuestPDF.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -59,6 +60,8 @@ builder.Services.AddCors(options => options.AddPolicy("AllowAngular",
     policy => policy.AllowAnyOrigin()
         .AllowAnyMethod()
         .AllowAnyHeader()));
+
+QuestPDF.Settings.License = LicenseType.Community;
 
 WebApplication app = builder.Build();
 

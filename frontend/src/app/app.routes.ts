@@ -136,6 +136,55 @@ export const routes: Routes = [
         title: 'Designations',
       },
 
+      // Payroll Routes
+      {
+        path: 'payroll',
+        canActivate: [authGuard],
+        children: [
+          {
+            path: 'payslips',
+            loadComponent: () =>
+              import(
+                './Components/payroll/payslip-list/payslip-list.component'
+              ).then((m) => m.PayslipListComponent),
+            title: 'Payslips',
+          },
+          {
+            path: 'allowances',
+            loadComponent: () =>
+              import(
+                './Components/payroll/allowance-list/allowance-list.component'
+              ).then((m) => m.AllowanceListComponent),
+            title: 'Allowances',
+          },
+          {
+            path: 'deductions',
+            loadComponent: () =>
+              import(
+                './Components/payroll/deduction-list/deduction-list.component'
+              ).then((m) => m.DeductionListComponent),
+            title: 'Deductions',
+          },
+          {
+            path: 'employee-allowances',
+            loadComponent: () =>
+              import(
+                './Components/payroll/employee-allowance-list/employee-allowance-list.component'
+              ).then((m) => m.EmployeeAllowanceListComponent),
+            title: 'Employee Allowances',
+          },
+          {
+            path: 'employee-deductions',
+            loadComponent: () =>
+              import(
+                './Components/payroll/employee-deduction-list/employee-deduction-list.component'
+              ).then((m) => m.EmployeeDeductionListComponent),
+            title: 'Employee Deductions',
+          },
+          { path: '', redirectTo: 'allowances', pathMatch: 'full' },
+        ],
+      },
+
       // Reports Routes
       {
         path: 'reports',
