@@ -9,6 +9,7 @@ import { LoginComponent } from './Components/auth/login/login.component';
 import { RegisterComponent } from './Components/auth/register/register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { authGuard } from './auth.guard';
+import { LandingPageComponent } from './Components/landing/landing-page/landing-page.component';
 
 /* export const routes: Routes = [
     // { path: '', redirectTo: 'home', pathMatch: 'full', title: 'Home' },
@@ -79,6 +80,14 @@ export const routes: Routes = [
               ),
             title: 'My Payslips',
           },
+          {
+            path: 'training',
+            loadComponent: () =>
+              import('./Components/ess/ess-training/ess-training.component').then(
+                (m) => m.EssTrainingComponent
+              ),
+            title: 'My Training',
+          },
           { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
         ],
       },
@@ -116,6 +125,39 @@ export const routes: Routes = [
         ],
       },
 
+      // Training Routes
+      {
+        path: 'training',
+        canActivate: [authGuard],
+        children: [
+          {
+            path: 'courses',
+            loadComponent: () =>
+              import(
+                './Components/training/training-courses/training-course-list/training-course-list.component'
+              ).then((m) => m.TrainingCourseListComponent),
+            title: 'Training Courses',
+          },
+          {
+            path: 'enrollments',
+            loadComponent: () =>
+              import(
+                './Components/training/employee-enrollments/enrollment-list/enrollment-list.component'
+              ).then((m) => m.EnrollmentListComponent),
+            title: 'Employee Enrollments',
+          },
+          {
+            path: 'requests',
+            loadComponent: () =>
+              import(
+                './Components/training/training-requests/request-list/request-list.component'
+              ).then((m) => m.RequestListComponent),
+            title: 'Training Requests',
+          },
+          { path: '', redirectTo: 'courses', pathMatch: 'full' },
+        ],
+      },
+
       // Organization Routes (Departments & Designations)
       {
         path: 'departments',
@@ -134,55 +176,6 @@ export const routes: Routes = [
           ).then((m) => m.DesignationListComponent),
         canActivate: [authGuard],
         title: 'Designations',
-      },
-
-      // Payroll Routes
-      {
-        path: 'payroll',
-        canActivate: [authGuard],
-        children: [
-          {
-            path: 'payslips',
-            loadComponent: () =>
-              import(
-                './Components/payroll/payslip-list/payslip-list.component'
-              ).then((m) => m.PayslipListComponent),
-            title: 'Payslips',
-          },
-          {
-            path: 'allowances',
-            loadComponent: () =>
-              import(
-                './Components/payroll/allowance-list/allowance-list.component'
-              ).then((m) => m.AllowanceListComponent),
-            title: 'Allowances',
-          },
-          {
-            path: 'deductions',
-            loadComponent: () =>
-              import(
-                './Components/payroll/deduction-list/deduction-list.component'
-              ).then((m) => m.DeductionListComponent),
-            title: 'Deductions',
-          },
-          {
-            path: 'employee-allowances',
-            loadComponent: () =>
-              import(
-                './Components/payroll/employee-allowance-list/employee-allowance-list.component'
-              ).then((m) => m.EmployeeAllowanceListComponent),
-            title: 'Employee Allowances',
-          },
-          {
-            path: 'employee-deductions',
-            loadComponent: () =>
-              import(
-                './Components/payroll/employee-deduction-list/employee-deduction-list.component'
-              ).then((m) => m.EmployeeDeductionListComponent),
-            title: 'Employee Deductions',
-          },
-          { path: '', redirectTo: 'allowances', pathMatch: 'full' },
-        ],
       },
 
       // Reports Routes
@@ -248,5 +241,9 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
-  { path: '', redirectTo: 'pages', pathMatch: 'full' },
+  {
+    path: '',
+    component: LandingPageComponent,
+    title: 'HRM System - Human Resource Management',
+  },
 ];
