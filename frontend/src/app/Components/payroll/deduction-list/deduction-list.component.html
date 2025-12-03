@@ -1,0 +1,180 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Deductions</h2>
+        <button class="btn btn-primary" (click)="openCreateModal()">
+            <i class="eva eva-plus-outline me-2"></i>Add Deduction
+        </button>
+    </div>
+
+    <div *ngIf="isLoading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div *ngIf="!isLoading && !error" class="card mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label">Search</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="eva eva-search-outline"></i>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Search deductions..."
+                            [(ngModel)]="searchTerm">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!isLoading && !error" class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Name</th>
+                            <th>Amount</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let deduction of filteredDeductions">
+                            <td class="ps-4">
+                                <div class="fw-medium">{{ deduction.name }}</div>
+                            </td>
+                            <td>
+                                <span class="fw-medium">
+                                    {{ deduction.isPercentage ? deduction.amount + '%' :
+                                    formatCurrency(deduction.amount) }}
+                                </span>
+                            </td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-sm btn-outline-info me-2" (click)="openDetailsModal(deduction)"
+                                    title="View Details">
+                                    <i class="eva eva-eye-outline"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-primary me-2" (click)="openEditModal(deduction)"
+                                    title="Edit">
+                                    <i class="eva eva-edit-outline"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger" (click)="openDeleteModal(deduction)"
+                                    title="Delete">
+                                    <i class="eva eva-trash-2-outline"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="deductions.length === 0">
+                            <td colspan="3" class="text-center py-5">
+                                <i class="eva eva-file-text-outline fs-1 text-muted"></i>
+                                <p class="mt-3 mb-0 text-muted">No deductions found. Create your first deduction!</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Create/Edit Modal -->
+<div class="modal fade show" [class.d-block]="showModal" tabindex="-1" *ngIf="showModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ isEditing ? 'Edit Deduction' : 'Add Deduction' }}</h5>
+                <button type="button" class="btn-close" (click)="closeModal()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="formData.name" placeholder="e.g., Income Tax">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Amount</label>
+                    <input type="number" class="form-control" [(ngModel)]="formData.amount" placeholder="Enter amount">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Type</label>
+                    <select class="form-select" [(ngModel)]="formData.isPercentage">
+                        <option [ngValue]="false">Fixed Amount</option>
+                        <option [ngValue]="true">Percentage</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="saveDeduction()" [disabled]="isSaving">
+                    <span *ngIf="isSaving" class="spinner-border spinner-border-sm me-2" role="status"
+                        aria-hidden="true"></span>
+                    {{ isEditing ? 'Update' : 'Create' }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showModal"></div>
+
+<!-- Details Modal -->
+<div class="modal fade show" [class.d-block]="showDetailsModal" tabindex="-1"
+    *ngIf="showDetailsModal && deductionToView">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Deduction Details</h5>
+                <button type="button" class="btn-close" (click)="closeDetailsModal()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div class="col-12">
+                        <p class="mb-1 text-muted small">Name</p>
+                        <p class="fw-bold">{{ deductionToView.name }}</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="mb-1 text-muted small">Amount</p>
+                        <p class="fw-bold">{{ deductionToView.isPercentage ? deductionToView.amount + '%' :
+                            formatCurrency(deductionToView.amount) }}</p>
+                    </div>
+                    <div class="col-6">
+                        <p class="mb-1 text-muted small">Type</p>
+                        <span class="badge" [class.bg-info]="deductionToView.isPercentage"
+                            [class.bg-success]="!deductionToView.isPercentage">
+                            {{ deductionToView.isPercentage ? 'Percentage' : 'Fixed Amount' }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeDetailsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showDetailsModal"></div>
+
+<!-- Delete Modal -->
+<div class="modal fade show" [class.d-block]="showDeleteModal" tabindex="-1" *ngIf="showDeleteModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Deduction</h5>
+                <button type="button" class="btn-close" (click)="closeDeleteModal()"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to delete this deduction?</p>
+                <p class="text-danger mb-0"><small>This action cannot be undone.</small></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeDeleteModal()">Cancel</button>
+                <button type="button" class="btn btn-danger" (click)="confirmDelete()" [disabled]="isSaving">
+                    <span *ngIf="isSaving" class="spinner-border spinner-border-sm me-2" role="status"
+                        aria-hidden="true"></span>
+                    Delete
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showDeleteModal"></div>

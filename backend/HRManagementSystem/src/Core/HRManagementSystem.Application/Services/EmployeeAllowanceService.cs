@@ -1,4 +1,6 @@
-﻿namespace HRManagementSystem.Application.Services;
+﻿using HRManagementSystem.Domain.Entities;
+
+namespace HRManagementSystem.Application.Services;
 
 public class EmployeeAllowanceService(
         IUnitOfWork _unitOfWork,
@@ -58,33 +60,46 @@ public class EmployeeAllowanceService(
     {
         try
         {
-            if (request.Recurrence == RecurrenceType.OneTime)
+            switch (request.Recurrence)
             {
-                if (request.StartDate == null)
-                    return new Response<EmployeeAllowanceDto>(null!, "Start date is required for one-time allowances.", true);
+                case RecurrenceType.OneTime:
+                case RecurrenceType.Annual:
+                case RecurrenceType.Permanent:
+                    if (request.StartDate == null)
+                        return new Response<EmployeeAllowanceDto>(null!, "Start date is required.", true);
+                    request.EndDate = null;
+                    break;
 
-                request.EndDate = null;
-            }
-            if (request.Recurrence == RecurrenceType.Period)
-            {
-                if (request.StartDate == null || request.EndDate == null)
-                    return new Response<EmployeeAllowanceDto>(null!, "Start and end dates are required for periodic allowances.", true);
+                case RecurrenceType.Period:
+                    if (request.StartDate == null || request.EndDate == null)
+                        return new Response<EmployeeAllowanceDto>(
+                            null!,
+                            "Start and end dates are required.",
+                            true
+                        );
 
-                if (request.EndDate <= request.StartDate)
-                    return new Response<EmployeeAllowanceDto>(null!, "End date must be greater than start date.", true);
-            }
+                    if (request.EndDate <= request.StartDate)
+                        return new Response<EmployeeAllowanceDto>(
+                            null!,
+                            "End date must be greater than start date.",
+                            true
+                        );
 
-            if (request.Recurrence == RecurrenceType.Annual)
-            {
-                if (request.StartDate == null)
-                    return new Response<EmployeeAllowanceDto>(null!, "Start date is required for annual allowances.", true);
+                    if (request.StartDate.Value.Month == request.EndDate.Value.Month &&
+                        request.StartDate.Value.Year == request.EndDate.Value.Year)
+                        return new Response<EmployeeAllowanceDto>(
+                            null!,
+                            "Start and end dates cannot fall within the same month and year.",
+                            true
+                        );
+                    break;
 
-                request.EndDate = null;
-            }
-            if (request.Recurrence == RecurrenceType.Permanent)
-            {
-                request.StartDate = null;
-                request.EndDate = null;
+                default:
+                    return new Response<EmployeeAllowanceDto>(
+                        null!,
+                        "Invalid recurrence type.",
+                        true
+                    );
             }
 
 
@@ -144,8 +159,12 @@ public class EmployeeAllowanceService(
                 switch (request.Recurrence.Value)
                 {
                     case RecurrenceType.OneTime:
-                        if (request.StartDate.HasValue)
-                            employeeAllowance.StartDate = request.StartDate;
+                    case RecurrenceType.Permanent:
+                    case RecurrenceType.Annual:
+                        if (!request.StartDate.HasValue)
+                            return new Response<EmployeeAllowanceDto>(null!, "Start date is required", true);
+
+                        employeeAllowance.StartDate = request.StartDate;
                         employeeAllowance.EndDate = null;
                         break;
 
@@ -160,18 +179,13 @@ public class EmployeeAllowanceService(
                         }
                         break;
 
-                    case RecurrenceType.Permanent:
-                        employeeAllowance.StartDate = null;
-                        employeeAllowance.EndDate = null;
-                        break;
+                    default:
+                        return new Response<EmployeeAllowanceDto>(
+                            null!,
+                            "Invalid recurrence type.",
+                            true
+                        );
 
-                    case RecurrenceType.Annual:
-                        if (!request.StartDate.HasValue)
-                            return new Response<EmployeeAllowanceDto>(null!, "Start date is required for annual allowances.", true);
-
-                        employeeAllowance.StartDate = request.StartDate;
-                        employeeAllowance.EndDate = null; 
-                        break;
                 }
             }
             else
@@ -183,13 +197,26 @@ public class EmployeeAllowanceService(
                     employeeAllowance.EndDate = request.EndDate;
             }
 
-            
-            if (request.Amount.HasValue)
-                employeeAllowance.Amount = request.Amount.Value;
-            if (request.IsPercentage.HasValue)
-                employeeAllowance.IsPercentage = request.IsPercentage.Value;
 
-           
+            if (request.Amount is not null)
+            {
+                employeeAllowance.Amount = request.Amount;
+            }
+            else
+            {
+                employeeAllowance.Amount = null;
+            }
+
+            if (request.IsPercentage is not null)
+            {
+                employeeAllowance.IsPercentage = request.IsPercentage;
+            }
+            else
+            {
+                employeeAllowance.IsPercentage = null;
+            }
+
+
             if (request.AllowanceId.HasValue && request.AllowanceId.Value != allowanceId)
             {
                 var existing = await _unitOfWork.EmployeeAllowances
