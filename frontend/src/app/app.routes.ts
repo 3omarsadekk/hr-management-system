@@ -9,6 +9,10 @@ import { LoginComponent } from './Components/auth/login/login.component';
 import { RegisterComponent } from './Components/auth/register/register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { authGuard } from './auth.guard';
+import { LeaveType } from './Components/Leaves/leave-type/leave-type';
+import { LeaveBalance } from './Components/Leaves/leave-balance/leave-balance';
+import { EmployeeLeaveRequest } from './Components/Leaves/Employee-leave-request/Employee-leave-request';
+import { LeaveRequests } from './Components/Leaves/Leave-requests/leave-requests';
 import { LandingPageComponent } from './Components/landing/landing-page/landing-page.component';
 
 /* export const routes: Routes = [
@@ -288,6 +292,11 @@ export const routes: Routes = [
       },
 
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: 'leave/types', component: LeaveType, title: 'LeaveType' },
+      { path: 'leave/balances', component: LeaveBalance, title: 'LeaveBalance' },
+      { path: 'ess/leave-requests', component: EmployeeLeaveRequest, title: 'EmployeeLeaveRequest' },
+      { path: 'leave/requests', component: LeaveRequests, title: 'LeaveRequests' },
+
     ],
   },
   {
