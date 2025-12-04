@@ -61,27 +61,45 @@ public class EmployeeDeductionService(
     {
         try
         {
-            if (request.Recurrence == RecurrenceType.OneTime && request.StartDate == null)
-                return new Response<EmployeeDeductionDto>(null!, "Start date is required for one-time deductions.", true);
+            switch (request.Recurrence)
+            {
+                case RecurrenceType.OneTime:
+                case RecurrenceType.Annual:
+                case RecurrenceType.Permanent:
+                    if (request.StartDate == null)
+                        return new Response<EmployeeDeductionDto>(null!, "Start date is required.", true);
+                    request.EndDate = null;
+                    break;
 
-            if (request.Recurrence == RecurrenceType.Period)
-            {
-                if (request.StartDate == null || request.EndDate == null)
-                    return new Response<EmployeeDeductionDto>(null!, "Start and end dates are required for periodic deductions.", true);
+                case RecurrenceType.Period:
+                    if (request.StartDate == null || request.EndDate == null)
+                        return new Response<EmployeeDeductionDto>(
+                            null!,
+                            "Start and end dates are required.",
+                            true
+                        );
 
-                if (request.EndDate <= request.StartDate)
-                    return new Response<EmployeeDeductionDto>(null!, "End date must be greater than start date.", true);
-            }
-            if (request.Recurrence == RecurrenceType.Annual)
-            {
-                if (request.StartDate == null)
-                    return new Response<EmployeeDeductionDto>(null!, "Start date is required for annual deduction.", true);
-                request.EndDate = null;
-            }
-            if (request.Recurrence == RecurrenceType.Permanent)
-            {
-                request.StartDate = null;
-                request.EndDate = null;
+                    if (request.EndDate <= request.StartDate)
+                        return new Response<EmployeeDeductionDto>(
+                            null!,
+                            "End date must be greater than start date.",
+                            true
+                        );
+
+                    if (request.StartDate.Value.Month == request.EndDate.Value.Month &&
+                        request.StartDate.Value.Year == request.EndDate.Value.Year)
+                        return new Response<EmployeeDeductionDto>(
+                            null!,
+                            "Start and end dates cannot fall within the same month and year.",
+                            true
+                        );
+                    break;
+                default:
+                    return new Response<EmployeeDeductionDto>(
+                        null!,
+                        "Invalid recurrence type.",
+                        true
+                    );
             }
 
             var existing = await _unitOfWork.EmployeeDeductions.GetByCompositeKeyAsync(request.EmployeeId, request.DeductionId);
@@ -124,12 +142,15 @@ public class EmployeeDeductionService(
                 switch (request.Recurrence.Value)
                 {
                     case RecurrenceType.OneTime:
-                        
-                        if (request.StartDate.HasValue)
-                        {
-                            employeeDeduction.StartDate = request.StartDate;
-                        }
+                    case RecurrenceType.Annual:
+                    case RecurrenceType.Permanent:
+                        if (!request.StartDate.HasValue)
+                            return new Response<EmployeeDeductionDto>(null!, "Start date is required", true);
+
+                        employeeDeduction.StartDate = request.StartDate;
                         employeeDeduction.EndDate = null;
+                        break;
+
                         break;
 
                     case RecurrenceType.Period:
@@ -144,18 +165,12 @@ public class EmployeeDeductionService(
                         }
                         break;
 
-                    case RecurrenceType.Annual:
-                        if (!request.StartDate.HasValue)
-                            return new Response<EmployeeDeductionDto>(null!, "Start date is required for annual deductions.", true);
-
-                        employeeDeduction.StartDate = request.StartDate;
-                        employeeDeduction.EndDate = null; 
-                        break;
-
-                    case RecurrenceType.Permanent:
-                        employeeDeduction.StartDate = null;
-                        employeeDeduction.EndDate = null;
-                        break;
+                    default:
+                        return new Response<EmployeeDeductionDto>(
+                            null!,
+                            "Invalid recurrence type.",
+                            true
+                        );
                 }
             }
             else
@@ -168,11 +183,24 @@ public class EmployeeDeductionService(
             }
 
 
-            if (request.Amount.HasValue)
-                employeeDeduction.Amount = request.Amount.Value;
+            if (request.Amount is not null)
+            {
+                employeeDeduction.Amount = request.Amount;
+            }
+            else
+            {
+                employeeDeduction.Amount = null;
+            }
 
-            if (request.IsPercentage.HasValue)
-                employeeDeduction.IsPercentage = request.IsPercentage.Value;
+            if (request.IsPercentage is not null)
+            {
+                employeeDeduction.IsPercentage = request.IsPercentage;
+            }
+            else
+            {
+                employeeDeduction.IsPercentage = null;
+            }
+
 
             if (request.DeductionId.HasValue && request.DeductionId.Value != deductionId)
             {

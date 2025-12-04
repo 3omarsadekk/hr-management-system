@@ -1,0 +1,250 @@
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Payslips</h2>
+        <div class="d-flex gap-2">
+            <button class="btn btn-primary text-nowrap" (click)="openGenerateModal()">
+                <i class="eva eva-plus-outline me-2"></i>Generate
+            </button>
+        </div>
+    </div>
+
+    <div *ngIf="isLoading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <div *ngIf="!isLoading" class="card mb-4">
+        <div class="card-body">
+            <div class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label">Search</label>
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="eva eva-search-outline"></i>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Search by employee..."
+                            [(ngModel)]="searchTerm">
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Month</label>
+                    <select class="form-select" [(ngModel)]="selectedMonth" (change)="loadPayslips()">
+                        <option *ngFor="let m of months" [ngValue]="m.value">{{ m.name }}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Year</label>
+                    <select class="form-select" [(ngModel)]="selectedYear" (change)="loadPayslips()">
+                        <option *ngFor="let y of years" [ngValue]="y">{{ y }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!isLoading" class="card shadow-sm">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Employee</th>
+                            <th>Basic Salary</th>
+                            <th>Total Allowances</th>
+                            <th>Total Deductions</th>
+                            <th>Net Salary</th>
+                            <th>Generated Date</th>
+                            <th class="text-end pe-4">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of filteredPayslips">
+                            <td class="ps-4 fw-medium">{{ item.employeeName }}</td>
+                            <td>{{ formatCurrency(item.basicSalary) }}</td>
+                            <td class="text-success">+{{ formatCurrency(item.totalAllowances) }}</td>
+                            <td class="text-danger">-{{ formatCurrency(item.totalDeductions) }}</td>
+                            <td class="fw-bold text-primary">{{ formatCurrency(item.netSalary) }}</td>
+                            <td>{{ (item.generatedAt || item.generatedDate) | date:'mediumDate' }}</td>
+                            <td class="text-end pe-4">
+                                <button class="btn btn-sm btn-outline-info me-2" (click)="openDetailsModal(item)"
+                                    title="View Details">
+                                    <i class="eva eva-eye-outline"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary me-2" (click)="downloadPdf(item.id)"
+                                    title="Download PDF">
+                                    <i class="eva eva-download-outline"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-warning" (click)="regeneratePayslip(item)"
+                                    title="Regenerate">
+                                    <i class="eva eva-refresh-outline"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr *ngIf="payslips.length === 0">
+                            <td colspan="7" class="text-center py-5 text-muted">
+                                <i class="eva eva-file-text-outline fs-1 mb-3 d-block opacity-25"></i>
+                                <p class="mb-0">No payslips found for this period.</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Generate Modal -->
+<div class="modal fade show" [class.d-block]="showGenerateModal" tabindex="-1" *ngIf="showGenerateModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Generate Payslips</h5>
+                <button type="button" class="btn-close" (click)="closeGenerateModal()"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to generate payslips for <strong>{{ months[selectedMonth - 1].name }} {{
+                        selectedYear }}</strong>?</p>
+                <div class="alert alert-info">
+                    <i class="eva eva-info-outline me-2"></i>
+                    This will calculate salaries for all active employees based on their attendance, allowances, and
+                    deductions.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeGenerateModal()">Cancel</button>
+                <button type="button" class="btn btn-primary" (click)="generatePayslips()" [disabled]="isGenerating">
+                    <span *ngIf="isGenerating" class="spinner-border spinner-border-sm me-2" role="status"
+                        aria-hidden="true"></span>
+                    Generate
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showGenerateModal"></div>
+
+<!-- Details Modal -->
+<div class="modal fade show" [class.d-block]="showDetailsModal" tabindex="-1"
+    *ngIf="showDetailsModal && selectedPayslip">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Payslip Details</h5>
+                <button type="button" class="btn-close" (click)="closeDetailsModal()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Employee</p>
+                        <p class="fw-bold">{{ selectedPayslip.employeeName }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Period</p>
+                        <p class="fw-bold">{{ months[selectedPayslip.month - 1].name }} {{ selectedPayslip.year }}</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <p class="mb-1 text-muted small">Basic Salary</p>
+                        <p class="fw-bold">{{ formatCurrency(selectedPayslip.basicSalary) }}</p>
+                    </div>
+                </div>
+
+                <!-- Allowances Breakdown -->
+                <div class="row mb-3" *ngIf="selectedPayslip.allowances && selectedPayslip.allowances.length > 0">
+                    <div class="col-md-12">
+                        <p class="mb-2 text-success fw-bold">Allowances</p>
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th class="text-end">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let allowance of selectedPayslip.allowances">
+                                        <td>{{ allowance.name }}</td>
+                                        <td class="text-end text-success">
+                                            <span *ngIf="allowance.isPercentage">+{{ allowance.amount }}%</span>
+                                            <span *ngIf="!allowance.isPercentage">+{{ formatCurrency(allowance.amount)
+                                                }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="fw-bold">
+                                        <td>Total Allowances</td>
+                                        <td class="text-end text-success">+{{
+                                            formatCurrency(selectedPayslip.totalAllowances) }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Deductions Breakdown -->
+                <div class="row mb-3" *ngIf="selectedPayslip.deductions && selectedPayslip.deductions.length > 0">
+                    <div class="col-md-12">
+                        <p class="mb-2 text-danger fw-bold">Deductions</p>
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th class="text-end">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let deduction of selectedPayslip.deductions">
+                                        <td>{{ deduction.name }}</td>
+                                        <td class="text-end text-danger">
+                                            <span *ngIf="deduction.isPercentage">-{{ deduction.amount }}%</span>
+                                            <span *ngIf="!deduction.isPercentage">-{{ formatCurrency(deduction.amount)
+                                                }}</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="fw-bold">
+                                        <td>Total Deductions</td>
+                                        <td class="text-end text-danger">-{{
+                                            formatCurrency(selectedPayslip.totalDeductions) }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="mb-1 text-muted small">Net Salary</p>
+                        <h4 class="fw-bold text-primary">{{ formatCurrency(selectedPayslip.netSalary) }}</h4>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Generated Date</p>
+                        <p>{{ (selectedPayslip.generatedAt || selectedPayslip.generatedDate) | date:'medium' }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mb-1 text-muted small">Status</p>
+                        <span class="badge bg-success">{{ selectedPayslip.status || 'Generated' }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="closeDetailsModal()">Close</button>
+                <button type="button" class="btn btn-primary" (click)="downloadPdf(selectedPayslip.id)">
+                    <i class="eva eva-download-outline me-2"></i>Download PDF
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop fade show" *ngIf="showDetailsModal"></div>

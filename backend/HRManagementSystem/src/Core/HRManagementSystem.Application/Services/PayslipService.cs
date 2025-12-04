@@ -258,36 +258,63 @@ public class PayslipService : IPayslipService
     private async Task<(IEnumerable<EmployeeAllowance>, IEnumerable<EmployeeDeduction>)> LoadActiveBenefitsAsync(
         int employeeId, int month, int year, CancellationToken cancellationToken)
     {
-        var allowances = await _unitOfWork.Payslips.GetActiveAllowancesAsync(employeeId, month, year, cancellationToken);
-        var deductions = await _unitOfWork.Payslips.GetActiveDeductionsAsync(employeeId, month, year, cancellationToken);
+        var employee = await _unitOfWork.Employees.GetByIdAsync(employeeId, cancellationToken);
 
-        // Use Employee values if available; fallback to default Allowance/Deduction values if null
+        var allowances = await _unitOfWork.Payslips.GetActiveAllowancesAsync(
+            employeeId, month, year, cancellationToken);
+
+        var deductions = await _unitOfWork.Payslips.GetActiveDeductionsAsync(
+            employeeId, month, year, cancellationToken);
+
+        decimal basicSalary = employee.BasicSalary;
+
+        // ------------------------
+        // ALLOWANCE PROCESSING
+        // ------------------------
         var finalizedAllowances = allowances.Select(a =>
         {
+            bool isPercent = a.IsPercentage ?? a.Allowance.IsPercentage;
+            decimal value = a.Amount ?? a.Allowance.Amount;
+
+            decimal actualAmount = isPercent
+                ? (value / 100m) * basicSalary  // ? calculate from salary
+                : value;
+
             return new EmployeeAllowance
             {
                 EmployeeId = a.EmployeeId,
                 AllowanceId = a.AllowanceId,
-                Amount = a.Amount ?? a.Allowance.Amount,
-                IsPercentage = a.IsPercentage ?? a.Allowance.IsPercentage,
+                Amount = actualAmount,   // ? always actual amount
+                IsPercentage = false,    // ? return final value only
                 Allowance = a.Allowance
             };
         }).ToList();
 
+        // ------------------------
+        // DEDUCTION PROCESSING
+        // ------------------------
         var finalizedDeductions = deductions.Select(d =>
         {
+            bool isPercent = d.IsPercentage ?? d.Deduction.IsPercentage;
+            decimal value = d.Amount ?? d.Deduction.Amount;
+
+            decimal actualAmount = isPercent
+                ? (value / 100m) * basicSalary  // ? calculate from salary
+                : value;
+
             return new EmployeeDeduction
             {
                 EmployeeId = d.EmployeeId,
                 DeductionId = d.DeductionId,
-                Amount = d.Amount ?? d.Deduction.Amount,
-                IsPercentage = d.IsPercentage ?? d.Deduction.IsPercentage,
+                Amount = actualAmount,   // ? always actual amount
+                IsPercentage = false,    // ? return final value only
                 Deduction = d.Deduction
             };
         }).ToList();
 
         return (finalizedAllowances, finalizedDeductions);
     }
+
 
     private PayslipDto MapPayslip(Payslip payslip, IEnumerable<EmployeeAllowance> allowances, IEnumerable<EmployeeDeduction> deductions)
     {
