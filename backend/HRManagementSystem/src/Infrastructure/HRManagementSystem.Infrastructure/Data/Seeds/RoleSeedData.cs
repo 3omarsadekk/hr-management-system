@@ -12,7 +12,7 @@ public static class RoleSeedData
     {
         string[] roles =
         {
-            
+         
             "HR",
             "Manager",
             "Employee"

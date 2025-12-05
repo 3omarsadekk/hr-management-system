@@ -20,13 +20,13 @@ export const routes: Routes = [
     path: 'pages',
     component: MainLayoutComponent,
     children: [
-      // Auth pages (من غير guard)
+      
       { path: 'login', component: LoginComponent },
       { path: 'login2', component: Login }, // nada a7med login
       { path: 'register', component: RegisterComponent },
       { path: 'register2', component: Register }, // nada a7med register
 
-      // Dashboard – مسموح لأي حد Logged in
+      
       {
         path: 'dashboard',
         component: DashboardComponent,
@@ -77,7 +77,7 @@ export const routes: Routes = [
         ],
       },
 
-      // routes قديمة للـ checkIn/out والصورة – برضه نخلي فيها guard
+      
       {
         path: 'checkIn',
         component: CheckIn,
@@ -300,61 +300,75 @@ export const routes: Routes = [
 
       // ================= PERFORMANCE =================
       {
-        path: 'performance',
-        canActivate: [AuthGuard],
-        data: { roles: ['HR', 'Manager'] },
-        children: [
-          {
-            path: 'cycles',
-            loadComponent: () =>
-              import(
-                './Components/performance/review-cycles/review-cycle-list/review-cycle-list.component'
-              ).then((m) => m.ReviewCycleListComponent),
-            title: 'Review Cycles',
-          },
-          {
-            path: 'reviews',
-            loadComponent: () =>
-              import('./Components/performance/reviews/review-list/review-list.component').then(
-                (m) => m.ReviewListComponent
-              ),
-            title: 'Performance Reviews',
-          },
-          {
-            path: 'goals',
-            loadComponent: () =>
-              import('./Components/performance/goals/goal-list/goal-list.component').then(
-                (m) => m.GoalListComponent
-              ),
-            title: 'Goals',
-          },
-          {
-            path: 'kpis',
-            loadComponent: () =>
-              import('./Components/performance/kpis/kpi-list/kpi-list.component').then(
-                (m) => m.KpiListComponent
-              ),
-            title: 'KPIs',
-          },
-          {
-            path: 'competencies',
-            loadComponent: () =>
-              import(
-                './Components/performance/competencies/competency-list/competency-list.component'
-              ).then((m) => m.CompetencyListComponent),
-            title: 'Competencies',
-          },
-          {
-            path: 'feedback',
-            loadComponent: () =>
-              import(
-                './Components/performance/feedback/feedback-list/feedback-list.component'
-              ).then((m) => m.FeedbackListComponent),
-            title: 'Performance Feedback',
-          },
-          { path: '', redirectTo: 'cycles', pathMatch: 'full' },
-        ],
-      },
+  path: 'performance',
+  canActivate: [AuthGuard],     
+  children: [
+    {
+      path: 'cycles',
+      canActivate: [AuthGuard],
+      data: { roles: ['HR', 'Manager'] },
+      loadComponent: () =>
+        import(
+          './Components/performance/review-cycles/review-cycle-list/review-cycle-list.component'
+        ).then((m) => m.ReviewCycleListComponent),
+      title: 'Review Cycles',
+    },
+    {
+      path: 'reviews',
+      canActivate: [AuthGuard],
+      data: { roles: ['HR', 'Manager'] },
+      loadComponent: () =>
+        import('./Components/performance/reviews/review-list/review-list.component').then(
+          (m) => m.ReviewListComponent
+        ),
+      title: 'Performance Reviews',
+    },
+    {
+      path: 'goals',
+      canActivate: [AuthGuard],
+    
+      data: { roles: ['Employee', 'HR', 'Manager'] },
+      loadComponent: () =>
+        import('./Components/performance/goals/goal-list/goal-list.component').then(
+          (m) => m.GoalListComponent
+        ),
+      title: 'Goals',
+    },
+    {
+      path: 'kpis',
+      canActivate: [AuthGuard],
+      data: { roles: ['HR', 'Manager'] },
+      loadComponent: () =>
+        import('./Components/performance/kpis/kpi-list/kpi-list.component').then(
+          (m) => m.KpiListComponent
+        ),
+      title: 'KPIs',
+    },
+    {
+      path: 'competencies',
+      canActivate: [AuthGuard],
+      data: { roles: ['HR', 'Manager'] },
+      loadComponent: () =>
+        import(
+          './Components/performance/competencies/competency-list/competency-list.component'
+        ).then((m) => m.CompetencyListComponent),
+      title: 'Competencies',
+    },
+    {
+      path: 'feedback',
+      canActivate: [AuthGuard],
+   
+      data: { roles: ['Employee', 'HR', 'Manager'] },
+      loadComponent: () =>
+        import(
+          './Components/performance/feedback/feedback-list/feedback-list.component'
+        ).then((m) => m.FeedbackListComponent),
+      title: 'Performance Feedback',
+    },
+    { path: '', redirectTo: 'cycles', pathMatch: 'full' },
+  ],
+},
+
 
       // ================= REPORTS =================
       {

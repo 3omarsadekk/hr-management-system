@@ -28,16 +28,16 @@ export class SidebarComponent {
   isSidebarOpen = this.layoutService.isSidebarOpen;
 
   menuItems: MenuItem[] = [
-    { title: 'Dashboard', icon: 'home-outline', link: '/pages/dashboard', allowedRoles: ['Admin', 'HR', 'Manager', 'Employee'] },
+    { title: 'Dashboard', icon: 'home-outline', link: '/pages/dashboard', allowedRoles: ['HR', 'Manager', 'Employee'] },
 
     {
       title: 'Employee Management',
       icon: 'people-outline',
       allowedRoles: ['HR'],
       children: [
-        { title: 'Employee List', link: '/pages/employees', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Add Employee', link: '/pages/employees/create', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Resignation Requests', link: '/pages/employees/resignations', allowedRoles: ['Admin', 'HR', 'Manager'] },
+        { title: 'Employee List', link: '/pages/employees', allowedRoles: ['HR'] },
+        { title: 'Add Employee', link: '/pages/employees/create', allowedRoles: ['HR'] },
+        { title: 'Resignation Requests', link: '/pages/employees/resignations', allowedRoles: ['HR', 'Manager'] },
       ],
     },
     {
@@ -45,18 +45,18 @@ export class SidebarComponent {
       icon: 'briefcase-outline',
       allowedRoles: ['HR'],
       children: [
-        { title: 'Departments', link: '/pages/departments', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Designations', link: '/pages/designations', allowedRoles: ['Admin', 'HR'] },
+        { title: 'Departments', link: '/pages/departments', allowedRoles: ['HR'] },
+        { title: 'Designations', link: '/pages/designations', allowedRoles: [ 'HR'] },
       ],
     },
     {
       title: 'Attendance',
       icon: 'clock-outline',
-      allowedRoles: ['HR', 'Manager'],
+      allowedRoles: ['HR', 'Manager','Employee'],
       children: [
-        { title: 'Check In', link: '/pages/attendance/check', allowedRoles: ['Admin', 'HR', 'Manager', 'Employee'] },
-        { title: 'Check Out', link: '/pages/attendance/checkout', allowedRoles: ['Admin', 'HR', 'Manager', 'Employee'] },
-        { title: 'Attendance Records', link: '/pages/attendance/records', allowedRoles: ['Admin', 'HR', 'Manager'] },
+        { title: 'Check In', link: '/pages/attendance/check', allowedRoles: ['HR', 'Manager', 'Employee'] },
+        { title: 'Check Out', link: '/pages/attendance/checkout', allowedRoles: ['HR', 'Manager', 'Employee'] },
+        { title: 'Attendance Records', link: '/pages/attendance/records', allowedRoles: ['HR', 'Manager'] },
       ],
     },
     {
@@ -64,11 +64,11 @@ export class SidebarComponent {
       icon: 'calendar-outline',
       allowedRoles: ['HR', 'Manager'],
       children: [
-        { title: 'Leave Types', link: '/pages/leave/types', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Leave Requests', link: '/pages/leave/requests', allowedRoles: ['Admin', 'HR'] },
+        { title: 'Leave Types', link: '/pages/leave/types', allowedRoles: ['HR'] },
+        { title: 'Leave Requests', link: '/pages/leave/requests', allowedRoles: ['HR'] },
         { title: 'My Approvals', link: '/pages/leave/approvals', allowedRoles: ['Manager', 'HR'] },
-        { title: 'Leave Balances', link: '/pages/leave/balances', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Manage Balances', link: '/pages/leave/manage-balances', allowedRoles: ['Admin', 'HR'] },
+        { title: 'Leave Balances', link: '/pages/leave/balances', allowedRoles: ['HR'] },
+        { title: 'Manage Balances', link: '/pages/leave/manage-balances', allowedRoles: ['HR'] },
       ],
     },
     {
@@ -76,24 +76,24 @@ export class SidebarComponent {
       icon: 'credit-card-outline',
       allowedRoles: ['HR'],
       children: [
-        { title: 'Payslips', link: '/pages/payroll/payslips', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Allowances', link: '/pages/payroll/allowances', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Deductions', link: '/pages/payroll/deductions', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Employee Allowances', link: '/pages/payroll/employee-allowances', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Employee Deductions', link: '/pages/payroll/employee-deductions', allowedRoles: ['Admin', 'HR'] },
+        { title: 'Payslips', link: '/pages/payroll/payslips', allowedRoles: ['HR'] },
+        { title: 'Allowances', link: '/pages/payroll/allowances', allowedRoles: ['HR'] },
+        { title: 'Deductions', link: '/pages/payroll/deductions', allowedRoles: ['HR'] },
+        { title: 'Employee Allowances', link: '/pages/payroll/employee-allowances', allowedRoles: ['HR'] },
+        { title: 'Employee Deductions', link: '/pages/payroll/employee-deductions', allowedRoles: ['HR'] },
       ],
     },
     {
       title: 'Performance',
       icon: 'trending-up-outline',
-      allowedRoles: ['HR', 'Manager'],
+      allowedRoles: ['HR', 'Manager','Employee'],
       children: [
-        { title: 'Review Cycles', link: '/pages/performance/cycles', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Reviews', link: '/pages/performance/reviews', allowedRoles: ['Admin', 'HR', 'Manager'] },
-        { title: 'Goals', link: '/pages/performance/goals', allowedRoles: ['Admin', 'HR', 'Manager', 'Employee'] },
-        { title: 'KPIs', link: '/pages/performance/kpis', allowedRoles: ['Admin', 'HR', 'Manager'] },
-        { title: 'Competencies', link: '/pages/performance/competencies', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Feedback', link: '/pages/performance/feedback', allowedRoles: ['Admin', 'HR', 'Manager', 'Employee'] },
+        { title: 'Review Cycles', link: '/pages/performance/cycles', allowedRoles: ['HR'] },
+        { title: 'Reviews', link: '/pages/performance/reviews', allowedRoles: ['HR', 'Manager'] },
+        { title: 'Goals', link: '/pages/performance/goals', allowedRoles: ['HR', 'Manager', 'Employee'] },
+        { title: 'KPIs', link: '/pages/performance/kpis', allowedRoles: ['HR', 'Manager'] },
+        { title: 'Competencies', link: '/pages/performance/competencies', allowedRoles: [ 'HR'] },
+        { title: 'Feedback', link: '/pages/performance/feedback', allowedRoles: ['HR', 'Manager', 'Employee'] },
       ],
     },
     {
@@ -101,9 +101,9 @@ export class SidebarComponent {
       icon: 'book-open-outline',
       allowedRoles: ['HR', 'Manager'],
       children: [
-        { title: 'Training Courses', link: '/pages/training/courses', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Employee Enrollments', link: '/pages/training/enrollments', allowedRoles: ['Admin', 'HR', 'Manager'] },
-        { title: 'Training Requests', link: '/pages/training/requests', allowedRoles: ['Admin', 'HR', 'Manager'] },
+        { title: 'Training Courses', link: '/pages/training/courses', allowedRoles: ['HR'] },
+        { title: 'Employee Enrollments', link: '/pages/training/enrollments', allowedRoles: ['HR', 'Manager'] },
+        { title: 'Training Requests', link: '/pages/training/requests', allowedRoles: ['HR', 'Manager'] },
       ],
     },
     {
@@ -111,9 +111,9 @@ export class SidebarComponent {
       icon: 'person-add-outline',
       allowedRoles: ['HR'],
       children: [
-        { title: 'Job Postings', link: '/pages/recruitment/jobs', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Candidates', link: '/pages/recruitment/candidates', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Job Applications', link: '/pages/recruitment/applications', allowedRoles: ['Admin', 'HR'] },
+        { title: 'Job Postings', link: '/pages/recruitment/jobs', allowedRoles: ['HR'] },
+        { title: 'Candidates', link: '/pages/recruitment/candidates', allowedRoles: ['HR'] },
+        { title: 'Job Applications', link: '/pages/recruitment/applications', allowedRoles: ['HR'] },
       ],
     },
     {
@@ -121,14 +121,14 @@ export class SidebarComponent {
       icon: 'bar-chart-outline',
       allowedRoles: ['HR', 'Manager'],
       children: [
-        { title: 'Dashboard KPIs', link: '/pages/reports/dashboard', allowedRoles: ['Admin', 'HR', 'Manager'] },
-        { title: 'Employee Reports', link: '/pages/reports/employees', allowedRoles: ['Admin', 'HR', 'Manager'] },
-        { title: 'Payroll Reports', link: '/pages/reports/payroll', allowedRoles: ['Admin', 'HR'] },
-        { title: 'Leave Reports', link: '/pages/reports/leave', allowedRoles: ['Admin', 'HR', 'Manager'] },
-        { title: 'Recruitment Reports', link: '/pages/reports/recruitment', allowedRoles: ['Admin', 'HR'] },
+        { title: 'Dashboard KPIs', link: '/pages/reports/dashboard', allowedRoles: ['HR', 'Manager'] },
+        { title: 'Employee Reports', link: '/pages/reports/employees', allowedRoles: ['HR', 'Manager'] },
+        { title: 'Payroll Reports', link: '/pages/reports/payroll', allowedRoles: ['HR'] },
+        { title: 'Leave Reports', link: '/pages/reports/leave', allowedRoles: ['HR', 'Manager'] },
+        { title: 'Recruitment Reports', link: '/pages/reports/recruitment', allowedRoles: ['HR'] },
       ],
     },
-    { title: 'Notifications', icon: 'bell-outline', link: '/pages/notifications', allowedRoles: ['Admin', 'HR', 'Manager', 'Employee'] },
+    { title: 'Notifications', icon: 'bell-outline', link: '/pages/notifications', allowedRoles: ['HR', 'Manager', 'Employee'] },
     {
       title: 'Employee Self-Service',
       icon: 'person-outline',
