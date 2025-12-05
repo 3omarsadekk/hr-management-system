@@ -48,8 +48,10 @@ export class LoginModalComponent {
           if (response.data.token) {
             this.authService.saveToken(response.data.token);
           }
-          if (response.data.employeeId) {
-            this.authService.saveUserId(response.data.employeeId);
+          // employeeId is a number; save it with the dedicated method and
+          // guard against null/undefined (don't treat 0 as absence)
+          if (response.data.employeeId != null) {
+            this.authService.saveEmployeeId(response.data.employeeId);
           }
           this.loginSuccess.emit();
         }

@@ -8,72 +8,103 @@ import { MainLayoutComponent } from './layouts/main-layout/main-layout.component
 import { LoginComponent } from './Components/auth/login/login.component';
 import { RegisterComponent } from './Components/auth/register/register.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { authGuard } from './auth.guard';
+import { AuthGuard } from './auth.guard';
 import { LeaveType } from './Components/Leaves/leave-type/leave-type';
 import { LeaveBalance } from './Components/Leaves/leave-balance/leave-balance';
 import { EmployeeLeaveRequest } from './Components/Leaves/Employee-leave-request/Employee-leave-request';
 import { LeaveRequests } from './Components/Leaves/Leave-requests/leave-requests';
 import { LandingPageComponent } from './Components/landing/landing-page/landing-page.component';
 
-/* export const routes: Routes = [
-    // { path: '', redirectTo: 'home', pathMatch: 'full', title: 'Home' },
-    { path: 'login', component: Login, title: 'Login' },
-    { path: 'register', component: Register, title: 'Register' },
-    { path: 'checkIn', component: CheckIn, title: 'CheckIn' },
-    { path: 'checkOut', component: CheckOut, title: 'CheckOut' },
-    { path: 'updateEmployeeImage', component: UpdateEmployeeImage, title: 'UpdateEmployeeImage' }
-];
- */
-
 export const routes: Routes = [
   {
     path: 'pages',
     component: MainLayoutComponent,
     children: [
+      // Auth pages (من غير guard)
       { path: 'login', component: LoginComponent },
-
       { path: 'login2', component: Login }, // nada a7med login
       { path: 'register', component: RegisterComponent },
       { path: 'register2', component: Register }, // nada a7med register
-      { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
+
+      // Dashboard – مسموح لأي حد Logged in
+      {
+        path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [ 'HR', 'Manager', 'Employee'] },
+      },
+
+      // ================= EMPLOYEES =================
       {
         path: 'employees',
         loadComponent: () =>
-          import('./Components/employees/employee-list/employee-list').then((m) => m.EmployeeList),
-        canActivate: [authGuard],
+          import('./Components/employees/employee-list/employee-list').then(
+            (m) => m.EmployeeList
+          ),
+        canActivate: [AuthGuard],
+        data: { roles: ['HR'] },
         title: 'Employee Management',
       },
-      {
-        path: 'attendance',
-        canActivate: [authGuard],
-        children: [
-          { path: 'check', component: CheckIn, title: 'Check In/Out' },
-          { path: 'checkout', component: CheckOut, title: 'Check Out' },
-          {
-            path: 'records',
-            loadComponent: () => import('./Components/Attendance/attendance-records/attendance-records.component').then(m => m.AttendanceRecordsComponent),
-            title: 'Attendance Records'
-          },
-          { path: '', redirectTo: 'check', pathMatch: 'full' }
-        ]
-      },
+
       {
         path: 'employees/resignations',
         loadComponent: () =>
           import('./Components/employees/resignation-list/resignation-list.component').then(
             (m) => m.ResignationListComponent
           ),
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
+        data: { roles: ['HR', 'Manager'] },
         title: 'Resignation Requests',
       },
-      { path: 'checkIn', component: CheckIn, title: 'CheckIn' },
-      { path: 'checkOut', component: CheckOut, title: 'CheckOut' },
-      { path: 'updateEmployeeImage', component: UpdateEmployeeImage, title: 'UpdateEmployeeImage' },
 
-      // ESS (Employee Self-Service) Routes
+      // ================= ATTENDANCE =================
+      {
+        path: 'attendance',
+        canActivate: [AuthGuard],
+        data: { roles: ['HR', 'Manager', 'Employee'] },
+        children: [
+          { path: 'check', component: CheckIn, title: 'Check In/Out' },
+          { path: 'checkout', component: CheckOut, title: 'Check Out' },
+          {
+            path: 'records',
+            loadComponent: () =>
+              import(
+                './Components/Attendance/attendance-records/attendance-records.component'
+              ).then((m) => m.AttendanceRecordsComponent),
+            title: 'Attendance Records',
+          },
+          { path: '', redirectTo: 'check', pathMatch: 'full' },
+        ],
+      },
+
+      // routes قديمة للـ checkIn/out والصورة – برضه نخلي فيها guard
+      {
+        path: 'checkIn',
+        component: CheckIn,
+        canActivate: [AuthGuard],
+        data: { roles: ['HR', 'Manager', 'Employee'] },
+        title: 'CheckIn',
+      },
+      {
+        path: 'checkOut',
+        component: CheckOut,
+        canActivate: [AuthGuard],
+        data: { roles: [ 'HR', 'Manager', 'Employee'] },
+        title: 'CheckOut',
+      },
+      {
+        path: 'updateEmployeeImage',
+        component: UpdateEmployeeImage,
+        canActivate: [AuthGuard],
+        data: { roles: ['HR', 'Employee', 'Manager'] },
+        title: 'UpdateEmployeeImage',
+      },
+
+      // ================= ESS – Employee Self-Service =================
       {
         path: 'ess',
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
+        data: { roles: ['Employee', 'Manager', 'HR'] },
         children: [
           {
             path: 'dashboard',
@@ -127,10 +158,11 @@ export const routes: Routes = [
         ],
       },
 
-      // Recruitment Routes
+      // ================= RECRUITMENT =================
       {
         path: 'recruitment',
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
+        data: { roles: ['HR'] },
         children: [
           {
             path: 'jobs',
@@ -160,10 +192,11 @@ export const routes: Routes = [
         ],
       },
 
-      // Training Routes
+      // ================= TRAINING =================
       {
         path: 'training',
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
+        data: { roles: ['HR', 'Manager'] },
         children: [
           {
             path: 'courses',
@@ -193,14 +226,15 @@ export const routes: Routes = [
         ],
       },
 
-      // Organization Routes (Departments & Designations)
+      // ================= ORGANIZATION =================
       {
         path: 'departments',
         loadComponent: () =>
           import(
             './Components/organization/departments/department-list/department-list.component'
           ).then((m) => m.DepartmentListComponent),
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
+        data: { roles: ['HR'] },
         title: 'Departments',
       },
       {
@@ -209,14 +243,16 @@ export const routes: Routes = [
           import(
             './Components/organization/designations/designation-list/designation-list.component'
           ).then((m) => m.DesignationListComponent),
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
+        data: { roles: ['HR'] },
         title: 'Designations',
       },
 
-      // Payroll Routes
+      // ================= PAYROLL =================
       {
         path: 'payroll',
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
+        data: { roles: ['HR'] },
         children: [
           {
             path: 'payslips',
@@ -262,10 +298,11 @@ export const routes: Routes = [
         ],
       },
 
-      // Performance Routes
+      // ================= PERFORMANCE =================
       {
         path: 'performance',
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
+        data: { roles: ['HR', 'Manager'] },
         children: [
           {
             path: 'cycles',
@@ -319,10 +356,11 @@ export const routes: Routes = [
         ],
       },
 
-      // Reports Routes
+      // ================= REPORTS =================
       {
         path: 'reports',
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
+        data: { roles: ['HR', 'Manager'] },
         children: [
           {
             path: 'dashboard',
@@ -368,34 +406,68 @@ export const routes: Routes = [
         ],
       },
 
-      // Notifications Route
+      // ================= NOTIFICATIONS =================
       {
         path: 'notifications',
         loadComponent: () =>
           import('./Components/notifications/notification-list.component').then(
             (m) => m.NotificationListComponent
           ),
-        canActivate: [authGuard],
+        canActivate: [AuthGuard],
+        data: { roles: ['HR', 'Manager', 'Employee'] },
         title: 'Notifications',
       },
 
-      // Leave Management Routes
-      { path: 'leave/types', component: LeaveType, title: 'Leave Types' },
-      { path: 'leave/balances', component: LeaveBalance, title: 'Leave Balances' },
-      { path: 'leave/requests', component: LeaveRequests, title: 'Leave Requests' },
+      // ================= LEAVE MANAGEMENT =================
+      {
+        path: 'leave/types',
+        component: LeaveType,
+        canActivate: [AuthGuard],
+        data: { roles: ['HR'] },
+        title: 'Leave Types',
+      },
+      {
+        path: 'leave/balances',
+        component: LeaveBalance,
+        canActivate: [AuthGuard],
+        data: { roles: ['HR'] },
+        title: 'Leave Balances',
+      },
+      {
+        path: 'leave/requests',
+        component: LeaveRequests,
+        canActivate: [AuthGuard],
+        data: { roles: ['HR'] },
+        title: 'Leave Requests',
+      },
       {
         path: 'leave/manage-balances',
-        loadComponent: () => import('./Components/Leaves/leave-balance-management/leave-balance-management.component').then(m => m.LeaveBalanceManagementComponent),
-        title: 'Manage Leave Balances'
+        loadComponent: () =>
+          import(
+            './Components/Leaves/leave-balance-management/leave-balance-management.component'
+          ).then((m) => m.LeaveBalanceManagementComponent),
+        canActivate: [AuthGuard],
+        data: { roles: ['HR'] },
+        title: 'Manage Leave Balances',
       },
       {
         path: 'leave/approvals',
-        loadComponent: () => import('./Components/Leaves/my-approvals/my-approvals.component').then(m => m.MyApprovalsComponent),
-        title: 'My Approvals'
+        loadComponent: () =>
+          import('./Components/Leaves/my-approvals/my-approvals.component').then(
+            (m) => m.MyApprovalsComponent
+          ),
+        canActivate: [AuthGuard],
+        data: { roles: ['Manager', 'HR'] },
+        title: 'My Approvals',
       },
-      { path: 'leave/employee-requests', component: EmployeeLeaveRequest, title: 'My Leave Requests' },
+      {
+        path: 'leave/employee-requests',
+        component: EmployeeLeaveRequest,
+        canActivate: [AuthGuard],
+        data: { roles: ['Employee', 'Manager', 'HR'] },
+        title: 'My Leave Requests',
+      },
     ],
-
   },
   {
     path: '',
