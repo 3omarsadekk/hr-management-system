@@ -1,7 +1,9 @@
- using FaceRecognitionDotNet; // Disabled - requires native Dlib libraries for Linux
+ //using FaceRecognitionDotNet; // Disabled - requires native Dlib libraries for Linux
 using HRManagementSystem.Application.Services;
 using HRManagementSystem.WebApi.Extensions;
 using HRManagementSystem.WebApi.Middleware;
+using HRManagementSystem.Infrastructure.Data.Seeds;
+using Microsoft.AspNetCore.Identity;
 using QuestPDF.Infrastructure;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -83,7 +85,11 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+    await RoleSeedData.SeedRolesAsync(roleManager);
+}
 // Register recurring background jobs
 app.RegisterHangfireRecurringJobs();
 
