@@ -26,30 +26,14 @@ export class LoginComponent {
       .login({ email: this.email, password: this.password, rememberMe: true })
       .subscribe({
         next: (res) => {
-          // ensure there is data before accessing properties
+          // The saveAuthData in the service already handles saving all data via tap operator
           if (!res.hasError && res.data) {
-            this.authService.saveToken(res.data.token);
-            // save both userId (string) and employeeId (number) correctly
-            this.authService.saveUserId(res.data.userId);
-            this.authService.saveEmployeeId(res.data.employeeId);
-            this.authService.saveRoles(res.data.roles ?? []);
-
-            // Try to save user name if available, otherwise default or decode later
-            if (res.data.fullName) {
-              this.authService.saveUserName(res.data.fullName);
-            } else if (res.data.name) {
-              this.authService.saveUserName(res.data.name);
-            } else {
-              // Fallback or try to extract from token if possible (not implemented yet)
-              this.authService.saveUserName('User');
-            }
             this.errorMessage = '';
-
             this.layoutService.closeLogin();
-
             this.router.navigate(['/pages/dashboard']);
           } else {
             this.errorMessage = res.errorMessage || 'Login failed';
+            alert(this.errorMessage);
           }
         },
         error: (err) => {

@@ -11,12 +11,12 @@ export class Employee {
   constructor(private http: HttpClient) {}
   updateEmployeeImage(employeeId: number, file: File): Observable<any> {
     const formData = new FormData();
-    formData.append('Image', file); // لازم يكون نفس اسم الفيلد في DTO
+    formData.append('Image', file); 
 
     return this.http.post(`${this.apiUrl}/${employeeId}/update-image`, formData);
   }
   getEmployeeId(): number {
-    const employeeId = localStorage.getItem('userId');
+    const employeeId = localStorage.getItem('auth_employee_id');
     if (!employeeId) return 0;
     return parseInt(employeeId);
   }
