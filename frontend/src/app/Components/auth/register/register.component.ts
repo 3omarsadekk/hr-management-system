@@ -102,7 +102,7 @@ export class RegisterComponent {
           }, 1500);
         }
       },
-      error: (err) => {
+      error: (err: any) => {
         if (err.status === 400) {
           this.errorMessage = err.error.errorMessage;
           alert(this.errorMessage);

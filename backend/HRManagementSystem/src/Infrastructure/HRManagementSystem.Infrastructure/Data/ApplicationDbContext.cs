@@ -67,6 +67,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
 
         // Seed Attendance data
         builder.SeedAttendance();
+
+
+       
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

@@ -26,9 +26,14 @@ export class LoginComponent {
       .login({ email: this.email, password: this.password, rememberMe: true })
       .subscribe({
         next: (res) => {
-          if (res.hasError == false) {
+          // ensure there is data before accessing properties
+          if (!res.hasError && res.data) {
             this.authService.saveToken(res.data.token);
-            this.authService.saveUserId(res.data.employeeId);
+            // save both userId (string) and employeeId (number) correctly
+            this.authService.saveUserId(res.data.userId);
+            this.authService.saveEmployeeId(res.data.employeeId);
+            this.authService.saveRoles(res.data.roles ?? []);
+
             // Try to save user name if available, otherwise default or decode later
             if (res.data.fullName) {
               this.authService.saveUserName(res.data.fullName);
@@ -39,16 +44,18 @@ export class LoginComponent {
               this.authService.saveUserName('User');
             }
             this.errorMessage = '';
-            alert('Login successful! Token saved.');
-            this.layoutService.closeLogin(); // Close overlay on success
-            this.router.navigate(['/pages/dashboard']); // Navigate to dashboard
+
+            this.layoutService.closeLogin();
+
+            this.router.navigate(['/pages/dashboard']);
+          } else {
+            this.errorMessage = res.errorMessage || 'Login failed';
           }
         },
         error: (err) => {
-          console.error("FULL ERROR: ", err);
+          console.error('FULL ERROR: ', err);
           if (err.status === 401) {
-            console.log(err.error.errorMessage);
-            this.errorMessage = err.error.errorMessage;
+            this.errorMessage = err.error?.errorMessage || 'Invalid credentials';
             alert(this.errorMessage);
           } else {
             this.errorMessage = 'Error connecting to server';
@@ -60,11 +67,11 @@ export class LoginComponent {
 
   close() {
     this.layoutService.closeLogin();
-    this.router.navigate(['/pages/dashboard']); // Navigate to dashboard on close
+    this.router.navigate(['/pages/dashboard']);
   }
 
   openRegister() {
     this.layoutService.openRegister();
-    this.router.navigate(['/pages/register']); // Switch route
+    this.router.navigate(['/pages/register']);
   }
 }

@@ -4,14 +4,18 @@
 <div class="sidebar border-end sidebar-shadow" [class.collapsed]="!isSidebarOpen()">
   <div class="list-group list-group-flush mt-2">
     <ng-container *ngFor="let item of menuItems">
+
       <!-- Group Header -->
-      <div *ngIf="item.group" class="menu-header fw-bold mt-3 mb-2 px-3 small">
+      <div
+        *ngIf="item.group && canShow(item)"
+        class="menu-header fw-bold mt-3 mb-2 px-3 small"
+      >
         {{ item.title }}
       </div>
 
       <!-- Menu Item -->
       <a
-        *ngIf="!item.group"
+        *ngIf="!item.group && canShow(item)"
         [routerLink]="item.children ? null : item.link"
         class="list-group-item list-group-item-action border-0 d-flex align-items-center justify-content-between"
         [class.active]="!item.children && isActiveRoute(item.link)"
@@ -33,20 +37,22 @@
 
       <!-- Dropdown Children with animation -->
       <div
-        *ngIf="item.children"
+        *ngIf="item.children && canShow(item)"
         class="submenu"
         [class.expanded]="isExpanded(item)"
         [style.maxHeight]="isExpanded(item) ? item.children.length * 48 + 16 + 'px' : '0'"
       >
-        <a
-          *ngFor="let child of item.children"
-          [routerLink]="child.link"
-          routerLinkActive="active"
-          class="list-group-item list-group-item-action border-0 d-flex align-items-center ps-5 submenu-item"
-          (click)="closeSidebarOnMobile()"
-        >
-          <span class="menu-title">{{ child.title }}</span>
-        </a>
+        <ng-container *ngFor="let child of item.children">
+          <a
+            *ngIf="canShow(child)"
+            [routerLink]="child.link"
+            routerLinkActive="active"
+            class="list-group-item list-group-item-action border-0 d-flex align-items-center ps-5 submenu-item"
+            (click)="closeSidebarOnMobile()"
+          >
+            <span class="menu-title">{{ child.title }}</span>
+          </a>
+        </ng-container>
       </div>
     </ng-container>
   </div>
