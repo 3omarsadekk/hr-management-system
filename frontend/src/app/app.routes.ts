@@ -57,6 +57,15 @@ export const routes: Routes = [
           { path: '', redirectTo: 'check', pathMatch: 'full' }
         ]
       },
+      {
+        path: 'employees/resignations',
+        loadComponent: () =>
+          import('./Components/employees/resignation-list/resignation-list.component').then(
+            (m) => m.ResignationListComponent
+          ),
+        canActivate: [authGuard],
+        title: 'Resignation Requests',
+      },
       { path: 'checkIn', component: CheckIn, title: 'CheckIn' },
       { path: 'checkOut', component: CheckOut, title: 'CheckOut' },
       { path: 'updateEmployeeImage', component: UpdateEmployeeImage, title: 'UpdateEmployeeImage' },
@@ -105,6 +114,14 @@ export const routes: Routes = [
                 (m) => m.EssTrainingComponent
               ),
             title: 'My Training',
+          },
+          {
+            path: 'resignations',
+            loadComponent: () =>
+              import('./Components/ess/ess-resignations/ess-resignations.component').then(
+                (m) => m.EssResignationsComponent
+              ),
+            title: 'My Resignations',
           },
           { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
         ],
@@ -204,25 +221,25 @@ export const routes: Routes = [
           {
             path: 'payslips',
             loadComponent: () =>
-              import(
-                './Components/payroll/payslip-list/payslip-list.component'
-              ).then((m) => m.PayslipListComponent),
+              import('./Components/payroll/payslip-list/payslip-list.component').then(
+                (m) => m.PayslipListComponent
+              ),
             title: 'Payslips',
           },
           {
             path: 'allowances',
             loadComponent: () =>
-              import(
-                './Components/payroll/allowance-list/allowance-list.component'
-              ).then((m) => m.AllowanceListComponent),
+              import('./Components/payroll/allowance-list/allowance-list.component').then(
+                (m) => m.AllowanceListComponent
+              ),
             title: 'Allowances',
           },
           {
             path: 'deductions',
             loadComponent: () =>
-              import(
-                './Components/payroll/deduction-list/deduction-list.component'
-              ).then((m) => m.DeductionListComponent),
+              import('./Components/payroll/deduction-list/deduction-list.component').then(
+                (m) => m.DeductionListComponent
+              ),
             title: 'Deductions',
           },
           {
@@ -242,6 +259,63 @@ export const routes: Routes = [
             title: 'Employee Deductions',
           },
           { path: '', redirectTo: 'allowances', pathMatch: 'full' },
+        ],
+      },
+
+      // Performance Routes
+      {
+        path: 'performance',
+        canActivate: [authGuard],
+        children: [
+          {
+            path: 'cycles',
+            loadComponent: () =>
+              import(
+                './Components/performance/review-cycles/review-cycle-list/review-cycle-list.component'
+              ).then((m) => m.ReviewCycleListComponent),
+            title: 'Review Cycles',
+          },
+          {
+            path: 'reviews',
+            loadComponent: () =>
+              import('./Components/performance/reviews/review-list/review-list.component').then(
+                (m) => m.ReviewListComponent
+              ),
+            title: 'Performance Reviews',
+          },
+          {
+            path: 'goals',
+            loadComponent: () =>
+              import('./Components/performance/goals/goal-list/goal-list.component').then(
+                (m) => m.GoalListComponent
+              ),
+            title: 'Goals',
+          },
+          {
+            path: 'kpis',
+            loadComponent: () =>
+              import('./Components/performance/kpis/kpi-list/kpi-list.component').then(
+                (m) => m.KpiListComponent
+              ),
+            title: 'KPIs',
+          },
+          {
+            path: 'competencies',
+            loadComponent: () =>
+              import(
+                './Components/performance/competencies/competency-list/competency-list.component'
+              ).then((m) => m.CompetencyListComponent),
+            title: 'Competencies',
+          },
+          {
+            path: 'feedback',
+            loadComponent: () =>
+              import(
+                './Components/performance/feedback/feedback-list/feedback-list.component'
+              ).then((m) => m.FeedbackListComponent),
+            title: 'Performance Feedback',
+          },
+          { path: '', redirectTo: 'cycles', pathMatch: 'full' },
         ],
       },
 

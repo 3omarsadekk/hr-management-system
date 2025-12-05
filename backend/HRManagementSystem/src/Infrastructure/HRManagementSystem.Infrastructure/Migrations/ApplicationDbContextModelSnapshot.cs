@@ -3082,6 +3082,108 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.Resignation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("HandoverNotes")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<bool>("IsImmediateResignation")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastWorkingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("NoticePeriodDays")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<string>("RejectionReason")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime?>("ReviewedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ReviewedById")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<DateTime>("SubmissionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ReviewedById");
+
+                    b.ToTable("Resignations", (string)null);
+                });
+
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.ResignationApproval", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("ActionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ApproverId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Comments")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("ResignationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApproverId");
+
+                    b.HasIndex("ResignationId");
+
+                    b.ToTable("ResignationApprovals", (string)null);
+                });
+
             modelBuilder.Entity("HRManagementSystem.Domain.Entities.ReviewCycle", b =>
                 {
                     b.Property<int>("Id")
@@ -3792,6 +3894,43 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     b.Navigation("ReviewCycle");
                 });
 
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.Resignation", b =>
+                {
+                    b.HasOne("HRManagementSystem.Domain.Entities.Employee", "Employee")
+                        .WithMany("Resignations")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HRManagementSystem.Domain.Entities.Employee", "Reviewer")
+                        .WithMany()
+                        .HasForeignKey("ReviewedById")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Reviewer");
+                });
+
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.ResignationApproval", b =>
+                {
+                    b.HasOne("HRManagementSystem.Domain.Entities.Employee", "Approver")
+                        .WithMany("ResignationApprovals")
+                        .HasForeignKey("ApproverId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("HRManagementSystem.Domain.Entities.Resignation", "Resignation")
+                        .WithMany("ResignationApprovals")
+                        .HasForeignKey("ResignationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Approver");
+
+                    b.Navigation("Resignation");
+                });
+
             modelBuilder.Entity("HRManagementSystem.Domain.Entities.TrainingRequest", b =>
                 {
                     b.HasOne("HRManagementSystem.Domain.Entities.Employee", "Employee")
@@ -3910,6 +4049,10 @@ namespace HRManagementSystem.Infrastructure.Migrations
 
                     b.Navigation("Payslips");
 
+                    b.Navigation("ResignationApprovals");
+
+                    b.Navigation("Resignations");
+
                     b.Navigation("TrainingRequests");
                 });
 
@@ -3939,6 +4082,11 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     b.Navigation("Goals");
 
                     b.Navigation("KPIResults");
+                });
+
+            modelBuilder.Entity("HRManagementSystem.Domain.Entities.Resignation", b =>
+                {
+                    b.Navigation("ResignationApprovals");
                 });
 
             modelBuilder.Entity("HRManagementSystem.Domain.Entities.ReviewCycle", b =>
