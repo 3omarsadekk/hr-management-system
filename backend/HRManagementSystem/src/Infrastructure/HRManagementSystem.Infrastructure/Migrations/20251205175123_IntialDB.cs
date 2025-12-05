@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HRManagementSystem.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initCreate : Migration
+    public partial class IntialDB : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -1016,9 +1016,15 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     { 3, 500.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Food Allowance", null },
                     { 4, 300.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Mobile Allowance", null },
                     { 5, 200.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Internet Allowance", null },
-                    { 6, 3000.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Performance Bonus", null },
-                    { 7, 1500.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Health Insurance", null },
-                    { 8, 2000.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Training Completion Bonus", null }
+                    { 6, 1500.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Health Insurance", null },
+                    { 7, 1000.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Education Allowance", null },
+                    { 8, 400.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Utilities Allowance", null },
+                    { 9, 15.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "Annual Performance Bonus", null },
+                    { 10, 50.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "Overtime Allowance", null },
+                    { 11, 5.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "Sales Commission", null },
+                    { 12, 25.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "Night Shift Allowance", null },
+                    { 13, 3000.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Quarterly Bonus", null },
+                    { 14, 2000.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Training Completion Bonus", null }
                 });
 
             migrationBuilder.InsertData(
@@ -1062,14 +1068,31 @@ namespace HRManagementSystem.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "Name", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Ability to clearly convey information and ideas through various mediums", "Communication", null },
-                    { 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Ability to identify, analyze, and resolve problems effectively", "Problem Solving", null },
-                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Ability to work collaboratively with others to achieve common goals", "Teamwork", null },
-                    { 4, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Ability to guide, inspire, and influence others towards achieving objectives", "Leadership", null },
-                    { 5, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Proficiency in job-specific technical skills and knowledge", "Technical Expertise", null },
-                    { 6, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Ability to adjust to new conditions and handle change effectively", "Adaptability", null },
-                    { 7, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Ability to prioritize tasks and manage time efficiently", "Time Management", null },
-                    { 8, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Ability to take proactive action and go beyond basic requirements", "Initiative", null }
+                    { 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Proficiency in C# language, object-oriented programming, and .NET framework development", "C# Programming", null },
+                    { 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Skills in database design, SQL queries, stored procedures, and database optimization", "Database Development", null },
+                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Expertise in web technologies including HTML, CSS, JavaScript, and modern frameworks", "Web Development", null },
+                    { 4, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Knowledge of cloud platforms (Azure, AWS), containerization, and cloud-native architecture", "Cloud Computing", null },
+                    { 5, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Competency in CI/CD pipelines, infrastructure as code, automation, and monitoring", "DevOps Practices", null },
+                    { 6, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Proficiency in manual and automated testing, test planning, and quality assurance", "Software Testing", null },
+                    { 7, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Ability to design scalable, maintainable system architectures and technical solutions", "System Architecture", null },
+                    { 8, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Understanding of security principles, threat analysis, and secure coding practices", "Cybersecurity", null },
+                    { 9, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Ability to lead teams, make decisions, inspire others, and drive organizational success", "Leadership", null },
+                    { 10, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Collaborating effectively with others, sharing knowledge, and contributing to team goals", "Teamwork", null },
+                    { 11, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Clear and effective verbal and written communication with diverse audiences", "Communication Skills", null },
+                    { 12, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Analytical thinking, identifying root causes, and developing effective solutions", "Problem Solving", null },
+                    { 13, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Flexibility to adjust to changing circumstances, learn new skills, and embrace change", "Adaptability", null },
+                    { 14, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Prioritizing tasks, meeting deadlines, and managing multiple responsibilities effectively", "Time Management", null },
+                    { 15, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Understanding customer needs, providing excellent service, and building relationships", "Customer Focus", null },
+                    { 16, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Analyzing financial data, preparing reports, forecasting, and budgeting", "Financial Analysis", null },
+                    { 17, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Planning, executing, and delivering projects on time, within scope and budget", "Project Management", null },
+                    { 18, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Selling products/services, negotiating deals, and closing business opportunities", "Sales and Negotiation", null },
+                    { 19, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Developing marketing plans, understanding market dynamics, and brand management", "Marketing Strategy", null },
+                    { 20, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Identifying inefficiencies, implementing improvements, and streamlining operations", "Business Process Optimization", null },
+                    { 21, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Talent acquisition, employee relations, performance management, and HR compliance", "HR Management", null },
+                    { 22, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Understanding of accounting standards, financial reporting, and regulatory compliance", "Accounting Principles", null },
+                    { 23, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Handling customer inquiries, resolving issues, and maintaining customer satisfaction", "Customer Support", null },
+                    { 24, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Collecting, processing, and interpreting data to support business decisions", "Data Analysis", null },
+                    { 25, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Long-term planning, understanding industry trends, and aligning actions with strategy", "Strategic Thinking", null }
                 });
 
             migrationBuilder.InsertData(
@@ -1077,11 +1100,18 @@ namespace HRManagementSystem.Infrastructure.Migrations
                 columns: new[] { "Id", "Amount", "CreatedAt", "IsPercentage", "Name", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, 9.0m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "Social Insurance", null },
-                    { 2, 12.5m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "Income Tax", null },
-                    { 3, 500.0m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Absence Deduction", null },
-                    { 4, 100.0m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Late Arrival Penalty", null },
-                    { 5, 1000.0m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Loan Installment", null }
+                    { 1, 14.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "Social Insurance", null },
+                    { 2, 2.50m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "Income Tax - Tier 1", null },
+                    { 3, 10.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "Income Tax - Tier 2", null },
+                    { 4, 15.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "Income Tax - Tier 3", null },
+                    { 5, 1.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), true, "Professional Syndicate Fee", null },
+                    { 6, 50.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Late Arrival Fine", null },
+                    { 7, 200.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Absence Penalty", null },
+                    { 8, 500.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Loan Repayment - Personal", null },
+                    { 9, 1000.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Advance Salary Deduction", null },
+                    { 10, 300.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Equipment Damage Fee", null },
+                    { 11, 150.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Uniform Replacement", null },
+                    { 12, 250.00m, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), false, "Health Insurance Premium", null }
                 });
 
             migrationBuilder.InsertData(
@@ -1089,12 +1119,12 @@ namespace HRManagementSystem.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "EmployeeCount", "ManagerId", "Name", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Manages all IT infrastructure, software development, and technical support", null, null, "Information Technology", null },
-                    { 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Handles recruitment, employee relations, benefits, and HR policies", null, null, "Human Resources", null },
-                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Manages financial operations, accounting, budgeting, and reporting", null, null, "Finance", null },
-                    { 4, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Drives sales growth, customer acquisition, and marketing campaigns", null, null, "Sales & Marketing", null },
-                    { 5, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Oversees day-to-day operations and process optimization", null, null, "Operations", null },
-                    { 6, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Provides customer service and technical support", null, null, "Customer Support", null }
+                    { 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Manages all IT infrastructure, software development, technical support, cybersecurity, and digital transformation initiatives. Responsible for maintaining enterprise systems, developing custom applications, and ensuring technology alignment with business objectives.", 5, null, "Information Technology", null },
+                    { 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Handles recruitment and talent acquisition, employee relations, compensation and benefits administration, performance management, HR policy development, training and development programs, and ensuring regulatory compliance with Egyptian labor laws.", 3, null, "Human Resources", null },
+                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Manages financial operations including accounting, budgeting, financial reporting, cash flow management, tax compliance, audit coordination, financial analysis, and strategic financial planning. Ensures accurate financial records and regulatory compliance.", 4, null, "Finance", null },
+                    { 4, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Drives revenue growth through sales strategy execution, customer acquisition and retention, market research and analysis, digital marketing campaigns, brand management, lead generation, and customer relationship management. Develops and implements go-to-market strategies.", 4, null, "Sales & Marketing", null },
+                    { 5, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Oversees day-to-day business operations, process optimization, supply chain management, quality assurance, resource allocation, operational efficiency improvements, and cross-functional coordination to ensure smooth business execution.", 3, null, "Operations", null },
+                    { 6, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Provides exceptional customer service, technical support, issue resolution, customer satisfaction management, support ticket handling, product training for customers, and feedback collection to improve service quality and customer experience.", 3, null, "Customer Support", null }
                 });
 
             migrationBuilder.InsertData(
@@ -1102,24 +1132,24 @@ namespace HRManagementSystem.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "EmployeeCount", "Title", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Develops and maintains software applications", null, "Software Engineer", null },
-                    { 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Lead developer responsible for complex technical solutions", null, "Senior Software Engineer", null },
-                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Manages and guides team members to achieve project goals", null, "Team Lead", null },
-                    { 4, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Manages deployment pipelines and infrastructure", null, "DevOps Engineer", null },
-                    { 5, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Ensures software quality through testing and automation", null, "QA Engineer", null },
-                    { 6, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Oversees human resources operations and employee management", null, "HR Manager", null },
-                    { 7, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Handles recruitment, onboarding, and employee relations", null, "HR Specialist", null },
-                    { 8, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Focuses on talent acquisition and candidate screening", null, "Recruiter", null },
-                    { 9, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Analyzes financial data and prepares reports", null, "Financial Analyst", null },
-                    { 10, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Manages accounting records and financial transactions", null, "Accountant", null },
-                    { 11, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Oversees financial planning and budget management", null, "Finance Manager", null },
-                    { 12, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Drives sales and builds customer relationships", null, "Sales Representative", null },
-                    { 13, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Develops and executes marketing campaigns", null, "Marketing Specialist", null },
-                    { 14, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Identifies growth opportunities and partnerships", null, "Business Development Manager", null },
-                    { 15, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Manages daily operations and process improvements", null, "Operations Manager", null },
-                    { 16, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Plans, executes, and closes projects successfully", null, "Project Manager", null },
-                    { 17, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Provides customer assistance and resolves issues", null, "Customer Support Representative", null },
-                    { 18, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Leads customer support team and ensures service quality", null, "Support Team Lead", null }
+                    { 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Develops and maintains software applications using modern programming languages and frameworks. Designs technical solutions, writes clean code, performs code reviews, and collaborates with cross-functional teams.", 2, "Software Engineer", null },
+                    { 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Lead developer responsible for complex technical solutions, system architecture, mentoring junior developers, and technical decision-making. Drives best practices and innovation.", 1, "Senior Software Engineer", null },
+                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Manages and guides team members to achieve project goals. Responsible for team performance, resource allocation, sprint planning, stakeholder communication, and ensuring timely delivery.", 1, "Team Lead", null },
+                    { 4, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Manages CI/CD pipelines, cloud infrastructure, containerization, monitoring systems, and automates deployment processes. Ensures high availability and system reliability.", 1, "DevOps Engineer", null },
+                    { 5, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Ensures software quality through manual and automated testing, creates test plans, identifies bugs, performs regression testing, and maintains test automation frameworks.", 0, "QA Engineer", null },
+                    { 6, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Oversees all human resources operations including recruitment strategy, employee relations, performance management, policy development, and ensuring legal compliance with labor laws.", 1, "HR Manager", null },
+                    { 7, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Handles recruitment, onboarding, employee relations, benefits administration, maintaining HR records, and supporting talent development initiatives.", 1, "HR Specialist", null },
+                    { 8, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Focuses on talent acquisition, candidate sourcing and screening, conducting interviews, negotiating offers, and building talent pipelines for current and future needs.", 1, "Recruiter", null },
+                    { 9, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Analyzes financial data, prepares reports and forecasts, conducts variance analysis, supports budgeting processes, and provides insights for strategic decision-making.", 1, "Financial Analyst", null },
+                    { 10, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Manages accounting records, processes financial transactions, prepares journal entries, reconciles accounts, handles accounts payable/receivable, and ensures accuracy of financial data.", 1, "Accountant", null },
+                    { 11, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Oversees financial planning, budget management, financial reporting, cash flow optimization, coordinates audits, and leads the finance team to achieve organizational financial goals.", 2, "Finance Manager", null },
+                    { 12, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Drives sales through prospecting, lead qualification, product presentations, negotiation, and closing deals. Builds and maintains strong customer relationships for long-term growth.", 2, "Sales Representative", null },
+                    { 13, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Develops and executes marketing campaigns, manages social media presence, creates content, conducts market research, analyzes campaign performance, and supports brand positioning.", 1, "Marketing Specialist", null },
+                    { 14, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Identifies growth opportunities, develops partnerships, expands market presence, leads strategic initiatives, and drives revenue through new business channels and relationships.", 1, "Business Development Manager", null },
+                    { 15, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Manages daily operations, drives process improvements, optimizes resource allocation, ensures quality standards, and coordinates cross-functional activities for operational excellence.", 1, "Operations Manager", null },
+                    { 16, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Plans, executes, and closes projects successfully. Manages scope, timeline, budget, resources, stakeholder communication, and risk mitigation to ensure project objectives are met.", 1, "Project Manager", null },
+                    { 17, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Provides customer assistance, resolves technical and service issues, handles support tickets, maintains customer satisfaction, and documents customer interactions.", 2, "Customer Support Representative", null },
+                    { 18, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Leads customer support team, ensures service quality standards, manages escalations, monitors performance metrics, trains team members, and drives customer satisfaction improvements.", 1, "Support Team Lead", null }
                 });
 
             migrationBuilder.InsertData(
@@ -1127,14 +1157,29 @@ namespace HRManagementSystem.Infrastructure.Migrations
                 columns: new[] { "Id", "Code", "CreatedAt", "Description", "Name", "Target", "Unit", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, "PROJ-COMP", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Percentage of projects completed on time", "Project Completion Rate", 95.0m, "%", null },
-                    { 2, "CUST-SAT", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Average customer satisfaction rating (1-5 scale)", "Customer Satisfaction Score", 4.5m, "score", null },
-                    { 3, "CODE-QUAL", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Code quality metrics including test coverage and code review pass rate", "Code Quality Score", 90.0m, "%", null },
-                    { 4, "ATTEND", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Employee attendance rate excluding approved leaves", "Attendance Rate", 98.0m, "%", null },
-                    { 5, "TRAIN-COMP", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Number of training courses completed per review cycle", "Training Completion", 3.0m, "courses", null },
-                    { 6, "SALES-REV", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Revenue generated from sales activities", "Sales Revenue Target", 500000.0m, "EGP", null },
-                    { 7, "TICKET-RES", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Average time to resolve support tickets", "Ticket Resolution Time", 24.0m, "hours", null },
-                    { 8, "RECRUIT-TIME", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Average time from job posting to hire", "Time to Hire", 30.0m, "days", null }
+                    { 1, "SALES-REV", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Total monthly sales revenue target for the sales team", "Monthly Sales Revenue", 500000.00m, "EGP", null },
+                    { 2, "SALES-CONV", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Percentage of leads converted to customers", "Lead Conversion Rate", 25.00m, "%", null },
+                    { 3, "SALES-DEAL", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Average value of closed deals", "Average Deal Size", 15000.00m, "EGP", null },
+                    { 4, "HR-RETENTION", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Percentage of employees retained over a 12-month period", "Employee Retention Rate", 90.00m, "%", null },
+                    { 5, "HR-TTH", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Average number of days to fill a position from job posting to offer acceptance", "Time to Hire", 30.00m, "Days", null },
+                    { 6, "HR-SATISFACTION", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Average employee satisfaction rating on a 5-point scale", "Employee Satisfaction Score", 4.20m, "Score", null },
+                    { 7, "HR-TRAINING", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Average training hours completed per employee annually", "Training Hours per Employee", 40.00m, "Hours", null },
+                    { 8, "IT-UPTIME", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Percentage of time systems are operational and available", "System Uptime", 99.50m, "%", null },
+                    { 9, "IT-RESOLUTION", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Average time to resolve IT support tickets", "Average Ticket Resolution Time", 4.00m, "Hours", null },
+                    { 10, "IT-DEPLOY", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Number of successful deployments per month", "Deployment Frequency", 20.00m, "Count", null },
+                    { 11, "IT-BUGFIX", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Percentage of reported bugs fixed within SLA", "Bug Fix Rate", 95.00m, "%", null },
+                    { 12, "FIN-ROI", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Overall return on company investments", "Return on Investment", 15.00m, "%", null },
+                    { 13, "FIN-VARIANCE", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Acceptable variance between budgeted and actual expenses", "Budget Variance", 5.00m, "%", null },
+                    { 14, "FIN-COLLECT", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Average days to collect accounts receivable", "Receivables Collection Period", 30.00m, "Days", null },
+                    { 15, "FIN-MARGIN", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Net profit as a percentage of total revenue", "Net Profit Margin", 20.00m, "%", null },
+                    { 16, "CS-CSAT", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Average customer satisfaction rating on a 5-point scale", "Customer Satisfaction Score", 4.50m, "Score", null },
+                    { 17, "CS-FRT", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Average time to first response for customer inquiries", "First Response Time", 15.00m, "Minutes", null },
+                    { 18, "CS-FCR", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Percentage of issues resolved on first contact", "First Contact Resolution", 75.00m, "%", null },
+                    { 19, "OPS-EFFICIENCY", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Overall operational efficiency rating", "Operational Efficiency", 85.00m, "%", null },
+                    { 20, "OPS-CYCLE", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Average time to complete key operational processes", "Process Cycle Time", 24.00m, "Hours", null },
+                    { 21, "MKT-LEADS", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Number of qualified leads generated per month", "Monthly Lead Generation", 200.00m, "Count", null },
+                    { 22, "MKT-ENGAGEMENT", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Percentage engagement rate on social media posts", "Social Media Engagement Rate", 5.00m, "%", null },
+                    { 23, "MKT-CAC", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Average cost to acquire a new customer", "Customer Acquisition Cost", 1000.00m, "EGP", null }
                 });
 
             migrationBuilder.InsertData(
@@ -1148,7 +1193,10 @@ namespace HRManagementSystem.Infrastructure.Migrations
                     { 4, false, null, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Short paid leave for new fathers as per company policy", "Male", true, 3, "Paternity Leave", null },
                     { 5, false, null, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Leave without pay subject to management approval", null, false, 30, "Unpaid Leave", null },
                     { 6, false, null, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Leave for emergencies (death of a relative, special circumstances)", null, true, 5, "Emergency Leave", null },
-                    { 7, false, null, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Hajj leave for Muslims, 10 days paid, once in a lifetime", null, true, 10, "Hajj Leave", null }
+                    { 7, false, null, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Hajj leave for Muslims, 10 days paid, once in a lifetime", null, true, 10, "Hajj Leave", null },
+                    { 8, false, null, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Extended leave for personal development or rest, available after 5+ years of service", null, false, 90, "Sabbatical Leave", null },
+                    { 9, false, null, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Educational leave for pursuing further studies or professional certifications", null, true, 30, "Study Leave", null },
+                    { 10, false, null, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Leave for family emergencies or bereavement", null, true, 3, "Compassionate Leave", null }
                 });
 
             migrationBuilder.InsertData(
@@ -1166,14 +1214,24 @@ namespace HRManagementSystem.Infrastructure.Migrations
                 columns: new[] { "Id", "CreatedAt", "Description", "DurationHours", "Title", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Improve interpersonal and workplace communication skills.", 8, "Effective Communication", null },
-                    { 2, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Core leadership principles and team management skills.", 16, "Leadership Essentials", null },
-                    { 3, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Basics of project planning, scope, scheduling, and risk.", 40, "Project Management Fundamentals", null },
-                    { 4, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Workshop covering Agile principles and Scrum ceremonies.", 16, "Agile & Scrum Workshop", null },
-                    { 5, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Prioritization and productivity techniques.", 4, "Time Management", null },
-                    { 6, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Deep dive into C# features and best practices.", 40, "Advanced C# Programming", null },
-                    { 7, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Secure coding, compliance, and data protection essentials.", 8, "Data Protection & Security", null },
-                    { 8, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Best practices for customer interactions.", 8, "Customer Service Excellence", null }
+                    { 1, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Master advanced C# concepts including async/await, LINQ, delegates, generics, and design patterns for enterprise application development.", 40, "Advanced C# Programming", null },
+                    { 2, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Comprehensive training on building modern web applications with ASP.NET Core, Entity Framework Core, RESTful APIs, and authentication/authorization.", 48, "ASP.NET Core Web Development", null },
+                    { 3, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Learn to build dynamic single-page applications using Angular, TypeScript, RxJS, and modern frontend development practices.", 36, "Angular Framework Fundamentals", null },
+                    { 4, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Hands-on training covering Azure services, cloud architecture, deployment strategies, monitoring, and cost optimization.", 32, "Cloud Computing with Azure", null },
+                    { 5, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Master continuous integration and deployment using Azure DevOps, Git, Docker, Kubernetes, and automation best practices.", 40, "DevOps and CI/CD Pipelines", null },
+                    { 6, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Comprehensive training on database design, normalization, T-SQL, stored procedures, indexing strategies, and performance tuning.", 32, "Database Design and SQL Server", null },
+                    { 7, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Essential cybersecurity concepts including threat analysis, security protocols, encryption, secure coding practices, and incident response.", 24, "Cybersecurity Fundamentals", null },
+                    { 8, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Introduction to machine learning algorithms, data science, Python for ML, model training, and practical AI applications.", 48, "Machine Learning and AI Basics", null },
+                    { 9, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Develop essential leadership competencies including team management, conflict resolution, strategic thinking, and decision-making.", 24, "Leadership and Management Skills", null },
+                    { 10, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Enhance communication skills for presentations, meetings, email etiquette, active listening, and cross-cultural communication.", 16, "Effective Communication in the Workplace", null },
+                    { 11, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Comprehensive PMP certification preparation covering PMBOK guidelines, project lifecycle, risk management, and agile methodologies.", 60, "Project Management Professional (PMP) Prep", null },
+                    { 12, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Master productivity techniques, prioritization strategies, task management tools, and work-life balance practices.", 12, "Time Management and Productivity", null },
+                    { 13, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Advanced financial analysis techniques, financial statement interpretation, budgeting, forecasting, and Excel skills for finance professionals.", 28, "Financial Analysis and Reporting", null },
+                    { 14, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Proven sales strategies, customer acquisition, negotiation tactics, CRM usage, and building long-term client relationships.", 20, "Sales Techniques and Customer Relations", null },
+                    { 15, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Modern digital marketing including SEO, social media marketing, content strategy, email campaigns, and analytics.", 32, "Digital Marketing Strategies", null },
+                    { 16, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Essential workplace safety protocols, emergency procedures, ergonomics, and health compliance standards.", 8, "Workplace Safety and Health", null },
+                    { 17, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Understanding Egyptian labor laws, employee rights, ethical HR practices, and regulatory compliance requirements.", 16, "HR Ethics and Labor Law Compliance", null },
+                    { 18, new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), "Best practices for exceptional customer service, complaint handling, customer satisfaction metrics, and service quality improvement.", 16, "Customer Service Excellence", null }
                 });
 
             migrationBuilder.InsertData(
@@ -1182,15 +1240,27 @@ namespace HRManagementSystem.Infrastructure.Migrations
                 values: new object[,]
                 {
                     { 1, "123 Cairo Street, Nasr City, Cairo, Egypt", null, 25000.00m, "+20-123-456-7890", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1990, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 3, null, new DateTime(2022, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "ahmed.hassan@company.com", null, "Ahmed", "Male", new DateTime(2022, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Hassan", null },
-                    { 2, "456 Alexandria Road, Maadi, Cairo, Egypt", null, 20000.00m, "+20-100-555-1234", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1992, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 2, null, new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "sarah.mohamed@company.com", null, "Sarah", "Female", new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mohamed", null },
-                    { 3, "789 Pyramids Avenue, Giza, Egypt", null, 15000.00m, "+20-111-222-3333", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1988, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1, null, new DateTime(2021, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "khaled.ibrahim@company.com", null, "Khaled", "Male", new DateTime(2021, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ibrahim", null },
-                    { 4, "321 Nile Corniche, Zamalek, Cairo, Egypt", null, 22000.00m, "+20-122-333-4444", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1987, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 6, null, new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "fatima.ali@company.com", null, "Fatima", "Female", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ali", null },
-                    { 5, "654 Heliopolis Street, Cairo, Egypt", null, 16000.00m, "+20-155-666-7777", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1991, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 7, null, new DateTime(2022, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "omar.mahmoud@company.com", null, "Omar", "Male", new DateTime(2022, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mahmoud", null },
-                    { 6, "987 Garden City, Cairo, Egypt", null, 24000.00m, "+20-101-888-9999", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1989, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, 11, null, new DateTime(2021, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "mariam.youssef@company.com", null, "Mariam", "Female", new DateTime(2021, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Youssef", null },
-                    { 7, "147 Downtown, Cairo, Egypt", null, 14000.00m, "+20-127-111-2222", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1993, 3, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, 10, null, new DateTime(2023, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "hassan.saleh@company.com", null, "Hassan", "Male", new DateTime(2023, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Saleh", null },
-                    { 8, "258 New Cairo, Egypt", null, 23000.00m, "+20-150-333-4444", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1990, 7, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 14, null, new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "nour.abdel@company.com", null, "Nour", "Female", new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Abdel", null },
-                    { 9, "369 6th October City, Egypt", null, 13000.00m, "+20-106-555-6666", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1994, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 12, null, new DateTime(2023, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "tarek.farid@company.com", null, "Tarek", "Male", new DateTime(2023, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Farid", null },
-                    { 10, "741 Mohandessin, Giza, Egypt", null, 26000.00m, "+20-128-777-8888", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1986, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, 15, null, new DateTime(2021, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "layla.kamal@company.com", null, "Layla", "Female", new DateTime(2021, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Kamal", null }
+                    { 2, "456 Alexandria Road, Maadi, Cairo, Egypt", null, 22000.00m, "+20-100-555-1234", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1992, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 2, null, new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "sarah.mohamed@company.com", null, "Sarah", "Female", new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mohamed", null },
+                    { 3, "789 Pyramids Avenue, Giza, Egypt", null, 18000.00m, "+20-111-222-3333", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1994, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1, null, new DateTime(2023, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "khaled.ibrahim@company.com", null, "Khaled", "Male", new DateTime(2023, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ibrahim", null },
+                    { 4, "234 Heliopolis, Cairo, Egypt", null, 21000.00m, "+20-122-888-9999", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1991, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 4, null, new DateTime(2023, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "mona.samir@company.com", null, " Mona", "Female", new DateTime(2023, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Samir", null },
+                    { 5, "567 New Cairo, Egypt", null, 17000.00m, "+20-155-444-5555", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1995, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 1, 1, null, new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "youssef.tamer@company.com", null, "Youssef", "Male", new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tamer", null },
+                    { 6, "321 Nile Corniche, Zamalek, Cairo, Egypt", null, 24000.00m, "+20-122-333-4444", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1987, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 6, null, new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "fatima.ali@company.com", null, "Fatima", "Female", new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Ali", null },
+                    { 7, "654 Heliopolis Street, Cairo, Egypt", null, 18000.00m, "+20-155-666-7777", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1991, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 7, null, new DateTime(2022, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "omar.mahmoud@company.com", null, "Omar", "Male", new DateTime(2022, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mahmoud", null },
+                    { 8, "890 Garden City, Cairo, Egypt", null, 16000.00m, "+20-100-222-3333", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1993, 12, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 2, 8, null, new DateTime(2023, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "nada.khaled@company.com", null, "Nada", "Female", new DateTime(2023, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Khaled", null },
+                    { 9, "987 Garden City, Cairo, Egypt", null, 26000.00m, "+20-101-888-9999", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1989, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, 11, null, new DateTime(2021, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "mariam.youssef@company.com", null, "Mariam", "Female", new DateTime(2021, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Youssef", null },
+                    { 10, "147 Downtown, Cairo, Egypt", null, 17000.00m, "+20-127-111-2222", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1993, 3, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, 10, null, new DateTime(2023, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "hassan.saleh@company.com", null, "Hassan", "Male", new DateTime(2023, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Saleh", null },
+                    { 11, "345 Mohandessin, Giza, Egypt", null, 19000.00m, "+20-110-555-6666", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1990, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, 9, null, new DateTime(2022, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "dina.fathy@company.com", null, "Dina", "Female", new DateTime(2022, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Fathy", null },
+                    { 12, "678 Dokki, Giza, Egypt", null, 27000.00m, "+20-106-777-8888", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1988, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), 3, 11, null, new DateTime(2020, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "amr.nasser@company.com", null, "Amr", "Male", new DateTime(2020, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Nasser", null },
+                    { 13, "258 New Cairo, Egypt", null, 25000.00m, "+20-150-333-4444", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1990, 7, 8, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 14, null, new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "nour.abdel@company.com", null, "Nour", "Female", new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Abdel", null },
+                    { 14, "369 6th October City, Egypt", null, 16000.00m, "+20-106-555-6666", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1994, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 12, null, new DateTime(2023, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "tarek.farid@company.com", null, "Tarek", "Male", new DateTime(2023, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Farid", null },
+                    { 15, "456 Zamalek, Cairo, Egypt", null, 18000.00m, "+20-122-999-0000", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1992, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 13, null, new DateTime(2022, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "hala.magdy@company.com", null, "Hala", "Female", new DateTime(2022, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Magdy", null },
+                    { 16, "123 Maadi, Cairo, Egypt", null, 17000.00m, "+20-155-111-2222", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1989, 8, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 4, 12, null, new DateTime(2021, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "karim.said@company.com", null, "Karim", "Male", new DateTime(2021, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Said", null },
+                    { 17, "741 Mohandessin, Giza, Egypt", null, 28000.00m, "+20-128-777-8888", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1986, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, 15, null, new DateTime(2021, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "layla.kamal@company.com", null, "Layla", "Female", new DateTime(2021, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), "Kamal", null },
+                    { 18, "852 Nasr City, Cairo, Egypt", null, 23000.00m, "+20-100-333-4444", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1991, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, 16, null, new DateTime(2022, 6, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "waleed.adel@company.com", null, "Waleed", "Male", new DateTime(2022, 6, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Adel", null },
+                    { 19, "963 New Cairo, Egypt", null, 22000.00m, "+20-127-555-6666", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1993, 9, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), 5, 16, null, new DateTime(2023, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "salma.rashad@company.com", null, "Salma", "Female", new DateTime(2023, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified), "Rashad", null },
+                    { 20, "147 Heliopolis, Cairo, Egypt", null, 20000.00m, "+20-106-888-9999", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1992, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified), 6, 18, null, new DateTime(2022, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "hossam.eldin@company.com", null, "Hossam", "Male", new DateTime(2022, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Eldin", null },
+                    { 21, "258 5th Settlement, Cairo, Egypt", null, 14000.00m, "+20-122-000-1111", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1995, 4, 7, 0, 0, 0, 0, DateTimeKind.Unspecified), 6, 17, null, new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "rana.mostafa@company.com", null, "Rana", "Female", new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Mostafa", null },
+                    { 22, "369 Maadi, Cairo, Egypt", null, 13500.00m, "+20-155-222-3333", new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), new DateTime(1996, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified), 6, 17, null, new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "ziad.hosny@company.com", null, "Ziad", "Male", new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Hosny", null }
                 });
 
             migrationBuilder.InsertData(

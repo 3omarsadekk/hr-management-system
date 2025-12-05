@@ -12,13 +12,13 @@ import { CommonModule } from '@angular/common';
 export class UpdateEmployeeImage implements AfterViewInit {
 
   employeeId!: number;
-  capturedImage: string | null = null; // لتخزين الصورة قبل الرفع
+  capturedImage: string | null = null; 
   @ViewChild('video') video!: ElementRef<HTMLVideoElement>;
   @ViewChild('canvas') canvas!: ElementRef<HTMLCanvasElement>;
 
   constructor(private employeeService: Employee) { }
   ngAfterViewInit() {
-    this.startCamera(); // تبدأ الكاميرا تلقائي
+    this.startCamera(); 
   }
   // Start the camera
   startCamera() {
@@ -41,7 +41,7 @@ export class UpdateEmployeeImage implements AfterViewInit {
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
     this.employeeId = this.employeeService.getEmployeeId();
     console.log("Employee ID:", this.employeeId);
-    this.capturedImage = canvas.toDataURL("image/jpeg"); // نعرض الصورة كـ preview
+    this.capturedImage = canvas.toDataURL("image/jpeg"); 
     console.log("Captured Image:", this.capturedImage);
     if (!this.employeeId) {
       alert("Please enter Employee ID");

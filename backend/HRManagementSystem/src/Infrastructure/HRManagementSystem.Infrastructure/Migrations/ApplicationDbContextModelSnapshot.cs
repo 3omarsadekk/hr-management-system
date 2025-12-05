@@ -94,14 +94,6 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         new
                         {
                             Id = 6,
-                            Amount = 3000.00m,
-                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IsPercentage = false,
-                            Name = "Performance Bonus"
-                        },
-                        new
-                        {
-                            Id = 7,
                             Amount = 1500.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsPercentage = false,
@@ -109,7 +101,63 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         },
                         new
                         {
+                            Id = 7,
+                            Amount = 1000.00m,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsPercentage = false,
+                            Name = "Education Allowance"
+                        },
+                        new
+                        {
                             Id = 8,
+                            Amount = 400.00m,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsPercentage = false,
+                            Name = "Utilities Allowance"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Amount = 15.00m,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsPercentage = true,
+                            Name = "Annual Performance Bonus"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Amount = 50.00m,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsPercentage = true,
+                            Name = "Overtime Allowance"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Amount = 5.00m,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsPercentage = true,
+                            Name = "Sales Commission"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Amount = 25.00m,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsPercentage = true,
+                            Name = "Night Shift Allowance"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Amount = 3000.00m,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsPercentage = false,
+                            Name = "Quarterly Bonus"
+                        },
+                        new
+                        {
+                            Id = 14,
                             Amount = 2000.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsPercentage = false,
@@ -543,57 +591,176 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Ability to clearly convey information and ideas through various mediums",
-                            Name = "Communication"
+                            Description = "Proficiency in C# language, object-oriented programming, and .NET framework development",
+                            Name = "C# Programming"
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Ability to identify, analyze, and resolve problems effectively",
-                            Name = "Problem Solving"
+                            Description = "Skills in database design, SQL queries, stored procedures, and database optimization",
+                            Name = "Database Development"
                         },
                         new
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Ability to work collaboratively with others to achieve common goals",
-                            Name = "Teamwork"
+                            Description = "Expertise in web technologies including HTML, CSS, JavaScript, and modern frameworks",
+                            Name = "Web Development"
                         },
                         new
                         {
                             Id = 4,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Ability to guide, inspire, and influence others towards achieving objectives",
-                            Name = "Leadership"
+                            Description = "Knowledge of cloud platforms (Azure, AWS), containerization, and cloud-native architecture",
+                            Name = "Cloud Computing"
                         },
                         new
                         {
                             Id = 5,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Proficiency in job-specific technical skills and knowledge",
-                            Name = "Technical Expertise"
+                            Description = "Competency in CI/CD pipelines, infrastructure as code, automation, and monitoring",
+                            Name = "DevOps Practices"
                         },
                         new
                         {
                             Id = 6,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Ability to adjust to new conditions and handle change effectively",
-                            Name = "Adaptability"
+                            Description = "Proficiency in manual and automated testing, test planning, and quality assurance",
+                            Name = "Software Testing"
                         },
                         new
                         {
                             Id = 7,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Ability to prioritize tasks and manage time efficiently",
-                            Name = "Time Management"
+                            Description = "Ability to design scalable, maintainable system architectures and technical solutions",
+                            Name = "System Architecture"
                         },
                         new
                         {
                             Id = 8,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Ability to take proactive action and go beyond basic requirements",
-                            Name = "Initiative"
+                            Description = "Understanding of security principles, threat analysis, and secure coding practices",
+                            Name = "Cybersecurity"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Ability to lead teams, make decisions, inspire others, and drive organizational success",
+                            Name = "Leadership"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Collaborating effectively with others, sharing knowledge, and contributing to team goals",
+                            Name = "Teamwork"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Clear and effective verbal and written communication with diverse audiences",
+                            Name = "Communication Skills"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Analytical thinking, identifying root causes, and developing effective solutions",
+                            Name = "Problem Solving"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Flexibility to adjust to changing circumstances, learn new skills, and embrace change",
+                            Name = "Adaptability"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Prioritizing tasks, meeting deadlines, and managing multiple responsibilities effectively",
+                            Name = "Time Management"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Understanding customer needs, providing excellent service, and building relationships",
+                            Name = "Customer Focus"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Analyzing financial data, preparing reports, forecasting, and budgeting",
+                            Name = "Financial Analysis"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Planning, executing, and delivering projects on time, within scope and budget",
+                            Name = "Project Management"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Selling products/services, negotiating deals, and closing business opportunities",
+                            Name = "Sales and Negotiation"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Developing marketing plans, understanding market dynamics, and brand management",
+                            Name = "Marketing Strategy"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Identifying inefficiencies, implementing improvements, and streamlining operations",
+                            Name = "Business Process Optimization"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Talent acquisition, employee relations, performance management, and HR compliance",
+                            Name = "HR Management"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Understanding of accounting standards, financial reporting, and regulatory compliance",
+                            Name = "Accounting Principles"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Handling customer inquiries, resolving issues, and maintaining customer satisfaction",
+                            Name = "Customer Support"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Collecting, processing, and interpreting data to support business decisions",
+                            Name = "Data Analysis"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Long-term planning, understanding industry trends, and aligning actions with strategy",
+                            Name = "Strategic Thinking"
                         });
                 });
 
@@ -629,7 +796,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Amount = 9.0m,
+                            Amount = 14.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsPercentage = true,
                             Name = "Social Insurance"
@@ -637,34 +804,90 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         new
                         {
                             Id = 2,
-                            Amount = 12.5m,
+                            Amount = 2.50m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsPercentage = true,
-                            Name = "Income Tax"
+                            Name = "Income Tax - Tier 1"
                         },
                         new
                         {
                             Id = 3,
-                            Amount = 500.0m,
+                            Amount = 10.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IsPercentage = false,
-                            Name = "Absence Deduction"
+                            IsPercentage = true,
+                            Name = "Income Tax - Tier 2"
                         },
                         new
                         {
                             Id = 4,
-                            Amount = 100.0m,
+                            Amount = 15.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            IsPercentage = false,
-                            Name = "Late Arrival Penalty"
+                            IsPercentage = true,
+                            Name = "Income Tax - Tier 3"
                         },
                         new
                         {
                             Id = 5,
-                            Amount = 1000.0m,
+                            Amount = 1.00m,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsPercentage = true,
+                            Name = "Professional Syndicate Fee"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Amount = 50.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             IsPercentage = false,
-                            Name = "Loan Installment"
+                            Name = "Late Arrival Fine"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Amount = 200.00m,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsPercentage = false,
+                            Name = "Absence Penalty"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Amount = 500.00m,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsPercentage = false,
+                            Name = "Loan Repayment - Personal"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Amount = 1000.00m,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsPercentage = false,
+                            Name = "Advance Salary Deduction"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Amount = 300.00m,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsPercentage = false,
+                            Name = "Equipment Damage Fee"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Amount = 150.00m,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsPercentage = false,
+                            Name = "Uniform Replacement"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Amount = 250.00m,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            IsPercentage = false,
+                            Name = "Health Insurance Premium"
                         });
                 });
 
@@ -706,42 +929,48 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Manages all IT infrastructure, software development, and technical support",
+                            Description = "Manages all IT infrastructure, software development, technical support, cybersecurity, and digital transformation initiatives. Responsible for maintaining enterprise systems, developing custom applications, and ensuring technology alignment with business objectives.",
+                            EmployeeCount = 5,
                             Name = "Information Technology"
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Handles recruitment, employee relations, benefits, and HR policies",
+                            Description = "Handles recruitment and talent acquisition, employee relations, compensation and benefits administration, performance management, HR policy development, training and development programs, and ensuring regulatory compliance with Egyptian labor laws.",
+                            EmployeeCount = 3,
                             Name = "Human Resources"
                         },
                         new
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Manages financial operations, accounting, budgeting, and reporting",
+                            Description = "Manages financial operations including accounting, budgeting, financial reporting, cash flow management, tax compliance, audit coordination, financial analysis, and strategic financial planning. Ensures accurate financial records and regulatory compliance.",
+                            EmployeeCount = 4,
                             Name = "Finance"
                         },
                         new
                         {
                             Id = 4,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Drives sales growth, customer acquisition, and marketing campaigns",
+                            Description = "Drives revenue growth through sales strategy execution, customer acquisition and retention, market research and analysis, digital marketing campaigns, brand management, lead generation, and customer relationship management. Develops and implements go-to-market strategies.",
+                            EmployeeCount = 4,
                             Name = "Sales & Marketing"
                         },
                         new
                         {
                             Id = 5,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Oversees day-to-day operations and process optimization",
+                            Description = "Oversees day-to-day business operations, process optimization, supply chain management, quality assurance, resource allocation, operational efficiency improvements, and cross-functional coordination to ensure smooth business execution.",
+                            EmployeeCount = 3,
                             Name = "Operations"
                         },
                         new
                         {
                             Id = 6,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Provides customer service and technical support",
+                            Description = "Provides exceptional customer service, technical support, issue resolution, customer satisfaction management, support ticket handling, product training for customers, and feedback collection to improve service quality and customer experience.",
+                            EmployeeCount = 3,
                             Name = "Customer Support"
                         });
                 });
@@ -781,126 +1010,144 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 1,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Develops and maintains software applications",
+                            Description = "Develops and maintains software applications using modern programming languages and frameworks. Designs technical solutions, writes clean code, performs code reviews, and collaborates with cross-functional teams.",
+                            EmployeeCount = 2,
                             Title = "Software Engineer"
                         },
                         new
                         {
                             Id = 2,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Lead developer responsible for complex technical solutions",
+                            Description = "Lead developer responsible for complex technical solutions, system architecture, mentoring junior developers, and technical decision-making. Drives best practices and innovation.",
+                            EmployeeCount = 1,
                             Title = "Senior Software Engineer"
                         },
                         new
                         {
                             Id = 3,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Manages and guides team members to achieve project goals",
+                            Description = "Manages and guides team members to achieve project goals. Responsible for team performance, resource allocation, sprint planning, stakeholder communication, and ensuring timely delivery.",
+                            EmployeeCount = 1,
                             Title = "Team Lead"
                         },
                         new
                         {
                             Id = 4,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Manages deployment pipelines and infrastructure",
+                            Description = "Manages CI/CD pipelines, cloud infrastructure, containerization, monitoring systems, and automates deployment processes. Ensures high availability and system reliability.",
+                            EmployeeCount = 1,
                             Title = "DevOps Engineer"
                         },
                         new
                         {
                             Id = 5,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Ensures software quality through testing and automation",
+                            Description = "Ensures software quality through manual and automated testing, creates test plans, identifies bugs, performs regression testing, and maintains test automation frameworks.",
+                            EmployeeCount = 0,
                             Title = "QA Engineer"
                         },
                         new
                         {
                             Id = 6,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Oversees human resources operations and employee management",
+                            Description = "Oversees all human resources operations including recruitment strategy, employee relations, performance management, policy development, and ensuring legal compliance with labor laws.",
+                            EmployeeCount = 1,
                             Title = "HR Manager"
                         },
                         new
                         {
                             Id = 7,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Handles recruitment, onboarding, and employee relations",
+                            Description = "Handles recruitment, onboarding, employee relations, benefits administration, maintaining HR records, and supporting talent development initiatives.",
+                            EmployeeCount = 1,
                             Title = "HR Specialist"
                         },
                         new
                         {
                             Id = 8,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Focuses on talent acquisition and candidate screening",
+                            Description = "Focuses on talent acquisition, candidate sourcing and screening, conducting interviews, negotiating offers, and building talent pipelines for current and future needs.",
+                            EmployeeCount = 1,
                             Title = "Recruiter"
                         },
                         new
                         {
                             Id = 9,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Analyzes financial data and prepares reports",
+                            Description = "Analyzes financial data, prepares reports and forecasts, conducts variance analysis, supports budgeting processes, and provides insights for strategic decision-making.",
+                            EmployeeCount = 1,
                             Title = "Financial Analyst"
                         },
                         new
                         {
                             Id = 10,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Manages accounting records and financial transactions",
+                            Description = "Manages accounting records, processes financial transactions, prepares journal entries, reconciles accounts, handles accounts payable/receivable, and ensures accuracy of financial data.",
+                            EmployeeCount = 1,
                             Title = "Accountant"
                         },
                         new
                         {
                             Id = 11,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Oversees financial planning and budget management",
+                            Description = "Oversees financial planning, budget management, financial reporting, cash flow optimization, coordinates audits, and leads the finance team to achieve organizational financial goals.",
+                            EmployeeCount = 2,
                             Title = "Finance Manager"
                         },
                         new
                         {
                             Id = 12,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Drives sales and builds customer relationships",
+                            Description = "Drives sales through prospecting, lead qualification, product presentations, negotiation, and closing deals. Builds and maintains strong customer relationships for long-term growth.",
+                            EmployeeCount = 2,
                             Title = "Sales Representative"
                         },
                         new
                         {
                             Id = 13,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Develops and executes marketing campaigns",
+                            Description = "Develops and executes marketing campaigns, manages social media presence, creates content, conducts market research, analyzes campaign performance, and supports brand positioning.",
+                            EmployeeCount = 1,
                             Title = "Marketing Specialist"
                         },
                         new
                         {
                             Id = 14,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Identifies growth opportunities and partnerships",
+                            Description = "Identifies growth opportunities, develops partnerships, expands market presence, leads strategic initiatives, and drives revenue through new business channels and relationships.",
+                            EmployeeCount = 1,
                             Title = "Business Development Manager"
                         },
                         new
                         {
                             Id = 15,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Manages daily operations and process improvements",
+                            Description = "Manages daily operations, drives process improvements, optimizes resource allocation, ensures quality standards, and coordinates cross-functional activities for operational excellence.",
+                            EmployeeCount = 1,
                             Title = "Operations Manager"
                         },
                         new
                         {
                             Id = 16,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Plans, executes, and closes projects successfully",
+                            Description = "Plans, executes, and closes projects successfully. Manages scope, timeline, budget, resources, stakeholder communication, and risk mitigation to ensure project objectives are met.",
+                            EmployeeCount = 1,
                             Title = "Project Manager"
                         },
                         new
                         {
                             Id = 17,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Provides customer assistance and resolves issues",
+                            Description = "Provides customer assistance, resolves technical and service issues, handles support tickets, maintains customer satisfaction, and documents customer interactions.",
+                            EmployeeCount = 2,
                             Title = "Customer Support Representative"
                         },
                         new
                         {
                             Id = 18,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Leads customer support team and ensures service quality",
+                            Description = "Leads customer support team, ensures service quality standards, manages escalations, monitors performance metrics, trains team members, and drives customer satisfaction improvements.",
+                            EmployeeCount = 1,
                             Title = "Support Team Lead"
                         });
                 });
@@ -1003,7 +1250,7 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 2,
                             Address = "456 Alexandria Road, Maadi, Cairo, Egypt",
-                            BasicSalary = 20000.00m,
+                            BasicSalary = 22000.00m,
                             ContactNumber = "+20-100-555-1234",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateOfBirth = new DateTime(1992, 8, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1020,24 +1267,58 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             Id = 3,
                             Address = "789 Pyramids Avenue, Giza, Egypt",
-                            BasicSalary = 15000.00m,
+                            BasicSalary = 18000.00m,
                             ContactNumber = "+20-111-222-3333",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            DateOfBirth = new DateTime(1988, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1994, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             DepartmentId = 1,
                             DesignationId = 1,
-                            EFF_Start = new DateTime(2021, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EFF_Start = new DateTime(2023, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "khaled.ibrahim@company.com",
                             FirstName = "Khaled",
                             Gender = "Male",
-                            HireDate = new DateTime(2021, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            HireDate = new DateTime(2023, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastName = "Ibrahim"
                         },
                         new
                         {
                             Id = 4,
+                            Address = "234 Heliopolis, Cairo, Egypt",
+                            BasicSalary = 21000.00m,
+                            ContactNumber = "+20-122-888-9999",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateOfBirth = new DateTime(1991, 3, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            DesignationId = 4,
+                            EFF_Start = new DateTime(2023, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "mona.samir@company.com",
+                            FirstName = " Mona",
+                            Gender = "Female",
+                            HireDate = new DateTime(2023, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Samir"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Address = "567 New Cairo, Egypt",
+                            BasicSalary = 17000.00m,
+                            ContactNumber = "+20-155-444-5555",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateOfBirth = new DateTime(1995, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 1,
+                            DesignationId = 1,
+                            EFF_Start = new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "youssef.tamer@company.com",
+                            FirstName = "Youssef",
+                            Gender = "Male",
+                            HireDate = new DateTime(2024, 1, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Tamer"
+                        },
+                        new
+                        {
+                            Id = 6,
                             Address = "321 Nile Corniche, Zamalek, Cairo, Egypt",
-                            BasicSalary = 22000.00m,
+                            BasicSalary = 24000.00m,
                             ContactNumber = "+20-122-333-4444",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateOfBirth = new DateTime(1987, 4, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1052,9 +1333,9 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 7,
                             Address = "654 Heliopolis Street, Cairo, Egypt",
-                            BasicSalary = 16000.00m,
+                            BasicSalary = 18000.00m,
                             ContactNumber = "+20-155-666-7777",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateOfBirth = new DateTime(1991, 9, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1069,9 +1350,26 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = 6,
+                            Id = 8,
+                            Address = "890 Garden City, Cairo, Egypt",
+                            BasicSalary = 16000.00m,
+                            ContactNumber = "+20-100-222-3333",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateOfBirth = new DateTime(1993, 12, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 2,
+                            DesignationId = 8,
+                            EFF_Start = new DateTime(2023, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "nada.khaled@company.com",
+                            FirstName = "Nada",
+                            Gender = "Female",
+                            HireDate = new DateTime(2023, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Khaled"
+                        },
+                        new
+                        {
+                            Id = 9,
                             Address = "987 Garden City, Cairo, Egypt",
-                            BasicSalary = 24000.00m,
+                            BasicSalary = 26000.00m,
                             ContactNumber = "+20-101-888-9999",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateOfBirth = new DateTime(1989, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1086,9 +1384,9 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = 7,
+                            Id = 10,
                             Address = "147 Downtown, Cairo, Egypt",
-                            BasicSalary = 14000.00m,
+                            BasicSalary = 17000.00m,
                             ContactNumber = "+20-127-111-2222",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateOfBirth = new DateTime(1993, 3, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1103,9 +1401,43 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 11,
+                            Address = "345 Mohandessin, Giza, Egypt",
+                            BasicSalary = 19000.00m,
+                            ContactNumber = "+20-110-555-6666",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateOfBirth = new DateTime(1990, 6, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 3,
+                            DesignationId = 9,
+                            EFF_Start = new DateTime(2022, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "dina.fathy@company.com",
+                            FirstName = "Dina",
+                            Gender = "Female",
+                            HireDate = new DateTime(2022, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Fathy"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Address = "678 Dokki, Giza, Egypt",
+                            BasicSalary = 27000.00m,
+                            ContactNumber = "+20-106-777-8888",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateOfBirth = new DateTime(1988, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 3,
+                            DesignationId = 11,
+                            EFF_Start = new DateTime(2020, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "amr.nasser@company.com",
+                            FirstName = "Amr",
+                            Gender = "Male",
+                            HireDate = new DateTime(2020, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Nasser"
+                        },
+                        new
+                        {
+                            Id = 13,
                             Address = "258 New Cairo, Egypt",
-                            BasicSalary = 23000.00m,
+                            BasicSalary = 25000.00m,
                             ContactNumber = "+20-150-333-4444",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateOfBirth = new DateTime(1990, 7, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1120,9 +1452,9 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = 9,
+                            Id = 14,
                             Address = "369 6th October City, Egypt",
-                            BasicSalary = 13000.00m,
+                            BasicSalary = 16000.00m,
                             ContactNumber = "+20-106-555-6666",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateOfBirth = new DateTime(1994, 2, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1137,9 +1469,43 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = 10,
+                            Id = 15,
+                            Address = "456 Zamalek, Cairo, Egypt",
+                            BasicSalary = 18000.00m,
+                            ContactNumber = "+20-122-999-0000",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateOfBirth = new DateTime(1992, 5, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 4,
+                            DesignationId = 13,
+                            EFF_Start = new DateTime(2022, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "hala.magdy@company.com",
+                            FirstName = "Hala",
+                            Gender = "Female",
+                            HireDate = new DateTime(2022, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Magdy"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Address = "123 Maadi, Cairo, Egypt",
+                            BasicSalary = 17000.00m,
+                            ContactNumber = "+20-155-111-2222",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateOfBirth = new DateTime(1989, 8, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 4,
+                            DesignationId = 12,
+                            EFF_Start = new DateTime(2021, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "karim.said@company.com",
+                            FirstName = "Karim",
+                            Gender = "Male",
+                            HireDate = new DateTime(2021, 7, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Said"
+                        },
+                        new
+                        {
+                            Id = 17,
                             Address = "741 Mohandessin, Giza, Egypt",
-                            BasicSalary = 26000.00m,
+                            BasicSalary = 28000.00m,
                             ContactNumber = "+20-128-777-8888",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             DateOfBirth = new DateTime(1986, 10, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1151,6 +1517,91 @@ namespace HRManagementSystem.Infrastructure.Migrations
                             Gender = "Female",
                             HireDate = new DateTime(2021, 4, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             LastName = "Kamal"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Address = "852 Nasr City, Cairo, Egypt",
+                            BasicSalary = 23000.00m,
+                            ContactNumber = "+20-100-333-4444",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateOfBirth = new DateTime(1991, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 5,
+                            DesignationId = 16,
+                            EFF_Start = new DateTime(2022, 6, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "waleed.adel@company.com",
+                            FirstName = "Waleed",
+                            Gender = "Male",
+                            HireDate = new DateTime(2022, 6, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Adel"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Address = "963 New Cairo, Egypt",
+                            BasicSalary = 22000.00m,
+                            ContactNumber = "+20-127-555-6666",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateOfBirth = new DateTime(1993, 9, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 5,
+                            DesignationId = 16,
+                            EFF_Start = new DateTime(2023, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "salma.rashad@company.com",
+                            FirstName = "Salma",
+                            Gender = "Female",
+                            HireDate = new DateTime(2023, 3, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Rashad"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Address = "147 Heliopolis, Cairo, Egypt",
+                            BasicSalary = 20000.00m,
+                            ContactNumber = "+20-106-888-9999",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateOfBirth = new DateTime(1992, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 6,
+                            DesignationId = 18,
+                            EFF_Start = new DateTime(2022, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "hossam.eldin@company.com",
+                            FirstName = "Hossam",
+                            Gender = "Male",
+                            HireDate = new DateTime(2022, 8, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Eldin"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Address = "258 5th Settlement, Cairo, Egypt",
+                            BasicSalary = 14000.00m,
+                            ContactNumber = "+20-122-000-1111",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateOfBirth = new DateTime(1995, 4, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 6,
+                            DesignationId = 17,
+                            EFF_Start = new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "rana.mostafa@company.com",
+                            FirstName = "Rana",
+                            Gender = "Female",
+                            HireDate = new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Mostafa"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Address = "369 Maadi, Cairo, Egypt",
+                            BasicSalary = 13500.00m,
+                            ContactNumber = "+20-155-222-3333",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            DateOfBirth = new DateTime(1996, 6, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DepartmentId = 6,
+                            DesignationId = 17,
+                            EFF_Start = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "ziad.hosny@company.com",
+                            FirstName = "Ziad",
+                            Gender = "Male",
+                            HireDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LastName = "Hosny"
                         });
                 });
 
@@ -2324,82 +2775,232 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Code = "PROJ-COMP",
+                            Code = "SALES-REV",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Percentage of projects completed on time",
-                            Name = "Project Completion Rate",
-                            Target = 95.0m,
-                            Unit = "%"
+                            Description = "Total monthly sales revenue target for the sales team",
+                            Name = "Monthly Sales Revenue",
+                            Target = 500000.00m,
+                            Unit = "EGP"
                         },
                         new
                         {
                             Id = 2,
-                            Code = "CUST-SAT",
+                            Code = "SALES-CONV",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Average customer satisfaction rating (1-5 scale)",
-                            Name = "Customer Satisfaction Score",
-                            Target = 4.5m,
-                            Unit = "score"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Code = "CODE-QUAL",
-                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Code quality metrics including test coverage and code review pass rate",
-                            Name = "Code Quality Score",
-                            Target = 90.0m,
+                            Description = "Percentage of leads converted to customers",
+                            Name = "Lead Conversion Rate",
+                            Target = 25.00m,
                             Unit = "%"
                         },
                         new
                         {
-                            Id = 4,
-                            Code = "ATTEND",
+                            Id = 3,
+                            Code = "SALES-DEAL",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Employee attendance rate excluding approved leaves",
-                            Name = "Attendance Rate",
-                            Target = 98.0m,
+                            Description = "Average value of closed deals",
+                            Name = "Average Deal Size",
+                            Target = 15000.00m,
+                            Unit = "EGP"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Code = "HR-RETENTION",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Percentage of employees retained over a 12-month period",
+                            Name = "Employee Retention Rate",
+                            Target = 90.00m,
                             Unit = "%"
                         },
                         new
                         {
                             Id = 5,
-                            Code = "TRAIN-COMP",
+                            Code = "HR-TTH",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Number of training courses completed per review cycle",
-                            Name = "Training Completion",
-                            Target = 3.0m,
-                            Unit = "courses"
+                            Description = "Average number of days to fill a position from job posting to offer acceptance",
+                            Name = "Time to Hire",
+                            Target = 30.00m,
+                            Unit = "Days"
                         },
                         new
                         {
                             Id = 6,
-                            Code = "SALES-REV",
+                            Code = "HR-SATISFACTION",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Revenue generated from sales activities",
-                            Name = "Sales Revenue Target",
-                            Target = 500000.0m,
-                            Unit = "EGP"
+                            Description = "Average employee satisfaction rating on a 5-point scale",
+                            Name = "Employee Satisfaction Score",
+                            Target = 4.20m,
+                            Unit = "Score"
                         },
                         new
                         {
                             Id = 7,
-                            Code = "TICKET-RES",
+                            Code = "HR-TRAINING",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Average time to resolve support tickets",
-                            Name = "Ticket Resolution Time",
-                            Target = 24.0m,
-                            Unit = "hours"
+                            Description = "Average training hours completed per employee annually",
+                            Name = "Training Hours per Employee",
+                            Target = 40.00m,
+                            Unit = "Hours"
                         },
                         new
                         {
                             Id = 8,
-                            Code = "RECRUIT-TIME",
+                            Code = "IT-UPTIME",
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
-                            Description = "Average time from job posting to hire",
-                            Name = "Time to Hire",
-                            Target = 30.0m,
-                            Unit = "days"
+                            Description = "Percentage of time systems are operational and available",
+                            Name = "System Uptime",
+                            Target = 99.50m,
+                            Unit = "%"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Code = "IT-RESOLUTION",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Average time to resolve IT support tickets",
+                            Name = "Average Ticket Resolution Time",
+                            Target = 4.00m,
+                            Unit = "Hours"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Code = "IT-DEPLOY",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Number of successful deployments per month",
+                            Name = "Deployment Frequency",
+                            Target = 20.00m,
+                            Unit = "Count"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Code = "IT-BUGFIX",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Percentage of reported bugs fixed within SLA",
+                            Name = "Bug Fix Rate",
+                            Target = 95.00m,
+                            Unit = "%"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Code = "FIN-ROI",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Overall return on company investments",
+                            Name = "Return on Investment",
+                            Target = 15.00m,
+                            Unit = "%"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Code = "FIN-VARIANCE",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Acceptable variance between budgeted and actual expenses",
+                            Name = "Budget Variance",
+                            Target = 5.00m,
+                            Unit = "%"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Code = "FIN-COLLECT",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Average days to collect accounts receivable",
+                            Name = "Receivables Collection Period",
+                            Target = 30.00m,
+                            Unit = "Days"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Code = "FIN-MARGIN",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Net profit as a percentage of total revenue",
+                            Name = "Net Profit Margin",
+                            Target = 20.00m,
+                            Unit = "%"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Code = "CS-CSAT",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Average customer satisfaction rating on a 5-point scale",
+                            Name = "Customer Satisfaction Score",
+                            Target = 4.50m,
+                            Unit = "Score"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Code = "CS-FRT",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Average time to first response for customer inquiries",
+                            Name = "First Response Time",
+                            Target = 15.00m,
+                            Unit = "Minutes"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Code = "CS-FCR",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Percentage of issues resolved on first contact",
+                            Name = "First Contact Resolution",
+                            Target = 75.00m,
+                            Unit = "%"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Code = "OPS-EFFICIENCY",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Overall operational efficiency rating",
+                            Name = "Operational Efficiency",
+                            Target = 85.00m,
+                            Unit = "%"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Code = "OPS-CYCLE",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Average time to complete key operational processes",
+                            Name = "Process Cycle Time",
+                            Target = 24.00m,
+                            Unit = "Hours"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Code = "MKT-LEADS",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Number of qualified leads generated per month",
+                            Name = "Monthly Lead Generation",
+                            Target = 200.00m,
+                            Unit = "Count"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Code = "MKT-ENGAGEMENT",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Percentage engagement rate on social media posts",
+                            Name = "Social Media Engagement Rate",
+                            Target = 5.00m,
+                            Unit = "%"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Code = "MKT-CAC",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Average cost to acquire a new customer",
+                            Name = "Customer Acquisition Cost",
+                            Target = 1000.00m,
+                            Unit = "EGP"
                         });
                 });
 
@@ -2740,6 +3341,36 @@ namespace HRManagementSystem.Infrastructure.Migrations
                             IsPaid = true,
                             MaxDays = 10,
                             Name = "Hajj Leave"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CanCarryForward = false,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Extended leave for personal development or rest, available after 5+ years of service",
+                            IsPaid = false,
+                            MaxDays = 90,
+                            Name = "Sabbatical Leave"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CanCarryForward = false,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Educational leave for pursuing further studies or professional certifications",
+                            IsPaid = true,
+                            MaxDays = 30,
+                            Name = "Study Leave"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CanCarryForward = false,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Leave for family emergencies or bereavement",
+                            IsPaid = true,
+                            MaxDays = 3,
+                            Name = "Compassionate Leave"
                         });
                 });
 
@@ -3286,65 +3917,145 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Improve interpersonal and workplace communication skills.",
-                            DurationHours = 8,
-                            Title = "Effective Communication"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Core leadership principles and team management skills.",
-                            DurationHours = 16,
-                            Title = "Leadership Essentials"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Basics of project planning, scope, scheduling, and risk.",
-                            DurationHours = 40,
-                            Title = "Project Management Fundamentals"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Workshop covering Agile principles and Scrum ceremonies.",
-                            DurationHours = 16,
-                            Title = "Agile & Scrum Workshop"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Prioritization and productivity techniques.",
-                            DurationHours = 4,
-                            Title = "Time Management"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Deep dive into C# features and best practices.",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Master advanced C# concepts including async/await, LINQ, delegates, generics, and design patterns for enterprise application development.",
                             DurationHours = 40,
                             Title = "Advanced C# Programming"
                         },
                         new
                         {
+                            Id = 2,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Comprehensive training on building modern web applications with ASP.NET Core, Entity Framework Core, RESTful APIs, and authentication/authorization.",
+                            DurationHours = 48,
+                            Title = "ASP.NET Core Web Development"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Learn to build dynamic single-page applications using Angular, TypeScript, RxJS, and modern frontend development practices.",
+                            DurationHours = 36,
+                            Title = "Angular Framework Fundamentals"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Hands-on training covering Azure services, cloud architecture, deployment strategies, monitoring, and cost optimization.",
+                            DurationHours = 32,
+                            Title = "Cloud Computing with Azure"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Master continuous integration and deployment using Azure DevOps, Git, Docker, Kubernetes, and automation best practices.",
+                            DurationHours = 40,
+                            Title = "DevOps and CI/CD Pipelines"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Comprehensive training on database design, normalization, T-SQL, stored procedures, indexing strategies, and performance tuning.",
+                            DurationHours = 32,
+                            Title = "Database Design and SQL Server"
+                        },
+                        new
+                        {
                             Id = 7,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Secure coding, compliance, and data protection essentials.",
-                            DurationHours = 8,
-                            Title = "Data Protection & Security"
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Essential cybersecurity concepts including threat analysis, security protocols, encryption, secure coding practices, and incident response.",
+                            DurationHours = 24,
+                            Title = "Cybersecurity Fundamentals"
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Best practices for customer interactions.",
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Introduction to machine learning algorithms, data science, Python for ML, model training, and practical AI applications.",
+                            DurationHours = 48,
+                            Title = "Machine Learning and AI Basics"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Develop essential leadership competencies including team management, conflict resolution, strategic thinking, and decision-making.",
+                            DurationHours = 24,
+                            Title = "Leadership and Management Skills"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Enhance communication skills for presentations, meetings, email etiquette, active listening, and cross-cultural communication.",
+                            DurationHours = 16,
+                            Title = "Effective Communication in the Workplace"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Comprehensive PMP certification preparation covering PMBOK guidelines, project lifecycle, risk management, and agile methodologies.",
+                            DurationHours = 60,
+                            Title = "Project Management Professional (PMP) Prep"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Master productivity techniques, prioritization strategies, task management tools, and work-life balance practices.",
+                            DurationHours = 12,
+                            Title = "Time Management and Productivity"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Advanced financial analysis techniques, financial statement interpretation, budgeting, forecasting, and Excel skills for finance professionals.",
+                            DurationHours = 28,
+                            Title = "Financial Analysis and Reporting"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Proven sales strategies, customer acquisition, negotiation tactics, CRM usage, and building long-term client relationships.",
+                            DurationHours = 20,
+                            Title = "Sales Techniques and Customer Relations"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Modern digital marketing including SEO, social media marketing, content strategy, email campaigns, and analytics.",
+                            DurationHours = 32,
+                            Title = "Digital Marketing Strategies"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Essential workplace safety protocols, emergency procedures, ergonomics, and health compliance standards.",
                             DurationHours = 8,
+                            Title = "Workplace Safety and Health"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Understanding Egyptian labor laws, employee rights, ethical HR practices, and regulatory compliance requirements.",
+                            DurationHours = 16,
+                            Title = "HR Ethics and Labor Law Compliance"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            Description = "Best practices for exceptional customer service, complaint handling, customer satisfaction metrics, and service quality improvement.",
+                            DurationHours = 16,
                             Title = "Customer Service Excellence"
                         });
                 });

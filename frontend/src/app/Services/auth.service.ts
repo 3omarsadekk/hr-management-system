@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, tap , BehaviorSubject} from 'rxjs';
+import { Observable, tap, BehaviorSubject } from 'rxjs';
 import { ApiResponse } from '../models/api-response';
 
 interface LoginResponseData {
@@ -14,7 +14,6 @@ interface LoginResponseData {
   tokenExpiration: string;
 }
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -22,20 +21,17 @@ export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
 
-
   private apiUrl = 'https://localhost:7005/api/Account';
   private TOKEN_KEY = 'auth_token';
   private ROLES_KEY = 'auth_roles';
   private USER_ID_KEY = 'auth_user_id';
   private EMP_ID_KEY = 'auth_employee_id';
+
   // BehaviorSubject for reactive username
   private userNameSubject = new BehaviorSubject<string | null>(
     localStorage.getItem('userName')
   );
   public userName$ = this.userNameSubject.asObservable();
-
-  constructor(private http: HttpClient) { }
-
 
   // ========= API Calls =========
 
@@ -57,7 +53,11 @@ export class AuthService {
 
   // Register new user/employee
   register(payload: any): Observable<ApiResponse<any>> {
-    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/register`, payload);
+    return this.http.post<ApiResponse<any>>(`${this.apiUrl}/register-employee`, payload);
+  }
+
+  changePassword(data: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/change-password`, data);
   }
 
   // ========= Save / Clear Auth =========
@@ -67,13 +67,7 @@ export class AuthService {
     this.saveRoles(data.roles);
     this.saveUserId(data.userId);
     this.saveEmployeeId(data.employeeId);
-
-  changePassword(data: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/change-password`, data);
-  }
-
-  saveToken(token: string) {
-    localStorage.setItem('jwtToken', token);
+    this.saveUserName(data.fullName); // Save fullName from login response
   }
 
   saveToken(token: string) {
@@ -143,13 +137,10 @@ export class AuthService {
   }
 
   logout() {
-
     localStorage.removeItem(this.TOKEN_KEY);
     localStorage.removeItem(this.ROLES_KEY);
     localStorage.removeItem(this.USER_ID_KEY);
     localStorage.removeItem(this.EMP_ID_KEY);
-    localStorage.removeItem('jwtToken');
-    localStorage.removeItem('userId');
     localStorage.removeItem('userName');
     // Clear the username in the subject
     this.userNameSubject.next(null);
