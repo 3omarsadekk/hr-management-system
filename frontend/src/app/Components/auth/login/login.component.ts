@@ -29,6 +29,15 @@ export class LoginComponent {
           if (res.hasError == false) {
             this.authService.saveToken(res.data.token);
             this.authService.saveUserId(res.data.employeeId);
+            // Try to save user name if available, otherwise default or decode later
+            if (res.data.fullName) {
+              this.authService.saveUserName(res.data.fullName);
+            } else if (res.data.name) {
+              this.authService.saveUserName(res.data.name);
+            } else {
+              // Fallback or try to extract from token if possible (not implemented yet)
+              this.authService.saveUserName('User');
+            }
             this.errorMessage = '';
             alert('Login successful! Token saved.');
             this.layoutService.closeLogin(); // Close overlay on success

@@ -1,7 +1,6 @@
 /* Card Styling */
 :host ::ng-deep .card {
-    background-color: var(--body-bg, #f5f5f5) !important;
-    /* Match website background */
+    background-color: var(--card-bg) !important;
     border: 1px solid var(--border-basic) !important;
     color: var(--text-color) !important;
 }
@@ -92,6 +91,13 @@ small {
 
 .text-danger {
     color: #ff3d71 !important;
+}
+
+/* Card Header */
+:host ::ng-deep .card-header {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+    /* Slightly darker than body */
+    border-bottom: 1px solid var(--border-basic) !important;
 }
 
 /* Empty State */

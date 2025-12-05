@@ -131,7 +131,7 @@ export class SidebarComponent {
     {
       title: 'Settings',
       icon: 'settings-2-outline',
-      children: [{ title: 'Change Password', link: '/pages/account/change-password' }],
+      children: [{ title: 'Change Password', link: '/pages/change-password' }],
     },
   ];
 

@@ -378,6 +378,15 @@ export const routes: Routes = [
         canActivate: [authGuard],
         title: 'Notifications',
       },
+      {
+        path: 'change-password',
+        loadComponent: () =>
+          import('./pages/change-password/change-password.component').then(
+            (m) => m.ChangePasswordComponent
+          ),
+        canActivate: [authGuard],
+        title: 'Change Password',
+      },
 
       // Leave Management Routes
       { path: 'leave/types', component: LeaveType, title: 'Leave Types' },

@@ -28,7 +28,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   notifications = this.notificationService.notifications;
   isLoading = this.notificationService.isLoading;
 
+  // Reactive username
+  userName: string = 'User';
+
   ngOnInit(): void {
+    // Subscribe to username changes
+    this.authService.userName$.subscribe((name) => {
+      this.userName = name || 'User';
+    });
+
     // Only load notifications if user is authenticated
     if (this.authService.getToken()) {
       // Load notifications on init
