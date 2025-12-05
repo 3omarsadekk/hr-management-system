@@ -1,4 +1,6 @@
+using System.Security.Claims;
 using HRManagementSystem.Application.Common;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HRManagementSystem.WebApi.Controllers;
 
@@ -39,5 +41,31 @@ public class AccountController(IAccountService _accountService) : ControllerBase
         }
         return Ok(new { hasError = result.HasError, data = result.Data });
     }
+
+    [Authorize]
+    [HttpPost("change-password")]
+    public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto dto)
+    {
+        string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        if (userId == null)
+        {
+            return Unauthorized(new
+            {
+                hasError = true,
+                errorMessage = "Unable to identify the user."
+            });
+        }
+
+        var result = await _accountService.ChangePasswordAsync(Guid.Parse(userId), dto);
+
+        if (result.HasError)
+        {
+            return BadRequest(new { hasError = true, errorMessage = result.ErrorMessage });
+        }
+
+        return Ok(new { hasError = false, data = result.Data });
+    }
+
 
 }

@@ -431,6 +431,15 @@ export const routes: Routes = [
         data: { roles: ['HR', 'Manager', 'Employee'] },
         title: 'Notifications',
       },
+      {
+        path: 'change-password',
+        loadComponent: () =>
+          import('./pages/change-password/change-password.component').then(
+            (m) => m.ChangePasswordComponent
+          ),
+        canActivate: [authGuard],
+        title: 'Change Password',
+      },
 
       // ================= LEAVE MANAGEMENT =================
       {

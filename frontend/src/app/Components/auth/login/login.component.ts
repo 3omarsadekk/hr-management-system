@@ -28,19 +28,25 @@ export class LoginComponent {
         next: (res) => {
           // ensure there is data before accessing properties
           if (!res.hasError && res.data) {
-            // 🟢 1) خزّني كل الداتا المهمة
             this.authService.saveToken(res.data.token);
             // save both userId (string) and employeeId (number) correctly
             this.authService.saveUserId(res.data.userId);
             this.authService.saveEmployeeId(res.data.employeeId);
             this.authService.saveRoles(res.data.roles ?? []);
 
+            // Try to save user name if available, otherwise default or decode later
+            if (res.data.fullName) {
+              this.authService.saveUserName(res.data.fullName);
+            } else if (res.data.name) {
+              this.authService.saveUserName(res.data.name);
+            } else {
+              // Fallback or try to extract from token if possible (not implemented yet)
+              this.authService.saveUserName('User');
+            }
             this.errorMessage = '';
 
-            // 🟢 2) اقفلي الـ login overlay
             this.layoutService.closeLogin();
 
-            // 🟢 3) روّحي على الـ dashboard
             this.router.navigate(['/pages/dashboard']);
           } else {
             this.errorMessage = res.errorMessage || 'Login failed';

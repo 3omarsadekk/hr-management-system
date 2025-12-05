@@ -82,6 +82,39 @@ public static class LeaveTypeSeedData
                 IsPaid = true,
                 CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
                 GenderRestriction = null
+            },
+            new LeaveType
+            {
+                Id = 8,
+                Name = "Sabbatical Leave",
+                Description = "Extended leave for personal development or rest, available after 5+ years of service",
+                MaxDays = 90,
+                CanCarryForward = false,
+                IsPaid = false,
+                CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                GenderRestriction = null
+            },
+            new LeaveType
+            {
+                Id = 9,
+                Name = "Study Leave",
+                Description = "Educational leave for pursuing further studies or professional certifications",
+                MaxDays = 30,
+                CanCarryForward = false,
+                IsPaid = true,
+                CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                GenderRestriction = null
+            },
+            new LeaveType
+            {
+                Id = 10,
+                Name = "Compassionate Leave",
+                Description = "Leave for family emergencies or bereavement",
+                MaxDays = 3,
+                CanCarryForward = false,
+                IsPaid = true,
+                CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc),
+                GenderRestriction = null
             }
         );
     }

@@ -147,7 +147,9 @@ export class SidebarComponent {
       title: 'Settings',
       icon: 'settings-2-outline',
       allowedRoles: ['HR', 'Manager', 'Employee'],
-      children: [{ title: 'Change Password', link: '/pages/account/change-password' }],
+//       children: [{ title: 'Change Password', link: '/pages/account/change-password' }],
+      children: [{ title: 'Change Password', link: '/pages/change-password' }],
+
     },
   ];
 
