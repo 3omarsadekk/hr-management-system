@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../../models/api-response';
 import { LeaveBalance as LeaveBalanceModel } from '../../models/leaveBalance';
@@ -8,11 +8,26 @@ import { LeaveBalance as LeaveBalanceModel } from '../../models/leaveBalance';
   providedIn: 'root',
 })
 export class LeaveBalance {
-  private apiUrl = 'https://localhost:7005/api/LeaveBalance/employee-currentyear-leavebalance'; // Backend API URL
-  //private apiUrl = 'http://localhost:5093/api/Employee'; // Backend API URL
+  private http = inject(HttpClient);
+  private apiUrl = 'https://localhost:7005/api/LeaveBalance';
 
-  constructor(private http: HttpClient) { }
   getLeaveBalances(id: number): Observable<ApiResponse<LeaveBalanceModel[]>> {
-    return this.http.get<ApiResponse<LeaveBalanceModel[]>>(`${this.apiUrl}/${id}`);
+    return this.http.get<ApiResponse<LeaveBalanceModel[]>>(`${this.apiUrl}/employee-currentyear-leavebalance/${id}`);
+  }
+
+  getAllEmployeeBalances(id: number): Observable<ApiResponse<LeaveBalanceModel[]>> {
+    return this.http.get<ApiResponse<LeaveBalanceModel[]>>(`${this.apiUrl}/employee-leavebalance/${id}`);
+  }
+
+  allocate(employeeId: number): Observable<ApiResponse<boolean>> {
+    return this.http.post<ApiResponse<boolean>>(`${this.apiUrl}/allocate/${employeeId}`, {});
+  }
+
+  deduct(request: any): Observable<ApiResponse<boolean>> {
+    return this.http.post<ApiResponse<boolean>>(`${this.apiUrl}/deduct`, request);
+  }
+
+  resetAnnual(): Observable<ApiResponse<boolean>> {
+    return this.http.post<ApiResponse<boolean>>(`${this.apiUrl}/reset-annual`, {});
   }
 }

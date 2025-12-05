@@ -1532,7 +1532,6 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             EmployeeId = 1,
                             DeductionId = 1,
-                            Amount = 2250.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Recurrence = "Permanent",
                             StartDate = new DateTime(2022, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1541,7 +1540,6 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             EmployeeId = 1,
                             DeductionId = 2,
-                            Amount = 3750.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Recurrence = "Permanent",
                             StartDate = new DateTime(2022, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1550,7 +1548,6 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             EmployeeId = 2,
                             DeductionId = 1,
-                            Amount = 1800.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Recurrence = "Permanent",
                             StartDate = new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1559,7 +1556,6 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             EmployeeId = 2,
                             DeductionId = 2,
-                            Amount = 2500.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Recurrence = "Permanent",
                             StartDate = new DateTime(2022, 3, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1568,7 +1564,6 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             EmployeeId = 3,
                             DeductionId = 1,
-                            Amount = 1350.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Recurrence = "Permanent",
                             StartDate = new DateTime(2021, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1577,7 +1572,6 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             EmployeeId = 3,
                             DeductionId = 2,
-                            Amount = 1500.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Recurrence = "Permanent",
                             StartDate = new DateTime(2021, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1586,7 +1580,6 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             EmployeeId = 4,
                             DeductionId = 1,
-                            Amount = 1980.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Recurrence = "Permanent",
                             StartDate = new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1595,7 +1588,6 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             EmployeeId = 4,
                             DeductionId = 2,
-                            Amount = 2750.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Recurrence = "Permanent",
                             StartDate = new DateTime(2021, 2, 15, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1604,7 +1596,6 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             EmployeeId = 5,
                             DeductionId = 1,
-                            Amount = 1440.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Recurrence = "Permanent",
                             StartDate = new DateTime(2022, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1613,7 +1604,6 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             EmployeeId = 5,
                             DeductionId = 2,
-                            Amount = 1600.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Recurrence = "Permanent",
                             StartDate = new DateTime(2022, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1622,7 +1612,6 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             EmployeeId = 6,
                             DeductionId = 1,
-                            Amount = 2160.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Recurrence = "Permanent",
                             StartDate = new DateTime(2021, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
@@ -1631,7 +1620,6 @@ namespace HRManagementSystem.Infrastructure.Migrations
                         {
                             EmployeeId = 6,
                             DeductionId = 2,
-                            Amount = 3000.00m,
                             CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
                             Recurrence = "Permanent",
                             StartDate = new DateTime(2021, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)

@@ -43,6 +43,20 @@ export const routes: Routes = [
         canActivate: [authGuard],
         title: 'Employee Management',
       },
+      {
+        path: 'attendance',
+        canActivate: [authGuard],
+        children: [
+          { path: 'check', component: CheckIn, title: 'Check In/Out' },
+          { path: 'checkout', component: CheckOut, title: 'Check Out' },
+          {
+            path: 'records',
+            loadComponent: () => import('./Components/Attendance/attendance-records/attendance-records.component').then(m => m.AttendanceRecordsComponent),
+            title: 'Attendance Records'
+          },
+          { path: '', redirectTo: 'check', pathMatch: 'full' }
+        ]
+      },
       { path: 'checkIn', component: CheckIn, title: 'CheckIn' },
       { path: 'checkOut', component: CheckOut, title: 'CheckOut' },
       { path: 'updateEmployeeImage', component: UpdateEmployeeImage, title: 'UpdateEmployeeImage' },
@@ -291,13 +305,23 @@ export const routes: Routes = [
         title: 'Notifications',
       },
 
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-      { path: 'leave/types', component: LeaveType, title: 'LeaveType' },
-      { path: 'leave/balances', component: LeaveBalance, title: 'LeaveBalance' },
-      { path: 'ess/leave-requests', component: EmployeeLeaveRequest, title: 'EmployeeLeaveRequest' },
-      { path: 'leave/requests', component: LeaveRequests, title: 'LeaveRequests' },
-
+      // Leave Management Routes
+      { path: 'leave/types', component: LeaveType, title: 'Leave Types' },
+      { path: 'leave/balances', component: LeaveBalance, title: 'Leave Balances' },
+      { path: 'leave/requests', component: LeaveRequests, title: 'Leave Requests' },
+      {
+        path: 'leave/manage-balances',
+        loadComponent: () => import('./Components/Leaves/leave-balance-management/leave-balance-management.component').then(m => m.LeaveBalanceManagementComponent),
+        title: 'Manage Leave Balances'
+      },
+      {
+        path: 'leave/approvals',
+        loadComponent: () => import('./Components/Leaves/my-approvals/my-approvals.component').then(m => m.MyApprovalsComponent),
+        title: 'My Approvals'
+      },
+      { path: 'leave/employee-requests', component: EmployeeLeaveRequest, title: 'My Leave Requests' },
     ],
+
   },
   {
     path: '',
