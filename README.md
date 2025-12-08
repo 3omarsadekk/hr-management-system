@@ -1,49 +1,82 @@
-# Full-Stack HR Management System
+# 🏢 HR Management System
 
-A comprehensive, modern HR Management System built with Angular and ASP.NET Core, designed to streamline and automate human resource management processes for organizations of all sizes.
+A comprehensive, full-stack Human Resource Management System built with modern technologies. This enterprise-grade application provides complete HR functionality including employee management, payroll processing, leave management, recruitment, performance reviews, and more.
+
+![Angular](https://img.shields.io/badge/Angular-20-red?logo=angular)
+![.NET](https://img.shields.io/badge/.NET-8.0-purple?logo=dotnet)
+![SQL Server](https://img.shields.io/badge/SQL%20Server-2022-blue?logo=microsoftsqlserver)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple?logo=bootstrap)
 
 ## 📋 Project Overview
 
 This HR Management System is a full-stack web application that provides a complete solution for managing human resources, including employee management, attendance tracking, leave management, payroll processing, performance management, recruitment, and training. The system follows industry best practices with a clean architecture approach on the backend and a modern, responsive Angular frontend.
 
-## ✨ Key Features
+## ✨ Features
 
-### Core HR Management
-- **Employee Management**: Complete employee lifecycle management including onboarding, profile management, and offboarding
-- **Department & Designation**: Organizational structure management with departments and designations
-- **Employee Self-Service (ESS)**: Portal for employees to manage their own information and requests
+### 👥 Employee Management
 
-### Time & Attendance
-- **Attendance Tracking**: Real-time attendance monitoring and management
-- **Leave Management**: Comprehensive leave request, approval, and balance tracking system
-- **Leave Types**: Configurable leave types to match organizational policies
+- Complete employee lifecycle management
+- Employee profiles with detailed information
+- Department and designation assignments
+- Face recognition-based attendance tracking
+- Employee self-service portal
 
-### Payroll & Compensation
-- **Payroll Processing**: Automated payroll calculation and management
-- **Payslip Generation**: Digital payslip creation and distribution
-- **Allowances**: Manage various employee allowances
-- **Deductions**: Track and manage employee deductions
+### 💰 Payroll Management
 
-### Performance Management
-- **Performance Reviews**: Structured employee performance evaluation system
-- **Review Cycles**: Configurable review periods and cycles
-- **Goals & KPIs**: Goal setting and Key Performance Indicator tracking
-- **Feedback System**: 360-degree feedback collection
-- **Competency Management**: Skills and competency assessment
+- Automated payslip generation
+- Allowances and deductions configuration
+- Monthly/yearly payroll processing
+- PDF/Excel export capabilities
+- Salary comparison reports
 
-### Recruitment
-- **Job Postings**: Create and manage job openings
-- **Candidate Management**: Track and manage job applicants
-- **Job Applications**: Application submission and processing workflow
+### 📅 Leave Management
 
-### Training & Development
-- **Training Courses**: Manage training programs and courses
-- **Employee Training**: Track employee training participation and completion
-- **Training Requests**: Request and approval workflow for training
+- Multiple leave types (Annual, Sick, Maternity, etc.)
+- Leave request workflow with approvals
+- Leave balance tracking
+- Manager approval dashboard
+- Monthly leave trend analytics
+
+### 🎯 Recruitment
+
+- Job posting management
+- Candidate tracking system
+- Application pipeline management
+- Interview scheduling
+- Application status workflow
+
+### 📊 Performance Management
+
+- Review cycles configuration
+- KPI tracking and management
+- Competency assessments
+- 360-degree feedback system
+- Goal setting and tracking
+
+### 🎓 Training & Development
+
+- Training course management
+- Employee enrollment tracking
+- Course completion tracking
+- Skills development monitoring
+
+### 📈 Reports & Analytics
+
+- Interactive dashboard with real-time KPIs
+- Employee distribution charts
+- Payroll trend analysis
+- Leave usage reports
+- Recruitment pipeline analytics
+
+### 🤖 AI-Powered Features
+
+- RAG-based HR chatbot
+- Natural language employee queries
+- Intelligent data synchronization
 
 ### Additional Features
+
 - **Notifications**: Real-time notification system
-- **Reporting**: Comprehensive reporting capabilities
 - **Chat/Messaging**: Internal communication system
 - **Resignation Management**: Employee exit process management
 - **Authentication & Authorization**: Secure login with role-based access control
@@ -81,6 +114,7 @@ backend/HRManagementSystem/
 ```
 
 **Architecture Principles:**
+
 - **Dependency Rule**: Dependencies point inward (Domain has no dependencies)
 - **Separation of Concerns**: Each layer has a specific responsibility
 - **Dependency Inversion**: High-level modules don't depend on low-level modules
@@ -114,6 +148,7 @@ frontend/src/
 ```
 
 **Frontend Patterns:**
+
 - **Component-Based Architecture**: Reusable, modular components
 - **Service Layer**: Centralized business logic and API communication
 - **Reactive Programming**: RxJS for asynchronous operations
@@ -122,25 +157,19 @@ frontend/src/
 
 ## 🛠️ Technology Stack
 
-### Backend
-- **Framework**: ASP.NET Core 8.0
-- **Database**: SQL Server with Entity Framework Core
-- **API Documentation**: Swagger/OpenAPI
-- **Validation**: FluentValidation
-- **Architecture**: Clean Architecture
-
-### Frontend
-- **Framework**: Angular 20.3.x
-- **UI Library**: Bootstrap 5.3.x
-- **Icons**: Eva Icons
-- **Markdown**: Marked library for rendering
-- **Build Tool**: Angular CLI
-- **Testing**: Jasmine & Karma
-
-### Development Tools
-- **Version Control**: Git
-- **Package Management**: npm (frontend), NuGet (backend)
-- **Editor Config**: Consistent coding styles
+| Layer              | Technology             | Version |
+| ------------------ | ---------------------- | ------- |
+| **Frontend**       | Angular                | 20.3    |
+| **UI Framework**   | Bootstrap              | 5.3     |
+| **Icons**          | Eva Icons              | 1.1     |
+| **Charts**         | Chart.js               | 4.x     |
+| **Backend**        | ASP.NET Core           | 8.0     |
+| **ORM**            | Entity Framework Core  | 8.0     |
+| **Database**       | SQL Server             | 2022    |
+| **Authentication** | JWT + ASP.NET Identity | -       |
+| **Mapping**        | AutoMapper             | 15.1    |
+| **Validation**     | FluentValidation       | 11.9    |
+| **AI/RAG**         | LangChain + MongoDB    | -       |
 
 ## 🚀 Getting Started
 
@@ -149,11 +178,14 @@ frontend/src/
 Before you begin, ensure you have the following installed:
 
 #### For Backend:
+
 - **.NET SDK 8.0** or later - [Download here](https://dotnet.microsoft.com/download)
 - **SQL Server** (2019 or later) or **SQL Server LocalDB** - [Download here](https://www.microsoft.com/sql-server/sql-server-downloads)
+- **MongoDB** (for RAG features) - [Download here](https://www.mongodb.com/try/download/community)
 - **Git** - [Download here](https://git-scm.com/downloads)
 
 #### For Frontend:
+
 - **Node.js** (v18 or later) and **npm** - [Download here](https://nodejs.org/)
 - **Angular CLI** - Install globally: `npm install -g @angular/cli`
 
@@ -186,10 +218,7 @@ dotnet ef database update --project src/Infrastructure/HRManagementSystem.Infras
 dotnet run --project src/Presentation/HRManagementSystem.WebApi
 ```
 
-The API will be available at:
-- HTTPS: `https://localhost:5001`
-- HTTP: `http://localhost:5000`
-- Swagger UI: `https://localhost:5001/swagger`
+The API will be available at `http://localhost:5093`
 
 #### 3. Frontend Setup
 
@@ -211,15 +240,98 @@ The application will be available at: `http://localhost:4200`
 ### Default Access
 
 After setup, you can access the application at `http://localhost:4200`. You can either:
+
 - Register a new user account through the registration page
 - Use default admin credentials (if configured in the backend's `appsettings.json`)
 - Check `/backend/HRManagementSystem/README.md` for additional authentication setup details
+
+## 🔐 Authentication
+
+The system uses JWT-based authentication with role-based access control.
+
+### Default Roles
+
+- **HR** - Full system access
+- **Manager** - Team management, approvals
+- **Employee** - Self-service features
+
+### Login Flow
+
+1. POST to `/api/Account/login` with credentials
+2. Receive JWT token in response
+3. Include token in Authorization header: `Bearer {token}`
+
+## 📡 API Overview
+
+Base URL: `http://localhost:5093/api`
+
+All responses follow the format:
+
+```json
+{
+  "data": <T>,
+  "errorMessage": "string",
+  "hasError": boolean
+}
+```
+
+### Core Endpoints
+
+| Module             | Endpoint              | Description                        |
+| ------------------ | --------------------- | ---------------------------------- |
+| **Account**        | `/api/Account`        | Authentication & registration      |
+| **Employee**       | `/api/Employee`       | Employee CRUD operations           |
+| **Department**     | `/api/Department`     | Department management              |
+| **Designation**    | `/api/Designation`    | Job titles/positions               |
+| **Attendance**     | `/api/Attendance`     | Check-in/out with face recognition |
+| **Leave**          | `/api/LeaveRequest`   | Leave request management           |
+| **LeaveType**      | `/api/LeaveType`      | Leave type configuration           |
+| **Payroll**        | `/api/payslips`       | Payslip generation & management    |
+| **Allowance**      | `/api/Allowance`      | Salary allowances                  |
+| **Deduction**      | `/api/Deduction`      | Salary deductions                  |
+| **JobPosting**     | `/api/JobPosting`     | Recruitment postings               |
+| **Candidate**      | `/api/Candidate`      | Candidate management               |
+| **JobApplication** | `/api/JobApplication` | Application tracking               |
+| **Performance**    | `/api/Performance`    | Reviews, KPIs, goals               |
+| **Training**       | `/api/TrainingCourse` | Training courses                   |
+| **Reporting**      | `/api/Reporting`      | Analytics & dashboards             |
+| **Notification**   | `/api/Notification`   | User notifications                 |
+| **ESS**            | `/api/ESS`            | Employee self-service              |
+
+## 🎨 UI Theme
+
+The application uses a modern dark theme with the following color palette:
+
+| Variable          | Color   | Usage            |
+| ----------------- | ------- | ---------------- |
+| `--color-primary` | #3366ff | Primary actions  |
+| `--color-success` | #00d68f | Success states   |
+| `--color-warning` | #ffaa00 | Warnings         |
+| `--color-danger`  | #ff3d71 | Errors/deletions |
+| `--color-info`    | #0095ff | Information      |
+| `--card-bg`       | #222b45 | Card backgrounds |
+| `--body-bg`       | #151a30 | Page background  |
+
+## 📊 Dashboard
+
+The dashboard provides real-time insights:
+
+- **Stats Cards**: Total employees, departments, leave requests, job postings
+- **Charts**:
+  - Employees by Department (Bar)
+  - Designation Distribution (Doughnut)
+  - Leave Status Breakdown (Pie)
+  - Monthly Leave Trend (Line)
+- **Quick Actions**: Fast navigation to common tasks
+- **Recent Activities**: Latest system events
+- **System Status**: API and database health
 
 ## 📝 Development Workflow
 
 ### Backend Development
 
 #### Adding a New Feature
+
 1. Create entity in `Domain/Entities/`
 2. Add repository interface in `Domain/Interfaces/`
 3. Create DTOs in `Application/DTOs/`
@@ -228,6 +340,7 @@ After setup, you can access the application at `http://localhost:4200`. You can 
 6. Create controller in `WebApi/Controllers/`
 
 #### Database Migrations
+
 ```bash
 # Create a new migration
 dotnet ef migrations add MigrationName --project src/Infrastructure/HRManagementSystem.Infrastructure --startup-project src/Presentation/HRManagementSystem.WebApi
@@ -239,6 +352,7 @@ dotnet ef database update --project src/Infrastructure/HRManagementSystem.Infras
 ### Frontend Development
 
 #### Generate New Components
+
 ```bash
 ng generate component components/feature-name
 ng generate service services/feature-name
@@ -246,6 +360,7 @@ ng generate interface models/feature-name
 ```
 
 #### Build for Production
+
 ```bash
 # Backend
 cd backend/HRManagementSystem
@@ -256,13 +371,31 @@ cd frontend
 ng build --configuration production
 ```
 
-#### Running Tests
-```bash
-# Backend (if tests are available)
-dotnet test
+## 🔧 Configuration
 
-# Frontend
-ng test
+### Environment Variables
+
+| Variable                               | Description         | Default              |
+| -------------------------------------- | ------------------- | -------------------- |
+| `ASPNETCORE_ENVIRONMENT`               | Environment mode    | Development          |
+| `JWT_SECRET`                           | JWT signing key     | (set in appsettings) |
+| `ConnectionStrings__DefaultConnection` | Database connection | LocalDB              |
+
+### appsettings.json
+
+```json
+{
+  "JWT": {
+    "SecretKey": "your-secret-key",
+    "Issuer": "HRManagementSystem",
+    "Audience": "HRManagementSystemUsers",
+    "ExpiryInDays": 7
+  },
+  "MongoDBSettings": {
+    "ConnectionString": "mongodb://localhost:27017/",
+    "DatabaseName": "HRManagementSystemRAG"
+  }
+}
 ```
 
 ## 📚 Project Structure
@@ -277,6 +410,7 @@ ng test
 We welcome contributions to the HR Management System! Please follow these guidelines:
 
 ### Code Standards
+
 1. Follow Clean Architecture principles
 2. Keep dependencies pointing inward (Domain has no dependencies)
 3. Use interfaces for external dependencies
@@ -284,6 +418,7 @@ We welcome contributions to the HR Management System! Please follow these guidel
 5. Update documentation when adding new features
 
 ### Contribution Process
+
 1. Fork the repository
 2. Create a feature branch (`feature/your-feature-name` or `bugfix/issue-description`)
 3. Make your changes following the code standards
@@ -293,6 +428,7 @@ We welcome contributions to the HR Management System! Please follow these guidel
 7. Wait for code review and address any feedback
 
 ### Pull Request Guidelines
+
 - Provide a clear description of the changes
 - Reference any related issues
 - Ensure all tests pass
@@ -302,6 +438,7 @@ We welcome contributions to the HR Management System! Please follow these guidel
 ## 📄 License
 
 This project is licensed under the MIT License.
+
 
 ## 📧 Contact
 

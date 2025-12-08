@@ -9,7 +9,6 @@ namespace HRManagementSystem.WebApi.Controllers;
 public class TrainingRequestController(ITrainingRequestService trainingRequestService) : BaseApiController
 {
     private readonly ITrainingRequestService _trainingRequestService = trainingRequestService;
-
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] TrainingRequestCreateDto dto)
     {
